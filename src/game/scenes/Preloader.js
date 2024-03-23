@@ -35,6 +35,8 @@ export class Preloader extends Scene {
         this.load.tilemapTiledJSON("city", "./assets/city.json");
         this.load.image("exteriors_32", "./assets/exteriors_32.png");
 
+        this.load.image("bg", "./assets/balancebg.jpg");
+
         // Load player
         this.load.spritesheet("adam-run", "./assets/Adam_run_16x16.png", {
             frameWidth: 16,
