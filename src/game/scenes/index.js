@@ -4,6 +4,7 @@ import { GameOver } from "./GameOver";
 import { MainMenu } from "./MainMenu";
 import { Preloader } from "./Preloader";
 import { ChooseCharacter } from "./ChooseCharacter";
+import { Maze } from "./Maze";
 
 // IMPORTANT: you must import and add your new scene to this array for it to be renderable!!
 export const scenes = [
@@ -13,5 +14,6 @@ export const scenes = [
     ChooseCharacter,
     Game,
     GameOver,
+    Maze
 ];
 
