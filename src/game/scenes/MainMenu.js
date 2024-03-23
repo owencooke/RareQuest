@@ -1,4 +1,5 @@
 import { Scene } from "phaser";
+import TextBox from "../components/TextBox";
 
 export class MainMenu extends Scene {
     constructor() {
@@ -33,6 +34,15 @@ export class MainMenu extends Scene {
         playButton.on("pointerdown", () => {
             this.scene.start("City");
         });
+
+        // Create the dialogue box
+        this.dialogueBox = new TextBox(this);
+        this.add.existing(this.dialogueBox);
+
+        // Example usage:
+        const dialogueText =
+            "Hello, adventurer!\n Welcome to the world of Phaser RPG!";
+        this.dialogueBox.displayDialogue(dialogueText);
     }
 }
 
