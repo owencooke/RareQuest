@@ -9,6 +9,7 @@ export class City extends Scene {
 
     create() {
         // Create city map layers from tileset
+        this.cameras.main.fadeIn(1000, 0, 0, 0);
         const map = this.make.tilemap({
             key: "city",
             tileWidth: 32,
@@ -81,10 +82,10 @@ export class City extends Scene {
                 this.currentDirection === "right"
                     ? 0
                     : this.currentDirection === "up"
-                    ? 6
-                    : this.currentDirection === "left"
-                    ? 12
-                    : 18
+                        ? 6
+                        : this.currentDirection === "left"
+                            ? 12
+                            : 18
             );
         }
     }

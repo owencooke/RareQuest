@@ -33,7 +33,11 @@ export class Preloader extends Scene {
     preload() {
         // Load city
         this.load.tilemapTiledJSON("city", "./assets/city.json");
+        this.load.tilemapTiledJSON("maze", "./assets/maze.json");
         this.load.image("exteriors_32", "./assets/exteriors_32.png");
+        this.load.image("interiors_32", "./assets/interiors_32.png");
+        this.load.image("modern_exteriors_32", "./assets/modern_exteriors_32.png");
+        this.load.image("room_builder_32", "./assets/room_builder_32.png");
 
         // Load player
         this.load.spritesheet("adam-run", "./assets/Adam_run_16x16.png", {
@@ -48,7 +52,7 @@ export class Preloader extends Scene {
         this.createPlayerRunAnimations();
 
         //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
-        this.scene.start("MainMenu");
+        this.scene.start("Maze");
     }
 
     createPlayerRunAnimations() {
