@@ -5,12 +5,13 @@ import { scenes } from "./scenes";
 // https://newdocs.phaser.io/docs/3.70.0/Phaser.Types.Core.GameConfig
 
 const config = {
-    width: 1280,
-    height: 800,
     type: Phaser.AUTO,
     scene: scenes,
+    parent: 'game-container',
+    width: 800,
+    height: 600,
     scale: {
-        mode: Phaser.Scale.HEIGHT_CONTROLS_WIDTH,
+        mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
     },
     physics: {

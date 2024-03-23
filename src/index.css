@@ -1,12 +1,11 @@
 body {
-  overflow-y: hidden;
+    overflow-y: hidden;
 }
 
 .canvas-container {
-  height: 90vh;
-  padding-top: 5vh;
-  background-image: url('https://rqmo.org/wp-content/uploads/2022/01/bg-top.png');
-  background-size: cover;
-  background-position: center;
+    height: 90vh;
+    padding-top: 5vh;
+    background-image: url("https://rqmo.org/wp-content/uploads/2022/01/bg-top.png");
+    background-size: cover;
+    background-position: center;
 }
-
