@@ -23,19 +23,66 @@ export class Preloader extends Scene {
     }
 
     preload() {
-        //  Load the assets for the game - Replace with your own assets
-        this.load.setPath("assets");
+        // Load city
+        this.load.tilemapTiledJSON("city", "./assets/city.json");
+        this.load.image("exteriors_32", "./assets/exteriors_32.png");
 
-        this.load.image("logo", "logo.png");
-        this.load.image("star", "star.png");
+        // Load player
+        this.load.spritesheet("adam-run", "./assets/Adam_run_16x16.png", {
+            frameWidth: 16,
+            frameHeight: 32,
+        });
     }
 
     create() {
         //  When all the assets have loaded, it's often worth creating global objects here that the rest of the game can use.
         //  For example, you can define global animations here, so we can use them in other scenes.
+        this.createPlayerRunAnimations();
 
         //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
-        this.scene.start("Game");
+        this.scene.start("MainMenu");
+    }
+
+    createPlayerRunAnimations() {
+        this.anims.create({
+            key: "run-right",
+            frames: this.anims.generateFrameNumbers("adam-run", {
+                start: 0,
+                end: 5,
+            }),
+            frameRate: 12,
+            repeat: -1,
+        });
+
+        this.anims.create({
+            key: "run-up",
+            frames: this.anims.generateFrameNumbers("adam-run", {
+                start: 6,
+                end: 11,
+            }),
+            frameRate: 12,
+            repeat: -1,
+        });
+
+        this.anims.create({
+            key: "run-left",
+            frames: this.anims.generateFrameNumbers("adam-run", {
+                start: 12,
+                end: 17,
+            }),
+            frameRate: 12,
+            repeat: -1,
+        });
+
+        this.anims.create({
+            key: "run-down",
+            frames: this.anims.generateFrameNumbers("adam-run", {
+                start: 18,
+                end: 23,
+            }),
+            frameRate: 12,
+            repeat: -1,
+        });
     }
 }
 
