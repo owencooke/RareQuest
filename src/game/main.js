@@ -5,17 +5,13 @@ import { scenes } from "./scenes";
 // https://newdocs.phaser.io/docs/3.70.0/Phaser.Types.Core.GameConfig
 const config = {
     width: 1280,
-    height: 720,
+    height: 800,
     type: Phaser.AUTO,
-    parent: "game-container",
-    backgroundColor: "#028af8",
     scene: scenes,
-    // scale: {
-    //     // Fit to window
-    //     mode: Phaser.Scale.FIT,
-    //     // Center vertically and horizontally
-    //     autoCenter: Phaser.Scale.CENTER_BOTH,
-    // },
+    scale: {
+        mode: Phaser.Scale.HEIGHT_CONTROLS_WIDTH,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+    },
     physics: {
         default: "arcade",
         arcade: {
