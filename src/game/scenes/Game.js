@@ -1,11 +1,11 @@
-import { Scene, Input } from "phaser";
+import { Scene } from "phaser";
 
 export class Game extends Scene {
     constructor() {
         super("Game");
         this.player;
         this.cursors;
-        this.currentDirection = "down"; // Default direction
+        this.currentDirection = "down";
     }
 
     preload() {
@@ -13,15 +13,8 @@ export class Game extends Scene {
         // var width = this.cameras.main.width;
 
         // Load Tiled JSON map and tileset images
-        this.load.tilemapTiledJSON("test", "./assets/test_room.json");
-        this.load.image(
-            "Room_Builder_free_32x32",
-            "./assets/Room_Builder_free_32x32.png"
-        );
-        this.load.image(
-            "Interiors_free_32x32",
-            "./assets/Interiors_free_32x32.png"
-        );
+        this.load.tilemapTiledJSON("test", "./assets/city.json");
+        this.load.image("exteriors_32", "./assets/exteriors_32.png");
 
         // Load player
         this.load.spritesheet("adam-run", "./assets/Adam_run_16x16.png", {
@@ -39,28 +32,41 @@ export class Game extends Scene {
         });
 
         // Add tilesets
-        const room = map.addTilesetImage(
-            "Room_Builder_free_32x32",
-            "Room_Builder_free_32x32"
-        );
-        const interiors = map.addTilesetImage(
-            "Interiors_free_32x32",
-            "Interiors_free_32x32"
-        );
+        const exteriors = map.addTilesetImage("exteriors_32", "exteriors_32");
 
         // Create layers
-        map.createLayer("Tile Layer 1", room, 0, 0);
-        map.createLayer("Tile Layer 2", interiors, 0, 0);
-        map.createLayer("Tile Layer 3", interiors, 0, 0);
+        map.createLayer("Ground", exteriors, 0, 0);
+        const buildingsLayer = map.createLayer("Buildings", exteriors, 0, 0);
+        buildingsLayer.setCollisionByExclusion([-1]);
+        map.createLayer("Doorways", exteriors, 0, 0);
+
+        this.physics.world.setBounds(
+            0,
+            0,
+            map.widthInPixels,
+            map.heightInPixels
+        );
+        this.cameras.main.setBounds(
+            0,
+            0,
+            map.widthInPixels,
+            map.heightInPixels
+        );
 
         // Create player sprite
-        this.player = this.add
+        this.player = this.physics.add
             .sprite(
                 this.cameras.main.centerX,
                 this.cameras.main.centerY,
                 "adam-run"
             )
             .setScale(2);
+
+        map.createLayer("AbovePlayer", exteriors, 0, 0);
+
+        this.cameras.main.startFollow(this.player);
+        this.player.setCollideWorldBounds(true);
+        this.physics.add.collider(this.player, buildingsLayer);
 
         this.anims.create({
             key: "run-right",
@@ -110,31 +116,28 @@ export class Game extends Scene {
     }
 
     update() {
-        const speed = this.input.keyboard.checkDown(
-            this.input.keyboard.addKey(Input.Keyboard.KeyCodes.SHIFT)
-        )
-            ? 4
-            : 2;
+        // Reset velocity
+        this.player.setVelocity(0);
+        const speed = this.cursors.shift.isDown ? 400 : 200;
 
         // Handle player movement
         if (this.cursors.up.isDown) {
-            this.player.y -= speed;
+            this.player.setVelocityY(-speed);
             this.player.anims.play("run-up", true);
             this.currentDirection = "up";
         } else if (this.cursors.down.isDown) {
-            this.player.y += speed;
+            this.player.setVelocityY(speed);
             this.player.anims.play("run-down", true);
             this.currentDirection = "down";
         } else if (this.cursors.left.isDown) {
-            this.player.x -= speed;
+            this.player.setVelocityX(-speed);
             this.player.anims.play("run-left", true);
             this.currentDirection = "left";
         } else if (this.cursors.right.isDown) {
-            this.player.x += speed;
+            this.player.setVelocityX(speed);
             this.player.anims.play("run-right", true);
             this.currentDirection = "right";
         } else {
-            // If no movement keys are pressed, stop animation
             this.player.anims.stop();
             this.player.setTexture(
                 "adam-run",
