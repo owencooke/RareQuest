@@ -44,27 +44,38 @@ class Dialogue extends TextBox {
         this.displayDialogue();
     }
 
-    displayDialogue() {
+    displayDialogue(isAnimated) {
+        this.hideDialogue();
         const { name, text } = this.dialogue[this.currentIndex];
-        super.displayDialogue(`${name}:\n\t\t\t\t ${text}`);
-        this.showButtons();
+        const dialogue = `${name}:\n ${text}`;
+        if (isAnimated) {
+            super.displayDialogue(dialogue);
+        } else {
+            super.displayStaticDialogue(dialogue);
+        }
+        this.forwardButton.setVisible(this.currentIndex < this.dialogue.length);
+        this.backButton.setVisible(this.currentIndex > 0);
     }
 
     advance() {
-        if (this.currentIndex < this.dialogue.length - 1) {
-            this.currentIndex++;
-            this.displayDialogue();
+        if (this.typingTimer?.loop) {
+            this.typingTimer.destroy();
+            this.typingTimer = null;
+            this.displayDialogue(false);
         } else {
-            this.hideButtons();
-            this.hideDialogue();
-            this.destroy();
+            if (this.currentIndex < this.dialogue.length - 1) {
+                this.currentIndex += 1;
+                this.displayDialogue(true);
+            } else {
+                this.end();
+            }
         }
     }
 
     goBack() {
         if (this.currentIndex > 0) {
-            this.currentIndex--;
-            this.displayDialogue();
+            this.currentIndex -= 1;
+            this.displayDialogue(false);
         }
     }
 
@@ -73,11 +84,11 @@ class Dialogue extends TextBox {
         this.backButton.setVisible(false);
     }
 
-    showButtons() {
-        this.forwardButton.setVisible(true);
-        if (this.currentIndex > 0) {
-            this.backButton.setVisible(true);
-        }
+    end() {
+        this.hideButtons();
+        this.hideDialogue();
+        this.scene.events.emit("dialogueComplete");
+        this.destroy();
     }
 }
 
@@ -88,12 +99,15 @@ class Dialogue extends TextBox {
  * @param {Object[]} script - An array of dialogue objects representing the conversation.
  *                            Each object should have 'name' and 'text' properties.
  *                            Example: [{ name: "Character A", text: "Hello!" }, ...]
+ * @param {Function} callback - A function to be called when the dialogue sequence is complete.
+ *                              This function will be invoked once, after the dialogue ends.
  * @returns {void}
  */
-function startDialogue(scene, script) {
+function startDialogue(scene, script, callback) {
     const dialog = new Dialogue(scene, script);
     scene.add.existing(dialog);
     dialog.start();
+    scene.events.once("dialogueComplete", callback);
 }
 
 export { startDialogue, Dialogue };

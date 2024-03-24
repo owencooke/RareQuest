@@ -1,8 +1,13 @@
 import { GameObjects } from "phaser";
 
-const TXTBOX_SPRITE_SHEET = "textbox";
-const TXTBOX_SPRITE_IDX = 3;
-const TXTBOX_MARGIN_WIDTH = 0.1;
+const TEXTBOX_SETTINGS = {
+    SPRITE_SHEET: "textbox",
+    SPRITE_INDEX: 3,
+    MARGIN_WIDTH: 0.05,
+    FONT_FAMILY: "ArcadeClassic",
+    FONT_SIZE: "24px",
+    CHARACTERS_PER_SECOND: 40,
+};
 
 class TextBox extends GameObjects.Container {
     constructor(scene) {
@@ -11,15 +16,15 @@ class TextBox extends GameObjects.Container {
 
         // Scale textbox sprite to fit screen width
         const { width: frameWidth, height: frameHeight } = this.scene.textures
-            .get(TXTBOX_SPRITE_SHEET)
-            .get(TXTBOX_SPRITE_IDX);
+            .get(TEXTBOX_SETTINGS.SPRITE_SHEET)
+            .get(TEXTBOX_SETTINGS.SPRITE_INDEX);
 
         const { width: screenWidth, height: screenHeight } =
             this.scene.game.config;
 
         const scale =
             Math.min(screenWidth / frameWidth, screenHeight / frameHeight) -
-            TXTBOX_MARGIN_WIDTH;
+            TEXTBOX_SETTINGS.MARGIN_WIDTH;
 
         this.width = frameWidth * scale;
         this.height = frameHeight * scale;
@@ -32,8 +37,8 @@ class TextBox extends GameObjects.Container {
         this.bgSprite = this.scene.add.sprite(
             0,
             0,
-            TXTBOX_SPRITE_SHEET,
-            TXTBOX_SPRITE_IDX
+            TEXTBOX_SETTINGS.SPRITE_SHEET,
+            TEXTBOX_SETTINGS.SPRITE_INDEX
         );
         this.bgSprite.setOrigin(0);
         this.bgSprite.displayWidth = this.width;
@@ -46,8 +51,8 @@ class TextBox extends GameObjects.Container {
             this.height * 0.25,
             "",
             {
-                fontFamily: "ArcadeClassic",
-                fontSize: "32px",
+                fontFamily: TEXTBOX_SETTINGS.FONT_FAMILY,
+                fontSize: TEXTBOX_SETTINGS.FONT_SIZE,
                 fill: "black",
                 wordWrap: { width: this.width * 0.9 },
             }
@@ -58,11 +63,37 @@ class TextBox extends GameObjects.Container {
     }
 
     displayDialogue(text) {
+        this.text.setText("");
+
+        // Setup typewriting animation
+        let index = 0;
+        this.typingTimer = this.scene.time.addEvent({
+            delay: 1000 / TEXTBOX_SETTINGS.CHARACTERS_PER_SECOND,
+            callback: () => {
+                this.text.setText(text.substring(0, index + 1));
+                index++;
+
+                // If all characters are displayed, stop the timer
+                if (index === text.length) {
+                    this.typingTimer.destroy();
+                }
+            },
+            callbackScope: this,
+            loop: true,
+        });
+
+        this.setVisible(true);
+    }
+
+    displayStaticDialogue(text) {
         this.text.setText(text);
         this.setVisible(true);
     }
 
     hideDialogue() {
+        if (this.typingTimer) {
+            this.typingTimer.destroy();
+        }
         this.setVisible(false);
     }
 }

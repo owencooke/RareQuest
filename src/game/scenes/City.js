@@ -1,8 +1,19 @@
 import { Scene, Cameras } from "phaser";
+import { MyPlayer } from "../components/MyPlayer";
 
 export class City extends Scene {
     constructor() {
         super("City");
+        this.playerSpawn = { x: 32 * 51, y: 32 * 30 };
+    }
+
+    init(data) {
+        if (data.playerSpawn) {
+            this.playerSpawn = {
+                x: data.playerSpawn.x,
+                y: data.playerSpawn.y + 32,
+            };
+        }
     }
 
     create() {
@@ -24,16 +35,13 @@ export class City extends Scene {
         map.createLayer("BelowPlayer", exteriors, 0, 0);
 
         // Add player sprite before AbovePlayer layer
-        this.player = this.physics.add
-            .sprite(
-                this.cameras.main.centerX,
-                this.cameras.main.centerY,
-                "adam-run"
-            )
-            .setScale(2);
+        this.player = new MyPlayer(
+            this,
+            this.playerSpawn.x,
+            this.playerSpawn.y,
+            "down"
+        );
         this.physics.add.collider(this.player, buildingsLayer);
-        this.player.setCollideWorldBounds(true);
-        this.player.anims.play("run-down", true);
 
         // Bind door objects to next scene handler
         this.physics.add.collider(
@@ -66,52 +74,22 @@ export class City extends Scene {
     }
 
     update() {
-        if (!this.allowMovement) return;
-
-        this.player.setVelocity(0);
-        const speed = (this.cursors.shift.isDown ? 2 : 1) * this.playerSpeed;
-
-        // Handle player keyboard movement and animation
-        if (this.cursors.up.isDown) {
-            this.player.setVelocityY(-speed);
-            this.player.anims.play("run-up", true);
-            this.currentDirection = "up";
-        } else if (this.cursors.down.isDown) {
-            this.player.setVelocityY(speed);
-            this.player.anims.play("run-down", true);
-            this.currentDirection = "down";
-        } else if (this.cursors.left.isDown) {
-            this.player.setVelocityX(-speed);
-            this.player.anims.play("run-left", true);
-            this.currentDirection = "left";
-        } else if (this.cursors.right.isDown) {
-            this.player.setVelocityX(speed);
-            this.player.anims.play("run-right", true);
-            this.currentDirection = "right";
-        } else {
-            this.player.anims.stop();
-            this.player.setTexture(
-                "adam-run",
-                this.currentDirection === "right"
-                    ? 0
-                    : this.currentDirection === "up"
-                        ? 6
-                        : this.currentDirection === "left"
-                            ? 12
-                            : 18
-            );
+        if (this.allowMovement) {
+            this.player.update(this.cursors);
         }
     }
 
-    // Scene names should be stored as Object names in the "Doors" layer of City map
+    // Doctor types should be stored as Object names in the "Doors" layer of City map
     handleEnterDoor(_, door) {
         this.allowMovement = false;
-        const nextScene = door.name;
-        console.log(nextScene);
+        const doctorType = door.name;
+        const doorPosition = { x: door.x, y: door.y };
         this.cameras.main.fadeOut(250, 0, 0, 0);
         this.cameras.main.once(Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () =>
-            //FIXME: pass nextScene here
-            this.scene.start("Hospital")
+            this.scene.start("Hospital", {
+                doctorType,
+                doorPosition,
+            })
         );
     }
 }
