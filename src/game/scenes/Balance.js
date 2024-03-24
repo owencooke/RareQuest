@@ -7,6 +7,7 @@ export class Balance extends Scene {
         });
         this.playerSpeed = 375;
         this.currentDirection = "right";
+        this.ballSpeed = 300;
     }
 
     create() {
@@ -20,6 +21,22 @@ export class Balance extends Scene {
         this.player.setCollideWorldBounds(true);
         this.player.setScale(5);
 
+        // Ball Object
+        this.ball = this.add.circle(100, 100, 50, 0);
+        this.physics.add.existing(this.ball);
+        this.ball.body.setCollideWorldBounds(true);
+        this.ball.body.onWorldBounds = true;
+        this.ball.body.setVelocity(this.ballSpeed, this.ballSpeed);
+
+        // Physics
+        this.physics.world.on("worldbounds", function(ball) {
+            ball.setVelocity(this.ballSpeed, this.ballSpeed)
+        }, this);
+
+        this.physics.add.collider(this.player, this.ball, function (player, ball) {
+            ball.body.setVelocity(-this.ballSpeed, -this.ballSpeed);
+        }, undefined, this);
+        
         // Set Up Input
         this.cursors = this.input.keyboard.createCursorKeys();
     }
