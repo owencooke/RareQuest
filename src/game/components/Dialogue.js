@@ -22,7 +22,6 @@ class Dialogue extends TextBox {
             buttonNavStyle
         );
         this.forwardButton.setInteractive();
-
         this.forwardButton.on("pointerdown", this.advance, this);
         this.forwardButton.setDepth(this.depth + 1);
 
@@ -35,7 +34,6 @@ class Dialogue extends TextBox {
         );
         this.backButton.setInteractive();
         this.backButton.on("pointerdown", this.goBack, this);
-
         this.backButton.setDepth(this.depth + 1);
 
         // Initially hide buttons
@@ -46,38 +44,27 @@ class Dialogue extends TextBox {
         this.displayDialogue();
     }
 
-    displayDialogue(isAnimated) {
+    displayDialogue() {
         this.hideDialogue();
         const { name, text } = this.dialogue[this.currentIndex];
-        const dialogue = `${name}:\n ${text}`;
-        if (isAnimated) {
-            super.displayDialogue(dialogue);
-        } else {
-            super.displayStaticDialogue(dialogue);
-        }
+        super.displayDialogue(`${name}:\n ${text}`);
         this.forwardButton.setVisible(this.currentIndex < this.dialogue.length);
         this.backButton.setVisible(this.currentIndex > 0);
     }
 
     advance() {
-        if (this.typingTimer?.loop) {
-            this.typingTimer.destroy();
-            this.typingTimer = null;
-            this.displayDialogue(false);
+        if (this.currentIndex < this.dialogue.length - 1) {
+            this.currentIndex += 1;
+            this.displayDialogue();
         } else {
-            if (this.currentIndex < this.dialogue.length - 1) {
-                this.currentIndex += 1;
-                this.displayDialogue(true);
-            } else {
-                this.end();
-            }
+            this.end();
         }
     }
 
     goBack() {
         if (this.currentIndex > 0) {
             this.currentIndex -= 1;
-            this.displayDialogue(false);
+            this.displayDialogue();
         }
     }
 
@@ -113,4 +100,3 @@ function startDialogue(scene, script, callback) {
 }
 
 export { startDialogue, Dialogue };
-
