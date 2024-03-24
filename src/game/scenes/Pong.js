@@ -7,7 +7,7 @@ export class Pong extends Scene {
         this.currentDirection = "right";
         this.scoreWin = 50;
         this.ballSpeed = 300;
-        this.ballSpeedAmp = 15;
+        this.ballSpeedAmp = 20;
         this.scoreCount = 0;
         this.ColliderActivate = true;
     }
@@ -47,7 +47,6 @@ export class Pong extends Scene {
             this.ColliderActivate = true;
             const angle = Phaser.Math.Between(25, 360);
             const vec = this.physics.velocityFromAngle(angle, 100 + this.ballSpeed)
-            this.ballSpeed += this.ballSpeedAmp
             ball.setVelocity(vec.x, vec.y);
         }, this);
 
@@ -57,8 +56,9 @@ export class Pong extends Scene {
             if (this.ColliderActivate) {
                 const angle = Phaser.Math.Between(25, 360);
                 const vec = this.physics.velocityFromAngle(angle, 100 + this.ballSpeed)
+                this.ballSpeed += this.ballSpeedAmp
                 ball.body.setVelocity(vec.x, vec.y);
-
+                
                 // Score Update
                 this.scoreCount += 10;
                 this.score.text = this.scoreCount + "/" + this.scoreWin;
