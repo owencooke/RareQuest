@@ -85,6 +85,11 @@ class TextBox extends GameObjects.Container {
         this.setVisible(true);
     }
 
+    displayStaticDialogue(text) {
+        this.text.setText(text);
+        this.setVisible(true);
+    }
+
     hideDialogue() {
         if (this.typingTimer) {
             this.typingTimer.destroy();
