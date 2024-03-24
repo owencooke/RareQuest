@@ -31,7 +31,7 @@ export class MainMenu extends Scene {
             .setInteractive();
 
         playButton.on("pointerdown", () => {
-            this.scene.start("Balance");
+            this.scene.start("City");
         });
     }
 }
