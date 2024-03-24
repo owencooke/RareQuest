@@ -2,6 +2,7 @@ import { Boot } from "./Boot";
 import { City } from "./City";
 import { Hospital } from "./hospital/Hospital";
 import { MainMenu } from "./MainMenu";
+import { Story } from "./Story";
 import { Preloader } from "./Preloader";
 import { TileJump } from "./TileJump";
 import { GameOverTileJump } from "./GameOverTileJump";
@@ -12,6 +13,7 @@ export const scenes = [
     Boot,
     Preloader,
     MainMenu,
+    Story,
     City,
     Hospital,
     TileJump,
