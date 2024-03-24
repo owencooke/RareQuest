@@ -351,6 +351,12 @@
                  "id":1,
                  "name":"Pediatrician",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"alpha",
+                         "type":"float",
+                         "value":0
+                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -363,6 +369,12 @@
                  "id":3,
                  "name":"Pulmonologist",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"alpha",
+                         "type":"float",
+                         "value":0
+                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -375,6 +387,12 @@
                  "id":4,
                  "name":"Dermatologist",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"alpha",
+                         "type":"float",
+                         "value":0
+                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -387,6 +405,12 @@
                  "id":5,
                  "name":"Neurologist",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"alpha",
+                         "type":"float",
+                         "value":0
+                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -399,6 +423,12 @@
                  "id":6,
                  "name":"Ophthalmologist",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"alpha",
+                         "type":"float",
+                         "value":0
+                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,

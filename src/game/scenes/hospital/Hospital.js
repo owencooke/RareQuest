@@ -14,7 +14,7 @@ export class Hospital extends Scene {
     init(data) {
         this.doorPosition = data.doorPosition;
         this.dialogue = script[data.doctorType];
-        // FIXME: assign this.minigameScene based on doctorType
+        // TODO: assign this.minigameScene based on doctorType
     }
 
     create() {
@@ -103,16 +103,6 @@ export class Hospital extends Scene {
             .staticSprite(doctor.x + layerX, doctor.y + layerY, "doctorA")
             .setScale(2);
         this.doctor.setOffset(4, 24);
-
-        this.anims.create({
-            key: "doctorA-animation",
-            frames: this.anims.generateFrameNumbers("doctorA", {
-                start: 395,
-                end: 396,
-            }),
-            frameRate: 8,
-            repeat: -1,
-        });
         this.doctor.anims.play("doctorA-animation", true);
 
         // Start dialogue upon collision with the doctor

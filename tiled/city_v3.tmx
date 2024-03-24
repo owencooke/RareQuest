@@ -323,18 +323,33 @@
  </layer>
  <objectgroup id="10" name="Doors">
   <object id="1" name="Pediatrician" x="415.667" y="194.667">
+   <properties>
+    <property name="alpha" type="float" value="0"/>
+   </properties>
    <point/>
   </object>
   <object id="3" name="Pulmonologist" x="2654.97" y="192.909">
+   <properties>
+    <property name="alpha" type="float" value="0"/>
+   </properties>
    <point/>
   </object>
   <object id="4" name="Dermatologist" x="1439.39" y="1566.67">
+   <properties>
+    <property name="alpha" type="float" value="0"/>
+   </properties>
    <point/>
   </object>
   <object id="5" name="Neurologist" x="1215.85" y="2913.12">
+   <properties>
+    <property name="alpha" type="float" value="0"/>
+   </properties>
    <point/>
   </object>
   <object id="6" name="Ophthalmologist" x="3039.03" y="2207.39">
+   <properties>
+    <property name="alpha" type="float" value="0"/>
+   </properties>
    <point/>
   </object>
  </objectgroup>

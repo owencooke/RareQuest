@@ -43,15 +43,29 @@ export class Preloader extends Scene {
 
         // Load Hospital Room
         // this.load.tilemapTiledJSON("hospitalRoom", "./assets/test.json");
-        this.load.tilemapTiledJSON("hospitalRoom", "./assets/hospitalRoom.json");
-        this.load.image("Room_Builder_Arched_Entryways_32x32", "./assets/Room_Builder_Arched_Entryways_32x32.png");
-        this.load.image("Room_Builder_Floors_32x32", "./assets/Room_Builder_Floors_32x32.png");
-        this.load.image("Room_Builder_Walls_32x32", "./assets/Room_Builder_Walls_32x32.png");
+        this.load.tilemapTiledJSON(
+            "hospitalRoom",
+            "./assets/hospitalRoom.json"
+        );
+        this.load.image(
+            "Room_Builder_Arched_Entryways_32x32",
+            "./assets/Room_Builder_Arched_Entryways_32x32.png"
+        );
+        this.load.image(
+            "Room_Builder_Floors_32x32",
+            "./assets/Room_Builder_Floors_32x32.png"
+        );
+        this.load.image(
+            "Room_Builder_Walls_32x32",
+            "./assets/Room_Builder_Walls_32x32.png"
+        );
         this.load.image("19_Hospital_32x32", "./assets/19_Hospital_32x32.png");
 
         // Load DoctorA
-        this.load.spritesheet("doctorA", "./assets/doctorA.png", { frameWidth: 16, frameHeight: 32 });
-
+        this.load.spritesheet("doctorA", "./assets/doctorA.png", {
+            frameWidth: 16,
+            frameHeight: 32,
+        });
 
         // Load dialogue textbox
         this.load.spritesheet("textbox", "./assets/textboxes.png", {
@@ -64,6 +78,16 @@ export class Preloader extends Scene {
         //  When all the assets have loaded, it's often worth creating global objects here that the rest of the game can use.
         //  For example, you can define global animations here, so we can use them in other scenes.
         this.createPlayerRunAnimations();
+
+        this.anims.create({
+            key: "doctorA-animation",
+            frames: this.anims.generateFrameNumbers("doctorA", {
+                start: 395,
+                end: 396,
+            }),
+            frameRate: 8,
+            repeat: -1,
+        });
 
         //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
         this.scene.start("MainMenu");
