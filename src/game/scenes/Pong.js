@@ -1,24 +1,25 @@
 import { Scene } from "phaser";
 
-export class Balance extends Scene {
+export class Pong extends Scene {
     constructor () {
-        super({
-            key: "Balance"
-        });
+        super("Pong");
         this.playerSpeed = 375;
         this.currentDirection = "right";
+        this.scoreWin = 50;
         this.ballSpeed = 300;
+        this.ballSpeedAmp = 15;
         this.scoreCount = 0;
+        this.ColliderActivate = true;
     }
 
     create() {
         // Setup Scene
         this.cameras.main.fadeIn(1000);
-        this.background = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, "bg");
+        this.cameras.main.setBackgroundColor("#87CEEB")
         this.physics.world.setBounds(0, 0, this.cameras.main.displayWidth, this.cameras.main.displayHeight, true, true, true, true);
 
         // Score
-        this.score = this.add.text(10, 0, this.scoreCount, {
+        this.score = this.add.text(10, 0, "0/" + this.scoreWin, {
             fontSize: "72px",
             color: "#ffffff",
             fontFamily: "Arial Black",
@@ -28,6 +29,10 @@ export class Balance extends Scene {
         this.player = this.physics.add.sprite(this.cameras.main.centerX, this.cameras.centerY, "adam-run");
         this.player.setCollideWorldBounds(true);
         this.player.setScale(5);
+
+        // Ground Object
+        this.ground = this.add.rectangle(this.player.x, this.player.y+182, this.cameras.main.displayWidth, 200, "0x136d15")
+        this.physics.add.existing(this.ground);
 
         // Ball Object
         this.ball = this.add.circle(100, 100, 50, 0);
@@ -39,35 +44,44 @@ export class Balance extends Scene {
 
         // Physics for ball and edge of world
         this.physics.world.on("worldbounds", function(ball) {
-            const angle = Phaser.Math.Between(0, 360);
+            this.ColliderActivate = true;
+            const angle = Phaser.Math.Between(25, 360);
             const vec = this.physics.velocityFromAngle(angle, 100 + this.ballSpeed)
-            this.ballSpeed += 10
+            this.ballSpeed += this.ballSpeedAmp
             ball.setVelocity(vec.x, vec.y);
-
-            // Game Over
-            if (this.ball.y > this.player.y) {
-                this.playerSpeed = 375;
-                this.currentDirection = "right";
-                this.ballSpeed = 300;
-                this.scoreCount = 0;
-                this.scene.start("gameEnd", {gameScore: this.scoreCount});
-            }
         }, this);
 
         // Physics for Player and Ball
         this.physics.add.collider(this.player, this.ball, function (player, ball) {
-            const angle = Phaser.Math.Between(0, 360);
-            const vec = this.physics.velocityFromAngle(angle, 100 + this.ballSpeed)
-            ball.body.setVelocity(vec.x, vec.y);
+            // Make sure hitbox overlap doesnt give > 10 points 
+            if (this.ColliderActivate) {
+                const angle = Phaser.Math.Between(25, 360);
+                const vec = this.physics.velocityFromAngle(angle, 100 + this.ballSpeed)
+                ball.body.setVelocity(vec.x, vec.y);
 
-            // Score Update
-            this.scoreCount += 10;
-            this.score.text = this.scoreCount;
+                // Score Update
+                this.scoreCount += 10;
+                this.score.text = this.scoreCount + "/" + this.scoreWin;
+                this.ColliderActivate = false;
 
-            // Check for win conditions
-            if (this.scoreCount === 100) {
-                this.scene.start("gameEnd", {gameScore: this.scoreCount});
+                // Check for win conditions
+                if (this.scoreCount === this.scoreWin) {
+                    this.playerSpeed = 375;
+                    this.currentDirection = "right";
+                    this.ballSpeed = 300;
+                    this.scene.start("gameEnd", {gameScore: this.scoreCount, scoreCon: this.scoreWin});
+                    this.scoreCount = 0;
+                }
             }
+        }, undefined, this);
+
+        // Physics for ground
+        this.physics.add.collider(this.ground, this.ball, function() {
+            this.playerSpeed = 375;
+            this.currentDirection = "right";
+            this.ballSpeed = 300;
+            this.scoreCount = 0;
+            this.scene.start("gameEnd", {gameScore: this.scoreCount, scoreCon: this.scoreWin});
         }, undefined, this);
         
         // Set Up Input
@@ -77,13 +91,14 @@ export class Balance extends Scene {
     update() {
         // Player Movement
         this.player.setVelocity(0)
+        const speed = (this.cursors.shift.isDown ? 2 : 1) * this.playerSpeed;
         if (this.cursors.left.isDown) {
-            this.player.setVelocityX(-this.playerSpeed);
+            this.player.setVelocityX(-speed);
             this.player.anims.play("run-left", true);
             this.currentDirection = "left";
         }
         else if (this.cursors.right.isDown) {
-            this.player.setVelocityX(this.playerSpeed);
+            this.player.setVelocityX(speed);
             this.player.anims.play("run-right", true);
             this.currentDirection = "right";
         }
@@ -98,8 +113,7 @@ export class gameEnd extends Scene {
 
     create(data) {
         // Game End
-        
-        if (data.gameScore === 100) {
+        if (data.gameScore === data.scoreCon) {
             this.gameState = "Success!"
         }
         this.add
@@ -145,7 +159,7 @@ export class gameEnd extends Scene {
             .setOrigin(0.5)
             .setInteractive();
             playButton.on("pointerdown", () => {
-                this.scene.start("Balance");
+                this.scene.start("Pong");
             });
         }
     }
