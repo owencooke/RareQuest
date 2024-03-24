@@ -1,11 +1,11 @@
 import TextBox from "./TextBox";
 
-const BUTTON_FONT_SIZE = 64;
+const BUTTON_FONT_SIZE = 48;
 
 const buttonNavStyle = {
     fontFamily: "Impact",
     fontSize: `${BUTTON_FONT_SIZE}px`,
-    fill: "white",
+    fill: "orange",
 };
 
 class Dialogue extends TextBox {
@@ -22,6 +22,7 @@ class Dialogue extends TextBox {
             buttonNavStyle
         );
         this.forwardButton.setInteractive();
+
         this.forwardButton.on("pointerdown", this.advance, this);
         this.forwardButton.setDepth(this.depth + 1);
 
@@ -34,6 +35,7 @@ class Dialogue extends TextBox {
         );
         this.backButton.setInteractive();
         this.backButton.on("pointerdown", this.goBack, this);
+
         this.backButton.setDepth(this.depth + 1);
 
         // Initially hide buttons
