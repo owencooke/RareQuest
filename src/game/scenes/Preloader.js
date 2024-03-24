@@ -41,6 +41,18 @@ export class Preloader extends Scene {
             frameHeight: 32,
         });
 
+        // Load Hospital Room
+        // this.load.tilemapTiledJSON("hospitalRoom", "./assets/test.json");
+        this.load.tilemapTiledJSON("hospitalRoom", "./assets/hospitalRoom.json");
+        this.load.image("Room_Builder_Arched_Entryways_32x32", "./assets/Room_Builder_Arched_Entryways_32x32.png");
+        this.load.image("Room_Builder_Floors_32x32", "./assets/Room_Builder_Floors_32x32.png");
+        this.load.image("Room_Builder_Walls_32x32", "./assets/Room_Builder_Walls_32x32.png");
+        this.load.image("19_Hospital_32x32", "./assets/19_Hospital_32x32.png");
+
+        // Load DoctorA
+        this.load.spritesheet("doctorA", "./assets/doctorA.png", { frameWidth: 16, frameHeight: 32 });
+
+
         // Load dialogue textbox
         this.load.spritesheet("textbox", "./assets/textboxes.png", {
             frameWidth: 321,
