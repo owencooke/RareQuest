@@ -45,15 +45,16 @@ class Dialogue extends TextBox {
     }
 
     displayDialogue() {
+        this.hideDialogue();
         const { name, text } = this.dialogue[this.currentIndex];
         super.displayDialogue(`${name}:\n ${text}`);
-        this.showButtons();
+        this.forwardButton.setVisible(this.currentIndex < this.dialogue.length);
+        this.backButton.setVisible(this.currentIndex > 0);
     }
 
     advance() {
         if (this.currentIndex < this.dialogue.length - 1) {
-            this.currentIndex++;
-            this.hideDialogue();
+            this.currentIndex += 1;
             this.displayDialogue();
         } else {
             this.end();
@@ -62,7 +63,7 @@ class Dialogue extends TextBox {
 
     goBack() {
         if (this.currentIndex > 0) {
-            this.currentIndex--;
+            this.currentIndex -= 1;
             this.displayDialogue();
         }
     }
@@ -70,13 +71,6 @@ class Dialogue extends TextBox {
     hideButtons() {
         this.forwardButton.setVisible(false);
         this.backButton.setVisible(false);
-    }
-
-    showButtons() {
-        this.forwardButton.setVisible(true);
-        if (this.currentIndex > 0) {
-            this.backButton.setVisible(true);
-        }
     }
 
     end() {
