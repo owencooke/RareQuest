@@ -1,6 +1,7 @@
 import { Scene, Cameras } from "phaser";
 import { startDialogue } from "../../components/Dialogue";
 import script from "./script.json";
+import { MyPlayer } from "../../components/MyPlayer";
 
 export class Hospital extends Scene {
     constructor() {
@@ -12,17 +13,12 @@ export class Hospital extends Scene {
 
     init(data) {
         this.doorPosition = data.doorPosition;
-        console.log(this.doorPosition);
         this.dialogue = script[data.doctorType];
         // FIXME: assign this.minigameScene based on doctorType
     }
 
     create() {
         this.allowMovement = true;
-        this.currentDirection = "up";
-        this.playerSpeed = 200;
-        this.doctorCollision = false;
-
         // Load the hospital room tilemap
         const map = this.make.tilemap({
             key: "hospitalRoom",
@@ -81,18 +77,12 @@ export class Hospital extends Scene {
         //Get the object layer made in the map to indicate where the plaer starts when map is loaded
         const startingPoint = map.getObjectLayer("Player").objects[0];
 
-        this.player = this.physics.add
-            .sprite(
-                startingPoint.x + layerX,
-                startingPoint.y + layerY,
-                "adam-run"
-            )
-            .setScale(2);
-
-        this.player.setCollideWorldBounds(true);
-        this.player.anims.play("run-down", true);
-        this.player.setSize(8, 8);
-        this.player.setOffset(4, 24);
+        this.player = new MyPlayer(
+            this,
+            startingPoint.x + layerX,
+            startingPoint.y + layerY,
+            "up"
+        );
 
         this.physics.add.collider(this.player, wallsLayer);
         this.physics.add.collider(this.player, interiorLayer);
@@ -175,47 +165,14 @@ export class Hospital extends Scene {
             map.widthInPixels / 2,
             map.heightInPixels / 2
         );
-        // this.cameras.main.startFollow(this.player);
 
         // Enable keyboard input
         this.cursors = this.input.keyboard.createCursorKeys();
     }
 
     update() {
-        if (!this.allowMovement) return;
-
-        this.player.setVelocity(0);
-        const speed = (this.cursors.shift.isDown ? 2 : 1) * this.playerSpeed;
-
-        // Handle player keyboard movement and animation
-        if (this.cursors.up.isDown) {
-            this.player.setVelocityY(-speed);
-            this.player.anims.play("run-up", true);
-            this.currentDirection = "up";
-        } else if (this.cursors.down.isDown) {
-            this.player.setVelocityY(speed);
-            this.player.anims.play("run-down", true);
-            this.currentDirection = "down";
-        } else if (this.cursors.left.isDown) {
-            this.player.setVelocityX(-speed);
-            this.player.anims.play("run-left", true);
-            this.currentDirection = "left";
-        } else if (this.cursors.right.isDown) {
-            this.player.setVelocityX(speed);
-            this.player.anims.play("run-right", true);
-            this.currentDirection = "right";
-        } else {
-            this.player.anims.stop();
-            this.player.setTexture(
-                "adam-run",
-                this.currentDirection === "right"
-                    ? 0
-                    : this.currentDirection === "up"
-                    ? 6
-                    : this.currentDirection === "left"
-                    ? 12
-                    : 18
-            );
+        if (this.allowMovement) {
+            this.player.update(this.cursors);
         }
     }
 

@@ -1,16 +1,17 @@
 import { Scene, Cameras } from "phaser";
+import { MyPlayer } from "../components/MyPlayer";
 
 export class City extends Scene {
     constructor() {
         super("City");
-        this.playerSpawn = { x: 0, y: 0 };
+        this.playerSpawn = { x: 32 * 51, y: 32 * 30 };
     }
 
     init(data) {
         if (data.playerSpawn) {
             this.playerSpawn = {
                 x: data.playerSpawn.x,
-                y: data.playerSpawn.y + 64,
+                y: data.playerSpawn.y + 32,
             };
         }
     }
@@ -33,12 +34,13 @@ export class City extends Scene {
         map.createLayer("BelowPlayer", exteriors, 0, 0);
 
         // Add player sprite before AbovePlayer layer
-        this.player = this.physics.add
-            .sprite(this.playerSpawn.x, this.playerSpawn.y, "adam-run")
-            .setScale(2);
+        this.player = new MyPlayer(
+            this,
+            this.playerSpawn.x,
+            this.playerSpawn.y,
+            "down"
+        );
         this.physics.add.collider(this.player, buildingsLayer);
-        this.player.setCollideWorldBounds(true);
-        this.player.anims.play("run-down", true);
 
         // Bind door objects to next scene handler
         this.physics.add.collider(
@@ -71,40 +73,8 @@ export class City extends Scene {
     }
 
     update() {
-        if (!this.allowMovement) return;
-
-        this.player.setVelocity(0);
-        const speed = (this.cursors.shift.isDown ? 2 : 1) * this.playerSpeed;
-
-        // Handle player keyboard movement and animation
-        if (this.cursors.up.isDown) {
-            this.player.setVelocityY(-speed);
-            this.player.anims.play("run-up", true);
-            this.currentDirection = "up";
-        } else if (this.cursors.down.isDown) {
-            this.player.setVelocityY(speed);
-            this.player.anims.play("run-down", true);
-            this.currentDirection = "down";
-        } else if (this.cursors.left.isDown) {
-            this.player.setVelocityX(-speed);
-            this.player.anims.play("run-left", true);
-            this.currentDirection = "left";
-        } else if (this.cursors.right.isDown) {
-            this.player.setVelocityX(speed);
-            this.player.anims.play("run-right", true);
-            this.currentDirection = "right";
-        } else {
-            this.player.anims.stop();
-            this.player.setTexture(
-                "adam-run",
-                this.currentDirection === "right"
-                    ? 0
-                    : this.currentDirection === "up"
-                    ? 6
-                    : this.currentDirection === "left"
-                    ? 12
-                    : 18
-            );
+        if (this.allowMovement) {
+            this.player.update(this.cursors);
         }
     }
 
