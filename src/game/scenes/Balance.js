@@ -8,6 +8,7 @@ export class Balance extends Scene {
         this.playerSpeed = 375;
         this.currentDirection = "right";
         this.ballSpeed = 300;
+        this.scoreCount = 0;
     }
 
     create() {
@@ -15,6 +16,13 @@ export class Balance extends Scene {
         this.cameras.main.fadeIn(1000);
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, "bg");
         this.physics.world.setBounds(0, 0, this.cameras.main.displayWidth, this.cameras.main.displayHeight, true, true, true, true);
+
+        // Score
+        this.score = this.add.text(10, 0, this.scoreCount, {
+            fontSize: "72px",
+            color: "#ffffff",
+            fontFamily: "Arial Black",
+        })
 
         // Setup Player
         this.player = this.physics.add.sprite(this.cameras.main.centerX, this.cameras.centerY, "adam-run");
@@ -30,11 +38,19 @@ export class Balance extends Scene {
 
         // Physics
         this.physics.world.on("worldbounds", function(ball) {
-            ball.setVelocity(this.ballSpeed, this.ballSpeed)
+            const angle = Phaser.Math.Between(0, 360);
+            const vec = this.physics.velocityFromAngle(angle, 300)
+            ball.setVelocity(vec.x, vec.y);
         }, this);
 
         this.physics.add.collider(this.player, this.ball, function (player, ball) {
-            ball.body.setVelocity(-this.ballSpeed, -this.ballSpeed);
+            const angle = Phaser.Math.Between(0, 360);
+            const vec = this.physics.velocityFromAngle(angle, 300)
+            ball.body.setVelocity(vec.x, vec.y);
+
+            // Score Update
+            this.scoreCount += 10;
+            this.score.text = this.scoreCount;
         }, undefined, this);
         
         // Set Up Input
