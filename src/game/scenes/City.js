@@ -3,6 +3,16 @@ import { Scene, Cameras } from "phaser";
 export class City extends Scene {
     constructor() {
         super("City");
+        this.playerSpawn = { x: 0, y: 0 };
+    }
+
+    init(data) {
+        if (data.playerSpawn) {
+            this.playerSpawn = {
+                x: data.playerSpawn.x,
+                y: data.playerSpawn.y + 64,
+            };
+        }
     }
 
     create() {
@@ -24,11 +34,7 @@ export class City extends Scene {
 
         // Add player sprite before AbovePlayer layer
         this.player = this.physics.add
-            .sprite(
-                this.cameras.main.centerX,
-                this.cameras.main.centerY,
-                "adam-run"
-            )
+            .sprite(this.playerSpawn.x, this.playerSpawn.y, "adam-run")
             .setScale(2);
         this.physics.add.collider(this.player, buildingsLayer);
         this.player.setCollideWorldBounds(true);
@@ -106,9 +112,13 @@ export class City extends Scene {
     handleEnterDoor(_, door) {
         this.allowMovement = false;
         const doctorType = door.name;
+        const doorPosition = { x: door.x, y: door.y };
         this.cameras.main.fadeOut(250, 0, 0, 0);
         this.cameras.main.once(Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () =>
-            this.scene.start("Hospital", { doctorType })
+            this.scene.start("Hospital", {
+                doctorType,
+                doorPosition,
+            })
         );
     }
 }

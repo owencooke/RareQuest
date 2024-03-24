@@ -11,8 +11,9 @@ export class Hospital extends Scene {
     }
 
     init(data) {
-        const { doctorType } = data;
-        this.dialogue = script[doctorType];
+        this.doorPosition = data.doorPosition;
+        console.log(this.doorPosition);
+        this.dialogue = script[data.doctorType];
         // FIXME: assign this.minigameScene based on doctorType
     }
 
@@ -222,7 +223,7 @@ export class Hospital extends Scene {
         this.allowMovement = false;
         this.cameras.main.fadeOut(250, 0, 0, 0);
         this.cameras.main.once(Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () =>
-            this.scene.start("City")
+            this.scene.start("City", { playerSpawn: this.doorPosition })
         );
     }
 
