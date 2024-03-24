@@ -1,6 +1,6 @@
 import TextBox from "./TextBox";
 
-const BUTTON_FONT_SIZE = 48;
+const BUTTON_FONT_SIZE = 72;
 
 const buttonNavStyle = {
     fontFamily: "Impact",
