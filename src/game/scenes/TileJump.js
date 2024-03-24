@@ -8,10 +8,11 @@ export class TileJump extends Phaser.Scene {
         this.playerWidth = 16;
         this.playerHeight = 32;
         this.platforms = null;
-        this.spacing = 300;
+        this.spacing = 200;
         this.cursors = null;
         this.score = 0;
         this.player;
+        this.isPlayerAirborne = false;
     }
 
     preload() {
@@ -37,14 +38,14 @@ export class TileJump extends Phaser.Scene {
         this.scoreLabel = this.add.text(this.game.config.width / 2, 100, "0", {
             font: "100px Arial",
             fill: "#fff"
-        }).setOrigin(0.5);
+        }).setOrigin(0.5).setDepth(1);
 
         this.cursors = this.input.keyboard.createCursorKeys();
 
         this.createPlayer();
 
         this.time.addEvent({
-            delay: 2000,
+            delay: 1400,
             callback: this.addPlatform,
             callbackScope: this,
             loop: true
@@ -56,6 +57,13 @@ export class TileJump extends Phaser.Scene {
     
         exitButton.on('pointerdown', () => this.scene.start('MainMenu')); // Replace 'MainMenu' with the key of your main menu scene
 
+        this.physics.add.collider(this.player, this.platforms, (player, platform) => {
+            if (!platform.cleared && this.isPlayerAirborne && player.body.touching.down) {
+                this.incrementScore();
+                platform.cleared = true;
+                this.isPlayerAirborne = false; // Ensure this is reset only when a jump and land cycle is complete
+            }
+        });
     }
 
     addTile(x, y) {
@@ -69,6 +77,7 @@ export class TileJump extends Phaser.Scene {
         tile.checkWorldBounds = true;
         tile.outOfBoundsKill = true;
         tile.body.debugShowBody = false;
+        tile.cleared = false;
     }
 
     addPlatform(y = -this.tileHeight * 2) {
@@ -79,10 +88,6 @@ export class TileJump extends Phaser.Scene {
             if (i !== hole && i !== hole + 1) {
                 this.addTile(i * this.tileWidth, y);
             }
-        }
-
-        if (y === -this.tileHeight * 2) {
-            this.incrementScore();
         }
     }
 
@@ -141,26 +146,30 @@ export class TileJump extends Phaser.Scene {
 
 
     update() {
-        this.physics.collide(this.player, this.platforms);
+    this.physics.collide(this.player, this.platforms);
 
-        if (this.cursors.up.isDown && this.player.body.touching.down) {
-            this.player.setVelocityY(-1000);
-        }
-
-        if (this.cursors.left.isDown) {
-            this.player.setVelocityX(-260);
-            this.player.anims.play("run-left", true);
-        } else if (this.cursors.right.isDown) {
-            this.player.setVelocityX(260);
-            this.player.anims.play("run-right", true);
-        } else {
-            this.player.setVelocityX(0);
-        }
-
-        if (this.player.body.position.y >= this.game.config.height - this.player.body.height) {
-            this.gameOver();
-        }
+    // The jump condition checks if the up key is pressed and the player is touching the ground.
+    if (this.cursors.up.isDown && this.player.body.touching.down) {
+        this.player.setVelocityY(-1000);
+        this.isPlayerAirborne = true;
     }
+
+    // Movement logic for left and right movements.
+    if (this.cursors.left.isDown) {
+        this.player.setVelocityX(-290);
+        this.player.anims.play("run-left", true);
+    } else if (this.cursors.right.isDown) {
+        this.player.setVelocityX(290);
+        this.player.anims.play("run-right", true);
+    } else {
+        this.player.setVelocityX(0);
+    }
+
+    // Game over condition if the player touches the bottom of the game world.
+    if (this.player.body.position.y >= this.game.config.height - this.player.body.height) {
+        this.gameOver();
+    }
+}
 
     gameOver() {
         this.score = 0;
@@ -172,6 +181,7 @@ export class TileJump extends Phaser.Scene {
         this.scoreLabel.text = this.score.toString();
 
         if (this.score === 5) {
+            this.score = 0;
             // Display the congratulatory message
             this.add.text(this.game.config.width / 2, this.game.config.height / 2, 'Congratulations!', { font: '48px Arial', fill: '#fff' }).setOrigin(0.5);
             this.add.text(this.game.config.width / 2, this.game.config.height / 2 + 100, 'Click anywhere to play again', { font: '24px Arial', fill: '#fff' }).setOrigin(0.5);
