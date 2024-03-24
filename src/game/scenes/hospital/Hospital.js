@@ -1,11 +1,6 @@
 import { Scene, Cameras } from "phaser";
-import { startDialogue } from "../components/Dialogue";
-
-const dialogue = [
-    { name: "Character A", text: "Hello there!" },
-    { name: "Character B", text: "Hi! How can I help you?" },
-    // Add more dialogue blocks as needed
-];
+import { startDialogue } from "../../components/Dialogue";
+import script from "./script.json";
 
 export class Hospital extends Scene {
     constructor() {
@@ -13,6 +8,12 @@ export class Hospital extends Scene {
         this.player;
         this.doctor;
         this.dialogueInProgess = false;
+    }
+
+    init(data) {
+        const { doctorType } = data;
+        this.dialogue = script[doctorType];
+        // FIXME: assign this.minigameScene based on doctorType
     }
 
     create() {
@@ -230,7 +231,7 @@ export class Hospital extends Scene {
             this.dialogueInProgess = true;
             startDialogue(
                 this,
-                dialogue,
+                this.dialogue,
                 () => (this.dialogueInProgess = false)
             );
         }

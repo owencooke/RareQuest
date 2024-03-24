@@ -1,6 +1,6 @@
 import { Boot } from "./Boot";
 import { City } from "./City";
-import { Hospital } from "./hospitalRoom"
+import { Hospital } from "./hospital/Hospital";
 import { MainMenu } from "./MainMenu";
 import { Preloader } from "./Preloader";
 

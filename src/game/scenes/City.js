@@ -102,15 +102,13 @@ export class City extends Scene {
         }
     }
 
-    // Scene names should be stored as Object names in the "Doors" layer of City map
+    // Doctor types should be stored as Object names in the "Doors" layer of City map
     handleEnterDoor(_, door) {
         this.allowMovement = false;
-        const nextScene = door.name;
-        console.log(nextScene);
+        const doctorType = door.name;
         this.cameras.main.fadeOut(250, 0, 0, 0);
         this.cameras.main.once(Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () =>
-            //FIXME: pass nextScene here
-            this.scene.start("Hospital")
+            this.scene.start("Hospital", { doctorType })
         );
     }
 }
