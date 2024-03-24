@@ -46,13 +46,14 @@ class Dialogue extends TextBox {
 
     displayDialogue() {
         const { name, text } = this.dialogue[this.currentIndex];
-        super.displayDialogue(`${name}:\n\t\t\t\t ${text}`);
+        super.displayDialogue(`${name}:\n ${text}`);
         this.showButtons();
     }
 
     advance() {
         if (this.currentIndex < this.dialogue.length - 1) {
             this.currentIndex++;
+            this.hideDialogue();
             this.displayDialogue();
         } else {
             this.end();
