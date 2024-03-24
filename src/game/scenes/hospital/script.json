@@ -1,0 +1,153 @@
+{
+    "Pediatrician": [
+        {
+            "name": "Pediatrician",
+            "text": "Hello, I understand Sam's been feeling very tired, experiencing some unusual aches, and having fevers from time to time. Can you tell me more about when he first noticed these symptoms and how often they occur?"
+        },
+        {
+            "name": "Investigator",
+            "text": "It started a few months ago. No matter how much Sam sleeps, he wakes up feeling like he's still tired. And the aches, they just come out of nowhere. The fevers, too, seem to just appear without any other symptoms like a cold or cough."
+        },
+        {
+            "name": "Pediatrician",
+            "text": "Has there been any pattern you've noticed with the fatigue, pain, or fevers? For example, do they happen more at a certain time of day or after certain activities?"
+        },
+        {
+            "name": "Investigator",
+            "text": "Not really, they seem pretty random. But the tiredness is every day, and the aches and fevers come and go."
+        },
+        {
+            "name": "Pediatrician",
+            "text": "I see. Have you noticed anything that makes the symptoms better or worse? Also, has Sam missed school or been unable to participate in activities he usually enjoys?"
+        },
+        {
+            "name": "Investigator",
+            "text": "He's missed a few days of school and doesn't play outside as much. Nothing specific seems to make it better, but resting helps a bit."
+        },
+        {
+            "name": "Pediatrician",
+            "text": "Alright, it's important we look into this further. We will start with the Tile Jump Treatment Plan."
+        }
+    ],
+    "Dermatologist": [
+        {
+            "name": "Dermatologist",
+            "text": "Hello, I understand Sam's been noticing some unusual marks and spots on his skin that have been bothering him. Can you tell me more about when he first noticed them and where they usually appear?"
+        },
+        {
+            "name": "Investigator",
+            "text": "They started popping up a few months ago. They appear randomly – on his arms, legs, and sometimes his back. They're not itchy, just really noticeable."
+        },
+        {
+            "name": "Dermatologist",
+            "text": "Do these spots or marks come with any other symptoms, like itching, burning, or pain? And do they fade on their own or have they been persistent?"
+        },
+        {
+            "name": "Investigator",
+            "text": "No, they don't hurt or itch. Some of them fade after a while, but others stick around. We haven't been able to figure out what causes them to appear."
+        },
+        {
+            "name": "Dermatologist",
+            "text": "Have you noticed if anything in particular seems to trigger them? Like exposure to the sun, certain types of foods, or maybe even stress?"
+        },
+        {
+            "name": "Investigator",
+            "text": "Not that we've noticed. They seem to just come and go without any clear reason."
+        },
+        {
+            "name": "Dermatologist",
+            "text": "Alright, let's take a closer look. We will start with the Bubble Wrap Pop Analysis Test. You can start with the Chrome Dinosaur Treatment plan"
+        }
+    ],
+    "Neurologist": [
+        {
+            "name": "Neurologist",
+            "text": "Hello, I understand Sam's been experiencing some muscle weakness, making it hard for him to enjoy activities like he used to. Can you tell me more about when this started and how it's been affecting him?"
+        },
+        {
+            "name": "Investigator",
+            "text": "It started a few months ago. Sam used to climb the monkey bars all the time, but lately, he just can't hold himself up. His muscles feel really weak."
+        },
+        {
+            "name": "Neurologist",
+            "text": "Does the weakness seem to be in specific parts of the body or is it more general? And have you noticed if it gets worse as the day goes on or after certain activities?"
+        },
+        {
+            "name": "Investigator",
+            "text": "It seems to be mostly in his arms and legs. And yes, it does get worse if he's been trying to play or do anything active."
+        },
+        {
+            "name": "Neurologist",
+            "text": "Have there been any other symptoms accompanying the weakness, such as numbness, tingling, or difficulty with tasks like buttoning shirts or picking up small objects?"
+        },
+        {
+            "name": "Investigator",
+            "text": "No numbness or tingling, but he does seem to struggle with things like opening jars or tying his shoelaces now."
+        },
+        {
+            "name": "Neurologist",
+            "text": "I see. We'll need to get started on the Maze treatment plan immediately."
+        }
+    ],
+    "Ophthalmologist": [
+        {
+            "name": "Ophthalmologist",
+            "text": "Hello, I understand that Sam's been having some trouble with his vision, things appearing blurry as if he is looking underwater. Can you tell me more about when this started and how often it happens?"
+        },
+        {
+            "name": "Investigator",
+            "text": "It started a few weeks ago. Sam mentioned he's having a hard time seeing the board at school and struggles with reading and writing too. He needs to squint to see things clearly."
+        },
+        {
+            "name": "Ophthalmologist",
+            "text": "Does the blurriness happen all the time, or does it come and go? Also, have you noticed if it gets worse at certain times of the day or during specific activities?"
+        },
+        {
+            "name": "Investigator",
+            "text": "It's not all the time, but it happens pretty often, especially during school. It doesn't seem to get worse at any particular time of day, though."
+        },
+        {
+            "name": "Ophthalmologist",
+            "text": "Have there been any other symptoms along with the blurriness, like headaches, eye strain, or seeing double?"
+        },
+        {
+            "name": "Investigator",
+            "text": "He's complained about headaches a few times, especially after reading or trying to focus on something for a while."
+        },
+        {
+            "name": "Ophthalmologist",
+            "text": "Alright, we'll start with the Paper Airplane Vision Test. Sam can also get started on the Find the Object treatment"
+        }
+    ],
+    "Pulmonologist": [
+        {
+            "name": "Pulmonologist",
+            "text": "Hello, I understand that Sam's been having some trouble with your breathing, feeling like he is trying to breathe through a straw at times. Can you tell me a bit more about when this started and what seems to trigger it?"
+        },
+        {
+            "name": "Investigator",
+            "text": "It started a few months ago. Sam feels out of breath, much faster than his friends do, when he tries to play tag or run around with them."
+        },
+        {
+            "name": "Pulmonologist",
+            "text": "Does anything seem to make the breathing difficulties better or worse? For example, do you notice it more indoors or outdoors, or perhaps when there's a change in the weather?"
+        },
+        {
+            "name": "Investigator",
+            "text": "It seems worse when he's running or doing something active. We haven't noticed if being inside or outside makes a difference."
+        },
+        {
+            "name": "Pulmonologist",
+            "text": "Are there any other symptoms that come along with the difficulty breathing, like coughing, wheezing, or chest tightness?"
+        },
+        {
+            "name": "Investigator",
+            "text": "He does cough sometimes after running, but no wheezing or chest pain that we've noticed."
+        },
+        {
+            "name": "Pulmonologist",
+            "text": "Alright, based on what you've told me, Sam needs to get started on the Balance Scale Treatment plan."
+        }
+    ]
+}
+

@@ -8,6 +8,7 @@ const config = {
     height: 800,
     type: Phaser.AUTO,
     scene: scenes,
+    parent: "game-container",
     scale: {
         mode: Phaser.Scale.HEIGHT_CONTROLS_WIDTH,
         autoCenter: Phaser.Scale.CENTER_BOTH,
@@ -25,4 +26,3 @@ const StartGame = (parent) => {
 };
 
 export default StartGame;
-
