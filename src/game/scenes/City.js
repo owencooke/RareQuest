@@ -30,9 +30,9 @@ export class City extends Scene {
         });
         const exteriors = map.addTilesetImage("exteriors_32", "exteriors_32");
         map.createLayer("Ground", exteriors, 0, 0);
+        map.createLayer("GroundDecor", exteriors, 0, 0);
         const buildingsLayer = map.createLayer("Buildings", exteriors, 0, 0);
         buildingsLayer.setCollisionByExclusion([-1]);
-        map.createLayer("BelowPlayer", exteriors, 0, 0);
 
         // Add player sprite before AbovePlayer layer
         this.player = new MyPlayer(
@@ -52,7 +52,8 @@ export class City extends Scene {
             this
         );
 
-        map.createLayer("AbovePlayer", exteriors, 0, 0);
+        map.createLayer("Roofs", exteriors, 0, 0);
+        map.createLayer("RoofDecor", exteriors, 0, 0);
 
         // Set world bounds and collision
         this.physics.world.setBounds(
