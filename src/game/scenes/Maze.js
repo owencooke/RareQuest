@@ -119,7 +119,6 @@ export class Maze extends Scene {
     this.player.setVelocity(0);
     const speed = (this.cursors.shift.isDown ? 2 : 1) * this.playerSpeed;
 
-    // Check for player reaching endPoint
     if (this.physics.overlap(this.player, this.endPoint)) {
       this.showCongratsMessage();
     }
