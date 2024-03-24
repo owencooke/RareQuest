@@ -110,7 +110,7 @@ export class City extends Scene {
         this.cameras.main.fadeOut(250, 0, 0, 0);
         this.cameras.main.once(Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () =>
             //FIXME: pass nextScene here
-            this.scene.start("City")
+            this.scene.start("Hospital")
         );
     }
 }

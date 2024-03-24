@@ -12,7 +12,7 @@ class Dialogue extends TextBox {
     constructor(scene, dialogue) {
         super(scene);
         this.dialogue = dialogue;
-        this.currentIndex = 1;
+        this.currentIndex = 0;
 
         // Create forward button
         this.forwardButton = this.scene.add.text(
