@@ -1,13 +1,15 @@
-import { Scene } from "phaser";
+import { Scene, Cameras } from "phaser";
 
 export class City extends Scene {
     constructor() {
         super("City");
-        this.currentDirection = "down";
-        this.playerSpeed = 200;
     }
 
     create() {
+        this.allowMovement = true;
+        this.currentDirection = "down";
+        this.playerSpeed = 200;
+
         // Create city map layers from tileset
         this.cameras.main.fadeIn(1000, 0, 0, 0);
         const map = this.make.tilemap({
@@ -19,7 +21,7 @@ export class City extends Scene {
         map.createLayer("Ground", exteriors, 0, 0);
         const buildingsLayer = map.createLayer("Buildings", exteriors, 0, 0);
         buildingsLayer.setCollisionByExclusion([-1]);
-        map.createLayer("Doorways", exteriors, 0, 0);
+        map.createLayer("BelowPlayer", exteriors, 0, 0);
 
         // Add player sprite before AbovePlayer layer
         this.player = this.physics.add
@@ -32,6 +34,15 @@ export class City extends Scene {
         this.physics.add.collider(this.player, buildingsLayer);
         this.player.setCollideWorldBounds(true);
         this.player.anims.play("run-down", true);
+
+        // Bind door objects to next scene handler
+        this.physics.add.collider(
+            this.player,
+            this.physics.add.staticGroup(map.createFromObjects("Doors")),
+            this.handleEnterDoor,
+            null,
+            this
+        );
 
         map.createLayer("AbovePlayer", exteriors, 0, 0);
 
@@ -55,6 +66,8 @@ export class City extends Scene {
     }
 
     update() {
+        if (!this.allowMovement) return;
+
         this.player.setVelocity(0);
         const speed = (this.cursors.shift.isDown ? 2 : 1) * this.playerSpeed;
 
@@ -88,6 +101,18 @@ export class City extends Scene {
                             : 18
             );
         }
+    }
+
+    // Scene names should be stored as Object names in the "Doors" layer of City map
+    handleEnterDoor(_, door) {
+        this.allowMovement = false;
+        const nextScene = door.name;
+        console.log(nextScene);
+        this.cameras.main.fadeOut(250, 0, 0, 0);
+        this.cameras.main.once(Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () =>
+            //FIXME: pass nextScene here
+            this.scene.start("City")
+        );
     }
 }
 

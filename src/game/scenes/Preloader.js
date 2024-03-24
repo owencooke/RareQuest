@@ -43,6 +43,12 @@ export class Preloader extends Scene {
             frameWidth: 16,
             frameHeight: 32,
         });
+
+        // Load dialogue textbox
+        this.load.spritesheet("textbox", "./assets/textboxes.png", {
+            frameWidth: 321,
+            frameHeight: 80,
+        });
     }
 
     create() {
