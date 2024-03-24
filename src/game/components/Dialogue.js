@@ -55,9 +55,7 @@ class Dialogue extends TextBox {
             this.currentIndex++;
             this.displayDialogue();
         } else {
-            this.hideButtons();
-            this.hideDialogue();
-            this.destroy();
+            this.end();
         }
     }
 
@@ -79,6 +77,13 @@ class Dialogue extends TextBox {
             this.backButton.setVisible(true);
         }
     }
+
+    end() {
+        this.hideButtons();
+        this.hideDialogue();
+        this.scene.events.emit("dialogueComplete");
+        this.destroy();
+    }
 }
 
 /**
@@ -88,12 +93,15 @@ class Dialogue extends TextBox {
  * @param {Object[]} script - An array of dialogue objects representing the conversation.
  *                            Each object should have 'name' and 'text' properties.
  *                            Example: [{ name: "Character A", text: "Hello!" }, ...]
+ * @param {Function} callback - A function to be called when the dialogue sequence is complete.
+ *                              This function will be invoked once, after the dialogue ends.
  * @returns {void}
  */
-function startDialogue(scene, script) {
+function startDialogue(scene, script, callback) {
     const dialog = new Dialogue(scene, script);
     scene.add.existing(dialog);
     dialog.start();
+    scene.events.once("dialogueComplete", callback);
 }
 
 export { startDialogue, Dialogue };
