@@ -13,11 +13,11 @@ export class Preloader extends Scene {
         // Outline of the bar
         this.add
             .rectangle(centerX, centerY, progressBarWidth, 32)
-            .setStrokeStyle(2, 0xffffff);
+            .setStrokeStyle(2, 0x87CEEB);
 
         // Create a gradient texture for the progress bar
         const graphics = this.make.graphics();
-        graphics.fillStyle(0xfff);
+        graphics.fillStyle(0xffffff);
         graphics.fillRect(0, 0, 1, 28);
         graphics.generateTexture('progress-bar-fill', 1, 28);
         graphics.destroy();
@@ -41,10 +41,11 @@ export class Preloader extends Scene {
     }
 
     preload() {
-        this.cameras.main.setBackgroundColor('#050A30');
+        this.cameras.main.setBackgroundColor('#87CEEB');
         // Load city
         this.load.tilemapTiledJSON("city", "./assets/city.json");
         this.load.image("exteriors_32", "./assets/exteriors_32.png");
+        this.load.image("background", "./assets/menu.png");
 
         // Load player
         this.load.spritesheet("adam-run", "./assets/Adam_run_16x16.png", {
