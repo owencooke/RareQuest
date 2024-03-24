@@ -22,4 +22,5 @@ export const scenes = [
     GameOverTileJump,
     Maze,
     Pong,
+    gameEnd,
 ];

@@ -1,7 +1,8 @@
 import { Scene } from "phaser";
+import Phaser from "phaser";
 
 export class Pong extends Scene {
-    constructor () {
+    constructor() {
         super("Pong");
         this.playerSpeed = 375;
         this.currentDirection = "right";
@@ -31,7 +32,7 @@ export class Pong extends Scene {
         this.player.setScale(5);
 
         // Ground Object
-        this.ground = this.add.rectangle(this.player.x, this.player.y+182, this.cameras.main.displayWidth, 200, "0x136d15")
+        this.ground = this.add.rectangle(this.player.x, this.player.y + 182, this.cameras.main.displayWidth, 200, "0x136d15")
         this.physics.add.existing(this.ground);
 
         // Ball Object
@@ -43,7 +44,7 @@ export class Pong extends Scene {
         this.ball.body.setBounce(1, 1);
 
         // Physics for ball and edge of world
-        this.physics.world.on("worldbounds", function(ball) {
+        this.physics.world.on("worldbounds", function (ball) {
             this.ColliderActivate = true;
             const angle = Phaser.Math.Between(25, 360);
             const vec = this.physics.velocityFromAngle(angle, 100 + this.ballSpeed)
@@ -58,7 +59,7 @@ export class Pong extends Scene {
                 const vec = this.physics.velocityFromAngle(angle, 100 + this.ballSpeed)
                 this.ballSpeed += this.ballSpeedAmp
                 ball.body.setVelocity(vec.x, vec.y);
-                
+
                 // Score Update
                 this.scoreCount += 10;
                 this.score.text = this.scoreCount + "/" + this.scoreWin;
@@ -69,21 +70,21 @@ export class Pong extends Scene {
                     this.playerSpeed = 375;
                     this.currentDirection = "right";
                     this.ballSpeed = 300;
-                    this.scene.start("gameEnd", {gameScore: this.scoreCount, scoreCon: this.scoreWin});
+                    this.scene.start("gameEnd", { gameScore: this.scoreCount, scoreCon: this.scoreWin });
                     this.scoreCount = 0;
                 }
             }
         }, undefined, this);
 
         // Physics for ground
-        this.physics.add.collider(this.ground, this.ball, function() {
+        this.physics.add.collider(this.ground, this.ball, function () {
             this.playerSpeed = 375;
             this.currentDirection = "right";
             this.ballSpeed = 300;
             this.scoreCount = 0;
-            this.scene.start("gameEnd", {gameScore: this.scoreCount, scoreCon: this.scoreWin});
+            this.scene.start("gameEnd", { gameScore: this.scoreCount, scoreCon: this.scoreWin });
         }, undefined, this);
-        
+
         // Set Up Input
         this.cursors = this.input.keyboard.createCursorKeys();
     }
@@ -128,36 +129,36 @@ export class gameEnd extends Scene {
 
         if (this.gameState === "Success!") {
             const continueButton = this.add
-            .text(
-                this.cameras.main.centerX,
-                this.cameras.main.centerY + 100,
-                "Continue",
-                {
-                    fontSize: "32px",
-                    color: "#ffffff",
-                    fontFamily: "Arial Black",
-                }
-            )
-            .setOrigin(0.5)
-            .setInteractive();
+                .text(
+                    this.cameras.main.centerX,
+                    this.cameras.main.centerY + 100,
+                    "Continue",
+                    {
+                        fontSize: "32px",
+                        color: "#ffffff",
+                        fontFamily: "Arial Black",
+                    }
+                )
+                .setOrigin(0.5)
+                .setInteractive();
             continueButton.on("pointerdown", () => {
                 this.scene.start("City");
             });
         }
         else {
             const playButton = this.add
-            .text(
-                this.cameras.main.centerX,
-                this.cameras.main.centerY + 100,
-                "Try Again",
-                {
-                    fontSize: "32px",
-                    color: "#ffffff",
-                    fontFamily: "Arial Black",
-                }
-            )
-            .setOrigin(0.5)
-            .setInteractive();
+                .text(
+                    this.cameras.main.centerX,
+                    this.cameras.main.centerY + 100,
+                    "Try Again",
+                    {
+                        fontSize: "32px",
+                        color: "#ffffff",
+                        fontFamily: "Arial Black",
+                    }
+                )
+                .setOrigin(0.5)
+                .setInteractive();
             playButton.on("pointerdown", () => {
                 this.scene.start("Pong");
             });
