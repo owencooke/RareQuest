@@ -162,7 +162,7 @@ export class Hospital extends Scene {
 
     update() {
         if (this.allowMovement) {
-            this.player.update(this.cursors);
+            this.player.move2D(this.cursors);
         }
     }
 
