@@ -63,7 +63,7 @@ export class MinigameMenu extends Scene {
             .setOrigin(0.5);
 
         // Click to start text
-        let startText = this.add
+        this.add
             .text(
                 this.game.config.width / 2,
                 (this.game.config.height * 3) / 4,
@@ -72,9 +72,7 @@ export class MinigameMenu extends Scene {
             )
             .setOrigin(0.5);
 
-        // Make text interactive
-        startText.setInteractive();
-        startText.on("pointerdown", this.startGame, this);
+        this.input.on("pointerdown", this.startGame, this);
         this.input.keyboard.on("keydown-SPACE", this.startGame, this);
     }
 
