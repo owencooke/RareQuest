@@ -1,5 +1,6 @@
 import { Scene } from "phaser";
 
+
 const CHAR_FRAMES_PER_ROW = 56;
 
 export class Preloader extends Scene {
@@ -58,6 +59,9 @@ export class Preloader extends Scene {
             "./assets/modern_exteriors_32.png"
         );
         this.load.image("home", "./assets/home.png");
+        this.load.image("zebrabg", "./assets/zebrabg.png");
+        this.load.image("zebra", "./assets/zebra.png");
+        this.load.image("basket", "./assets/basket.png");
 
         // Load minigame assets
         this.load.image("bg", "./assets/balancebg.jpg");

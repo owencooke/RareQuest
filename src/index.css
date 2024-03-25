@@ -6,14 +6,17 @@ body {
 }
 
 .canvas-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 85vh;
     padding-top: 5vh;
     background-size: cover;
     background-position: center;
-    border-radius: 8px;
 }
 
 canvas {
-    border-radius: 50px;
+    border: 10px solid #d55e27;
+    border-radius: 40px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
 }
