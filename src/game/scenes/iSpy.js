@@ -46,7 +46,7 @@ export class iSpy extends Scene {
             .setOrigin(0.5);
 
         this.time.delayedCall(2000, () => {
-            startSpecialistScene(this, "Ophthalmologist");
+            startSpecialistScene(this, "Ophthalmologist", "Inclusion");
         });
     }
 }

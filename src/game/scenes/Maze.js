@@ -106,7 +106,7 @@ export class Maze extends Scene {
             1000,
             () => {
                 message.destroy();
-                startSpecialistScene(this, "Neurologist");
+                startSpecialistScene(this, "Neurologist", "Integrity");
             },
             [],
             this
