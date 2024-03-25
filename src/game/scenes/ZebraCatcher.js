@@ -96,13 +96,7 @@ export class ZebraCatcher extends Phaser.Scene {
 
         const { left, right } = this.cursor;
 
-        if (left.isDown) {
-            this.player.setVelocityX(-this.playerSpeed);
-        } else if (right.isDown) {
-            this.player.setVelocityX(this.playerSpeed);
-        } else {
-            this.player.setVelocityX(0);
-        }
+        this.player.move1D(left, right);
     }
 
     getRandomX() {
