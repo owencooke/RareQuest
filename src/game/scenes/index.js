@@ -1,6 +1,6 @@
 import { Boot } from "./Boot";
 import { City } from "./City";
-
+import {Rules} from "./Rules";
 import { Hospital } from "./hospital/Hospital";
 import { MainMenu } from "./MainMenu";
 import { Story } from "./Story";
@@ -10,6 +10,7 @@ import { GameOverTileJump } from "./GameOverTileJump";
 import { Maze } from "./Maze";
 import { Pong, gameEnd } from "./Pong";
 import { SpyGame } from "./SpyGame";
+import { ZebraCatcher } from "./ZebraCatcher";
 
 // IMPORTANT: you must import and add your new scene to this array for it to be renderable!!
 export const scenes = [
@@ -18,6 +19,7 @@ export const scenes = [
     MainMenu,
     Story,
     City,
+    Rules,
     Hospital,
     TileJump,
     GameOverTileJump,
@@ -25,4 +27,5 @@ export const scenes = [
     Pong,
     gameEnd,
     SpyGame,
+    ZebraCatcher
 ];

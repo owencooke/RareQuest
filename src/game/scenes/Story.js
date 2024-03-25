@@ -1,18 +1,6 @@
 import { Scene } from "phaser";
 import { startDialogue } from "../components/Dialogue";
 
-// "InitialStory": [
-//     {
-//         "text": "In a colorful neighborhood where the trees were always filled with the songs of birds and every house had a different color door, lived a young boy named Sam. Sam had the biggest heart and the kindest smile, making friends everywhere he went."
-//     },
-//     {
-//         "text": "But Sam faced some challenges that not everyone could see. Imagine feeling so tired when you wake up that it seems like you've spent the night running instead of sleeping. That's how Sam felt every morning. No matter how early he went to bed, he always felt like he needed just a few more hours of sleep."
-//     },
-//     {
-//         "text": "Sam also had times when his body would ache for no reason. It was as if he had played in the biggest soccer game of his life without actually playing. These aches would come and go, making it hard for Sam to join his friends in their playground adventures."
-//     }
-// ]
-
 export class Story extends Scene {
     constructor() {
         super("Story");
