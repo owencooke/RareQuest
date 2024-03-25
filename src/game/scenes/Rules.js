@@ -31,23 +31,46 @@ export class Rules extends Scene {
             this.cameras.main.height
         );
 
+        // title
+        this.add
+            .text(
+                this.game.config.width / 2,
+                this.game.config.height / 2 - 64,
+                "How to Play",
+                {
+                    fontSize: "56px",
+                    fill: "white",
+                    align: "center",
+                    fontFamily: "'Press Start 2P'",
+                }
+            )
+            .setOrigin(0.5);
+
         // Hardcoded dialogue text
         const dialogueScript = [
             {
-                name: "How to play",
+                name: "",
                 text: "1. The main objective of this game is for the user to visit each hospital in the order of the symptoms presented.",
             },
             {
-                name: "How to play",
+                name: "",
                 text: "2. Move around the city using the arrow keys on your keyboard.",
             },
             {
-                name: "How to play",
+                name: "",
                 text: "3. To interact with a doctor, press space upon reaching them.",
             },
             {
-                name: "How to play",
-                text: "4.To play the treatment plan minigame suggested by the doctor, go to their computer and press space.\n Close this window to go back to the game.",
+                name: "",
+                text: "4. To play the treatment plan minigame suggested by the doctor, go to their computer and press space.",
+            },
+            {
+                name: "",
+                text: "5. Win minigames to increase your Value Meters! Maintaining high levels of Engagement, Integrity, Inclusion, and Collaboration are essential towards understanding the challenges of rare diseases.",
+            },
+            {
+                name: "",
+                text: "Close this window to return to the game!",
             },
         ];
 
