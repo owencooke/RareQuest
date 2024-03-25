@@ -20,8 +20,20 @@ export class Rules extends Scene {
         const dialogueScript = [
             {
                 "name": "How to play",
-                "text": "1. The main objective of this game is for the user to visit each hospital in the order of the symptoms presented.\n\n2. Move around the city using the arrow keys on your keyboard.\n\n3. To interact with a doctor, press space upon reaching them."
+                "text": "1. The main objective of this game is for the user to visit each hospital in the order of the symptoms presented."
             },
+            {
+                "name": "How to play",
+                "text": "2. Move around the city using the arrow keys on your keyboard."
+            },
+            {
+                "name": "How to play",
+                "text": "3. To interact with a doctor, press space upon reaching them."
+            },
+            {
+                "name": "How to play",
+                "text": "4.To play the treatment plan minigame suggested by the doctor, go to their computer and press space.\n Close this window to go back to the game."
+            }
         ];
 
         // Start the dialogue
