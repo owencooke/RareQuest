@@ -108,11 +108,11 @@
         },
         {
             "name": "Ophthalmologist",
-            "text": "Have there been any other symptoms along with the blurriness, like headaches, eye strain, or seeing double?"
+            "text": "Have there been any other symptoms along with the blurriness, like swelling, redness or sensitivity to light?"
         },
         {
             "name": "Investigator",
-            "text": "He's complained about headaches a few times, especially after reading or trying to focus on something for a while."
+            "text": "He's complained about headaches in the presence of light and it does seem his eye has some swelling."
         },
         {
             "name": "Ophthalmologist",

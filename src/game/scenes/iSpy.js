@@ -1,11 +1,16 @@
 import { Scene } from "phaser";
-import { startSpecialistScene } from "./hospital/Hospital";
 import { createHomeButton } from "../components/HomeButton";
+
+const winText = ["Based on the tests and treatment plan, there doesn't seem to be any significant abnormality in the eye structure.",
+"However, the symptoms still persist. Sometimes eye symptoms can be linked to underlying systemic conditons",
+"It seems Sam has some skin rashes as well. Skin conditions can sometimes manifest with eye symptoms",
+"It's worth exploring Sam's condition from a dermatology angle."];
 
 export class iSpy extends Scene {
     constructor() {
         super("iSpy");
         this.background;
+        this.winText = winText;
     }
 
     create() {
@@ -47,7 +52,10 @@ export class iSpy extends Scene {
 
         this.time.delayedCall(2000, () => {
             message.destroy();
-            startSpecialistScene(this, "Ophthalmologist");
+            this.scene.start("MinigamePost", {
+                doctorType: "Ophthalmologist",
+                winText: this.winText,
+            })
         });
     }
 }
