@@ -1,7 +1,13 @@
 import Phaser from "phaser";
 import { MyPlayer } from "../components/MyPlayer";
-import { startSpecialistScene } from "./hospital/Hospital";
 import { createHomeButton } from "../components/HomeButton";
+
+const winText = [
+    "It seems that Sam's not responding well to the common treatments. His symptoms persist.",
+    "His symptoms are quite varied. It is difficult to diagnose him without some specialized tests",
+    "His respiratory symptoms like difficulty breathing may explain his other symptoms like fatigue and headaches",
+    "Perhaps a starting point would be to seek a Pulmonologist appointment",
+];
 
 export class TileJump extends Phaser.Scene {
     constructor() {
@@ -16,6 +22,7 @@ export class TileJump extends Phaser.Scene {
         this.score = 0;
         this.player;
         this.isPlayerAirborne = false;
+        this.winText = winText;
     }
 
     create() {
@@ -157,30 +164,41 @@ export class TileJump extends Phaser.Scene {
         if (this.score === 5) {
             this.score = 0;
             // Display the congratulatory message
-            this.add
+            // Create a box sprite as the background for the text
+            const box = this.add.graphics();
+            box.fillStyle(0x000000, 0.7);
+            box.fillRect(
+                this.cameras.main.centerX - 300,
+                this.cameras.main.centerY - 50,
+                600,
+                100
+            );
+
+            const message = this.add
                 .text(
-                    this.game.config.width / 2,
-                    this.game.config.height / 2,
+                    this.cameras.main.centerX,
+                    this.cameras.main.centerY,
                     "Congratulations!",
-                    { font: "48px Arial", fill: "#fff" }
-                )
-                .setOrigin(0.5);
-            this.add
-                .text(
-                    this.game.config.width / 2,
-                    this.game.config.height / 2 + 100,
-                    "Click anywhere to continue",
-                    { font: "24px Arial", fill: "#fff" }
+                    {
+                        fontSize: "42px",
+                        fill: "#ffffff",
+                        fontStyle: "bold",
+                        fontFamily: "Arial Black",
+                    }
                 )
                 .setOrigin(0.5);
 
-            // Pause the game logic (but not the scene itself)
+            // Pause the game logic
             this.physics.pause();
             this.time.removeAllEvents();
 
-            // Make the scene listen for a click to restart
-            this.input.once("pointerdown", () => {
-                startSpecialistScene(this, "Pediatrician", "Engagement");
+            this.time.delayedCall(2000, () => {
+                message.destroy();
+                this.scene.start("MinigamePost", {
+                    doctorType: "Pediatrician",
+                    winText: this.winText,
+                    scoreType: "Engagement",
+                });
             });
         }
     }

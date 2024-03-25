@@ -1,7 +1,13 @@
 import Phaser from "phaser";
 import { MyPlayer } from "../components/MyPlayer";
-import { startSpecialistScene } from "./hospital/Hospital";
 import { createHomeButton } from "../components/HomeButton";
+
+const winText = [
+    "After a long process of monitoring Sam's responses to the tests and treatments so far, it seems that his symptoms closely match that of the Fibrocutaneous Nodular Syndrome disease.\n",
+    "It is characterized by Firm, raised nodules or plaques on the skin, often slow-growing and painless, flesh-colored or pinkish in appearance, may have a slightly purplish hue, may be mistaken for a benign skin lesion, but can invade deeper tissues if left untreated.",
+    "Complications with this disease arising from environmental factors may manifest some of the other symptoms Sam has been experiencing. We suggest continuing on the ZebraCatcher treatment plan/",
+    "It is crucial that Sam continues to visit his doctors for regular check ups. His case also presents a unique opportunity for raising awareness on rare skin diseases. \nWe are here to help and ensure that Sam can continue to flourish in his endeavors!",
+];
 
 const sizes = {
     width: 1200,
@@ -19,6 +25,7 @@ export class ZebraCatcher extends Phaser.Scene {
         this.target = null;
         this.points = 0;
         this.textScore = null;
+        this.winText = winText;
     }
 
     create() {
@@ -99,7 +106,7 @@ export class ZebraCatcher extends Phaser.Scene {
 
         this.textScore.setText(`Score: ${this.points}`);
         this.resetZebraPosition();
-        if (this.points >= 10) {
+        if (this.points >= 3) {
             this.gameOver(true);
         }
     }
@@ -111,24 +118,38 @@ export class ZebraCatcher extends Phaser.Scene {
         this.player.setActive(false);
         this.cameras.main.stopFollow();
 
+        const box = this.add.graphics();
+        box.fillStyle(0x000000, 0.7);
+        box.fillRect(
+            this.cameras.main.centerX - 300,
+            this.cameras.main.centerY - 50,
+            600,
+            100
+        );
+
         const message = this.add
             .text(
-                this.cameras.main.worldView.x + this.cameras.main.width / 2,
-                this.cameras.main.worldView.y + this.cameras.main.height / 2,
+                this.cameras.main.centerX,
+                this.cameras.main.centerY,
                 "Congratulations!",
                 {
-                    fontSize: "32px",
-                    color: "#ffffff",
+                    fontSize: "42px",
+                    fill: "#ffffff",
                     fontStyle: "bold",
+                    fontFamily: "Arial Black",
                 }
             )
-            .setOrigin(0.5, 0.5);
+            .setOrigin(0.5);
 
         this.time.delayedCall(
-            1000,
+            2000,
             () => {
                 message.destroy();
-                startSpecialistScene(this, "Dermatologist", "Collaboration");
+                this.scene.start("MinigamePost", {
+                    doctorType: "Dermatologist",
+                    winText: this.winText,
+                    scoreType: "Collaboration",
+                });
             },
             [],
             this

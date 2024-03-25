@@ -1,7 +1,12 @@
 import { Scene } from "phaser";
 import { MyPlayer } from "../components/MyPlayer";
-import {createHomeButton} from "../components/HomeButton";
-import { startSpecialistScene } from "./hospital/Hospital";
+import { createHomeButton } from "../components/HomeButton";
+
+const winText = [
+    "Looking at Sam's test results, his symptoms don't align with symptoms of most neurological disorders and his low response to the treatment plan indicates this as well. there may be other underlying conditions",
+    "It was mentioned Sam has occasional blurry vision. Some redness was also noticed in Sam's cornea.",
+    "Given the persistence of his visual issues, it may be prudent to consult with an ophthalmologist to rule out any underlying eye conditions contributing to Sam's symptoms.",
+];
 
 export class Maze extends Scene {
     constructor() {
@@ -11,6 +16,7 @@ export class Maze extends Scene {
         this.endPoint;
         this.holes1;
         this.holes2;
+        this.winText = winText;
     }
 
     create() {
@@ -26,7 +32,7 @@ export class Maze extends Scene {
             "modern_exteriors_32",
             "modern_exteriors_32"
         );
-        
+
         // Create layers
         map.createLayer("Ground", modernExteriors, 0, 0);
         const wallLayer = map.createLayer("Walls", modernExteriors, 0, 0);
@@ -37,7 +43,7 @@ export class Maze extends Scene {
             0,
             0,
             map.widthInPixels,
-            map.heightInPixels,
+            map.heightInPixels
         );
 
         // Get starting point
@@ -89,24 +95,38 @@ export class Maze extends Scene {
         this.player.setActive(false);
         this.cameras.main.stopFollow();
 
+        const box = this.add.graphics();
+        box.fillStyle(0x000000, 0.5);
+        box.fillRect(
+            this.cameras.main.worldView.x + this.cameras.main.width / 2 - 300,
+            this.cameras.main.worldView.y + this.cameras.main.height / 2 - 50,
+            600,
+            100
+        );
+
         const message = this.add
             .text(
                 this.cameras.main.worldView.x + this.cameras.main.width / 2,
                 this.cameras.main.worldView.y + this.cameras.main.height / 2,
                 "Congratulations!",
                 {
-                    fontSize: "32px",
-                    color: "#ffffff",
+                    fontSize: "42px",
+                    fill: "#ffffff",
                     fontStyle: "bold",
+                    fontFamily: "Arial Black",
                 }
             )
-            .setOrigin(0.5, 0.5);
+            .setOrigin(0.5);
 
         this.time.delayedCall(
-            1000,
+            2000,
             () => {
                 message.destroy();
-                startSpecialistScene(this, "Neurologist", "Integrity");
+                this.scene.start("MinigamePost", {
+                    doctorType: "Neurologist",
+                    winText: this.winText,
+                    scoreType: "Integrity",
+                });
             },
             [],
             this

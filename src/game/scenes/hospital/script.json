@@ -22,7 +22,7 @@
         },
         {
             "name": "Investigator",
-            "text": "He's missed a few days of school and doesn't play outside as much. Nothing specific seems to make it better, but resting helps a bit."
+            "text": "He's missed a few days of school and doesn't play outside as much because he has difficulty breathing. Nothing specific seems to make it better, but resting helps a bit."
         },
         {
             "name": "Pediatrician",
@@ -62,27 +62,27 @@
     "Neurologist": [
         {
             "name": "Neurologist",
-            "text": "Hello, I understand Sam's been experiencing some muscle weakness, making it hard for him to enjoy activities like he used to. Can you tell me more about when this started and how it's been affecting him?"
+            "text": "Hello, I understand Sam's been experiencing some neurological symptoms, making it hard for him to enjoy activities like he used to. Can you tell me more about when this started and how it's been affecting him?"
         },
         {
             "name": "Investigator",
-            "text": "It started a few months ago. Sam used to climb the monkey bars all the time, but lately, he just can't hold himself up. His muscles feel really weak."
+            "text": "It started a few months ago. Sam used to be very agile, but lately, he's been having difficulty with coordination and balance. He struggles to walk straight and often stumbles."
         },
         {
             "name": "Neurologist",
-            "text": "Does the weakness seem to be in specific parts of the body or is it more general? And have you noticed if it gets worse as the day goes on or after certain activities?"
+            "text": "Have you noticed if it gets worse as the day goes on or after certain activities?"
         },
         {
             "name": "Investigator",
-            "text": "It seems to be mostly in his arms and legs. And yes, it does get worse if he's been trying to play or do anything active."
+            "text": "Yes, it does get worse if he's been trying to play or do anything active. He feels weaker than usual."
         },
         {
             "name": "Neurologist",
-            "text": "Have there been any other symptoms accompanying the weakness, such as numbness, tingling, or difficulty with tasks like buttoning shirts or picking up small objects?"
+            "text": "Have there been any other neurological symptoms accompanying the coordination and balance issues, such as headaches, dizziness, or changes in vision?"
         },
         {
             "name": "Investigator",
-            "text": "No numbness or tingling, but he does seem to struggle with things like opening jars or tying his shoelaces now."
+            "text": "No dizziness, but he does complain about headaches, difficulty concentrating and occasionally blurry vision."
         },
         {
             "name": "Neurologist",
@@ -108,11 +108,11 @@
         },
         {
             "name": "Ophthalmologist",
-            "text": "Have there been any other symptoms along with the blurriness, like headaches, eye strain, or seeing double?"
+            "text": "Have there been any other symptoms along with the blurriness, like swelling, redness or sensitivity to light?"
         },
         {
             "name": "Investigator",
-            "text": "He's complained about headaches a few times, especially after reading or trying to focus on something for a while."
+            "text": "He's complained about headaches in the presence of light and it does seem his eye has some swelling."
         },
         {
             "name": "Ophthalmologist",
@@ -142,11 +142,11 @@
         },
         {
             "name": "Investigator",
-            "text": "He does cough sometimes after running, but no wheezing or chest pain that we've noticed."
+            "text": "He does wheeze after running, but no cough or chest pain that we've noticed. He complains that the difficulty breathing is accompanied with difficult concentrating and headaches"
         },
         {
             "name": "Pulmonologist",
-            "text": "Alright, based on what you've told me, Sam needs to get started on the Pong treatment plan, which you can see over on my computer."
+            "text": "Alright, based on what you've told me, we should run some lung function tests and Sam needs to get started on the Pong treatment plan, which you can see over on my computer."
         }
     ]
 }

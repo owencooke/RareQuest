@@ -12,6 +12,7 @@ import { Pong, gameEnd } from "./Pong";
 import { iSpy } from "./iSpy";
 import { ZebraCatcher } from "./ZebraCatcher";
 import { MinigameMenu } from "./MinigameMenu";
+import { MinigamePost } from "./MinigamePost";
 
 // IMPORTANT: you must import and add your new scene to this array for it to be renderable!!
 export const scenes = [
@@ -30,5 +31,6 @@ export const scenes = [
     iSpy,
     ZebraCatcher,
     MinigameMenu,
+    MinigamePost,
 ];
 
