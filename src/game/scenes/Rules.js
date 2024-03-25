@@ -42,14 +42,14 @@ export class Rules extends Scene {
             // Perform actions after dialogue ends
         });
 
-        let buttonX = this.cameras.main.width - 80; // 30 pixels from the right edge of the camera viewport
+        let buttonX = this.cameras.main.width - 100; // 30 pixels from the right edge of the camera viewport
         let buttonY = 80; // 30 pixels from the top of the camera viewport
 
         const backButton = this.add.image(buttonX, buttonY, 'close').setScrollFactor(0).setInteractive();
 
         backButton.on('pointerdown', () => {
-        // Assuming 'this.playerSpawn' was stored in init() or create() from passed data
-        this.scene.start('City', { playerSpawn: this.playerSpawn });
+            // Assuming 'this.playerSpawn' was stored in init() or create() from passed data
+            this.scene.start('City', { playerSpawn: this.playerSpawn });
         });
     }
 
@@ -57,6 +57,6 @@ export class Rules extends Scene {
         // Store the position data passed from Scene A
         this.playerSpawn = data.playerSpawn;
     }
-    
+
 }
 
