@@ -5,9 +5,9 @@ const howToPlay = {
         "Jump up to the next rising layer without falling! Use the left and right arrow keys to move horizontally, and press the spacebar or the up arrow key to jump.",
     Pong: "Keep the ball up using your head and to prevent the ball from hitting the ground. Move left and right using the arrow keys.",
     Maze: "Navigate through the maze to reach the zebra-striped goal. Use the arrow keys to move up, down, left, and right.",
-    SpyGame:
-        "This exercise is simple: just spot the zebra! Use the mouse to click,",
-    ZebraCatcher: "",
+    SpyGame: `This exercise is simple: just spot the zebra! Use the mouse to click.\n\n PS: Did you know that the zebra is the symbol of rare diseases? Because When you hear hoofbeats behind you, you don't expect to see a zebra, similar to common rare disease diagnoses.`,
+    ZebraCatcher:
+        "Oh no, the zebras are falling from the sky! Catch them by moving your player with the left and right arrow keys. ",
 };
 
 const textStyle = {
