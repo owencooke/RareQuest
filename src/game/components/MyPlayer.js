@@ -27,6 +27,31 @@ export class MyPlayer extends Physics.Arcade.Sprite {
         }
     }
 
+    move1D(left, right) {
+        if (left.isDown) {
+            this.setVelocityX(-PLAYER.SPEED);
+            this.anims.play("run-left", true);
+            this.currentDirection = "left";
+        } else if (right.isDown) {
+            this.setVelocityX(PLAYER.SPEED);
+            this.anims.play("run-right", true);
+            this.currentDirection = "right";
+        } else {
+            this.anims.stop();
+            this.setVelocityX(0);
+            this.setTexture(
+                PLAYER.TEXTURE,
+                this.currentDirection === "right"
+                    ? idleRow
+                    : this.currentDirection === "up"
+                        ? idleRow + 6
+                        : this.currentDirection === "left"
+                            ? idleRow + 12
+                            : idleRow + 18
+            );
+        }
+    }
+
     move2D(cursors) {
         this.setVelocity(0);
         const speed = (cursors.shift.isDown ? 2 : 1) * PLAYER.SPEED;
@@ -55,10 +80,10 @@ export class MyPlayer extends Physics.Arcade.Sprite {
                 this.currentDirection === "right"
                     ? idleRow
                     : this.currentDirection === "up"
-                    ? idleRow + 6
-                    : this.currentDirection === "left"
-                    ? idleRow + 12
-                    : idleRow + 18
+                        ? idleRow + 6
+                        : this.currentDirection === "left"
+                            ? idleRow + 12
+                            : idleRow + 18
             );
         }
     }
