@@ -1,13 +1,17 @@
 import { Physics } from "phaser";
 
+const CHAR_FRAMES_PER_ROW = 56;
+
+const idleRow = 1 * CHAR_FRAMES_PER_ROW;
+
 const PLAYER = {
-    TEXTURE: "adam-run",
+    TEXTURE: "detective",
     SPEED: 200,
     SCALE: 2,
 };
 
 export class MyPlayer extends Physics.Arcade.Sprite {
-    constructor(scene, x, y, direction) {
+    constructor(scene, x, y, direction, setSmallerHitBox = true) {
         super(scene, x, y, PLAYER.TEXTURE);
         this.currentDirection = direction;
 
@@ -17,12 +21,13 @@ export class MyPlayer extends Physics.Arcade.Sprite {
 
         this.setScale(PLAYER.SCALE);
         this.setCollideWorldBounds(true);
-        this.anims.play(`run-${direction}`, true);
-        this.setSize(8, 8);
-        this.setOffset(4, 24);
+        if (setSmallerHitBox) {
+            this.setSize(8, 8);
+            this.setOffset(4, 24);
+        }
     }
 
-    update(cursors) {
+    move2D(cursors) {
         this.setVelocity(0);
         const speed = (cursors.shift.isDown ? 2 : 1) * PLAYER.SPEED;
 
@@ -48,12 +53,12 @@ export class MyPlayer extends Physics.Arcade.Sprite {
             this.setTexture(
                 PLAYER.TEXTURE,
                 this.currentDirection === "right"
-                    ? 0
+                    ? idleRow
                     : this.currentDirection === "up"
-                    ? 6
+                    ? idleRow + 6
                     : this.currentDirection === "left"
-                    ? 12
-                    : 18
+                    ? idleRow + 12
+                    : idleRow + 18
             );
         }
     }

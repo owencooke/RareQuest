@@ -1,5 +1,7 @@
 import { Scene } from "phaser";
 
+const CHAR_FRAMES_PER_ROW = 56;
+
 export class Preloader extends Scene {
     constructor() {
         super("Preloader");
@@ -57,7 +59,9 @@ export class Preloader extends Scene {
         );
         this.load.image("home", "./assets/home.png");
 
+        // Load minigame assets
         this.load.image("bg", "./assets/balancebg.jpg");
+        this.load.image("tile1", "./assets/tile1.png");
 
         // Load building icons for each doctor
         this.load.image("Pediatrician", "./assets/doctor_symbols/bear.png");
@@ -67,7 +71,7 @@ export class Preloader extends Scene {
         this.load.image("Ophthalmologist", "./assets/doctor_symbols/eye.png");
 
         // Load player
-        this.load.spritesheet("adam-run", "./assets/Adam_run_16x16.png", {
+        this.load.spritesheet("detective", "./assets/detective_v2_16.png", {
             frameWidth: 16,
             frameHeight: 32,
         });
@@ -121,15 +125,17 @@ export class Preloader extends Scene {
         });
 
         //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
-        this.scene.start("MainMenu");
+        this.scene.start("Pong");
     }
 
     createPlayerRunAnimations() {
+        const runRow = 2 * CHAR_FRAMES_PER_ROW;
+
         this.anims.create({
             key: "run-right",
-            frames: this.anims.generateFrameNumbers("adam-run", {
-                start: 0,
-                end: 5,
+            frames: this.anims.generateFrameNumbers("detective", {
+                start: runRow,
+                end: runRow + 5,
             }),
             frameRate: 12,
             repeat: -1,
@@ -137,9 +143,9 @@ export class Preloader extends Scene {
 
         this.anims.create({
             key: "run-up",
-            frames: this.anims.generateFrameNumbers("adam-run", {
-                start: 6,
-                end: 11,
+            frames: this.anims.generateFrameNumbers("detective", {
+                start: runRow + 6,
+                end: runRow + 11,
             }),
             frameRate: 12,
             repeat: -1,
@@ -147,9 +153,9 @@ export class Preloader extends Scene {
 
         this.anims.create({
             key: "run-left",
-            frames: this.anims.generateFrameNumbers("adam-run", {
-                start: 12,
-                end: 17,
+            frames: this.anims.generateFrameNumbers("detective", {
+                start: runRow + 12,
+                end: runRow + 17,
             }),
             frameRate: 12,
             repeat: -1,
@@ -157,9 +163,9 @@ export class Preloader extends Scene {
 
         this.anims.create({
             key: "run-down",
-            frames: this.anims.generateFrameNumbers("adam-run", {
-                start: 18,
-                end: 23,
+            frames: this.anims.generateFrameNumbers("detective", {
+                start: runRow + 18,
+                end: runRow + 23,
             }),
             frameRate: 12,
             repeat: -1,
