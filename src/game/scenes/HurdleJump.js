@@ -1,7 +1,7 @@
 import { MyPlayer } from "../components/MyPlayer";
 import Phaser from 'phaser';
 
-class HurdleJump extends Phaser.Scene {
+export class HurdleJump extends Phaser.Scene {
 
     constructor() {
         super('HurdleJump');
@@ -19,10 +19,6 @@ class HurdleJump extends Phaser.Scene {
         this.customIsGameRunning = false;
         this.customRespawnTime = 0;
         this.customScore = 0;
-    
-        this.customJumpSound = this.sound.add('jump', {volume: 0.2});
-        this.customHitSound = this.sound.add('hit', {volume: 0.2});
-        this.customReachSound = this.sound.add('reach', {volume: 0.2});
     
         this.customStartTrigger = this.physics.add.sprite(0, 10).setOrigin(0, 1).setImmovable();
         this.customGround = this.add.tileSprite(0, height, 88, 26, 'ground').setOrigin(0, 1)

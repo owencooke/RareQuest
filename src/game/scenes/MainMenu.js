@@ -30,7 +30,7 @@ export class MainMenu extends Scene {
             .setInteractive();
 
         playButton.on("pointerdown", () => {
-            this.scene.start("Story");
+            this.scene.start("HurdleJump");
         });
 
         playButton.on('pointerover', () => {
