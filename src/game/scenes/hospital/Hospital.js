@@ -9,6 +9,7 @@ class Hospital extends Scene {
         this.player;
         this.doctor;
         this.dialogueInProgess = false;
+        this.dialogueOccured = false;
     }
 
     init(data) {
@@ -194,6 +195,7 @@ class Hospital extends Scene {
         if (this.cursors.space.isDown && !this.dialogueInProgess) {
             this.allowMovement = false;
             this.dialogueInProgess = true;
+            this.dialogueOccured = true;
             startDialogue(this, this.dialogue, () => {
                 this.dialogueInProgess = false;
                 this.allowMovement = true;
@@ -202,8 +204,24 @@ class Hospital extends Scene {
     }
 
     handleMinigame() {
-        if (this.cursors.space.isDown) {
-            this.scene.start(this.minigameScene);
+        if (this.cursors.space.isDown && !this.dialogueInProgess) {
+            if (this.dialogueOccured) {
+                this.scene.start(this.minigameScene);
+            } else {
+                this.dialogueInProgess = true;
+                startDialogue(
+                    this,
+                    [
+                        {
+                            name: this.doctorType,
+                            text: `Hey! You have to come talk to me first!`,
+                        },
+                    ],
+                    () => {
+                        this.dialogueInProgess = false;
+                    }
+                );
+            }
         }
     }
 }
