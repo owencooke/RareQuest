@@ -109,6 +109,10 @@ export class Preloader extends Scene {
             frameWidth: 321,
             frameHeight: 80,
         });
+
+        // Load find zebra images
+        this.load.image("zebra", "./assets/zebra.png");
+        this.load.image("find_zebra", "./assets/find_zebra.png");
     }
 
     create() {

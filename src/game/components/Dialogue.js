@@ -111,4 +111,3 @@ function startDialogue(scene, script, callback) {
 }
 
 export { startDialogue, Dialogue };
-
