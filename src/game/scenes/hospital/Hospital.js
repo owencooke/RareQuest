@@ -14,7 +14,22 @@ export class Hospital extends Scene {
     init(data) {
         this.doorPosition = data.doorPosition;
         this.dialogue = script[data.doctorType];
-        // TODO: assign this.minigameScene based on doctorType
+        
+        if (data.doctorType === "Pulmonologist") {
+            this.minigameScene = "Pong"
+        }
+        else if (data.doctorType === "Neurologist") {
+            this.minigameScene = "Maze"
+        }
+        else if (data.doctorType === "Pediatrician") {
+            this.minigameScene = "TileJump"
+        }
+        else if (data.doctorType = "Dermatologist") {
+            this.minigameScene = "None"
+        }
+        else if (data.doctorType = "Ophthalmologist") {
+            this.minigameScene = "None"
+        }
     }
 
     create() {
@@ -122,6 +137,22 @@ export class Hospital extends Scene {
             this
         );
 
+        const minigameTriggerZone = this.add.zone(
+            this.doctor.x + 200, 
+            this.doctor.y + 30, 
+            48, 
+            64
+        );
+        this.physics.world.enable(minigameTriggerZone);
+        minigameTriggerZone.body.setAllowGravity(false);
+        this.physics.add.overlap(
+            this.player,
+            minigameTriggerZone,
+            this.handleMinigame,
+            null,
+            this
+        );
+
         const triggerDialogueZone = this.add.zone(
             this.doctor.x,
             this.doctor.y + 12,
@@ -182,6 +213,12 @@ export class Hospital extends Scene {
                 this.dialogueInProgess = false;
                 this.allowMovement = true;
             });
+        }
+    }
+
+    handleMinigame() {
+        if (this.cursors.space.isDown) {
+            this.scene.start(this.minigameScene)
         }
     }
 }
