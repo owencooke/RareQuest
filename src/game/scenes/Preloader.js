@@ -125,7 +125,7 @@ export class Preloader extends Scene {
         });
 
         //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
-        this.scene.start("Pong");
+        this.scene.start("MainMenu");
     }
 
     createPlayerRunAnimations() {
