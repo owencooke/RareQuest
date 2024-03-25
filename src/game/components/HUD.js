@@ -3,6 +3,7 @@ import { GameObjects } from "phaser";
 const VALUES = ["Engagement", "Integrity", "Inclusion", "Collaboration"];
 const MAX_BATTERY_VALUE = 5;
 const BATTERY_OUTLINE = 0x000000;
+const BATTERY_RADIUS = 8;
 
 // Local storage functions
 function saveCounter(name, value) {
@@ -24,19 +25,19 @@ class HUD extends GameObjects.Container {
     }
 
     createCounters() {
-        let offsetY = 16;
+        let offsetY = 32;
         VALUES.forEach((name) => {
             const value = getCounter(name);
             this.counters[name] = this.addCounter(name, value, offsetY);
-            offsetY += 70;
+            offsetY += 64;
         });
     }
 
     addCounter(name, value, offsetY) {
         const counterText = this.scene.add
             .text(10, offsetY, name, {
-                fontFamily: "Arial",
-                fontSize: "24px",
+                fontFamily: "'Press Start 2P'",
+                fontSize: "12px",
                 color: "#ffffff",
             })
             .setOrigin(0);
@@ -45,23 +46,12 @@ class HUD extends GameObjects.Container {
         this.drawBatteryMeter(
             batteryBar,
             10,
-            offsetY + 30,
+            offsetY + 18,
             value / MAX_BATTERY_VALUE
         );
 
         this.add([counterText, batteryBar]);
         return { text: counterText, batteryBar: batteryBar };
-    }
-
-    updateBattery(name, value) {
-        const batteryBar = this.counters[name].batteryBar;
-        batteryBar.clear();
-        this.drawBatteryMeter(
-            batteryBar,
-            10,
-            this.counters[name].text.y + 30,
-            value / MAX_BATTERY_VALUE
-        );
     }
 
     drawBatteryMeter(graphics, x, y, percentage) {
@@ -72,25 +62,35 @@ class HUD extends GameObjects.Container {
         const innerHeight = height - padding * 2;
         const sectionWidth = innerWidth / MAX_BATTERY_VALUE;
 
-        // Draw outer border
+        // Draw outer border with rounded corners
         graphics.lineStyle(2, BATTERY_OUTLINE, 1);
-        graphics.strokeRect(x, y, width, height);
+        graphics.strokeRoundedRect(x, y, width, height, BATTERY_RADIUS);
 
-        // Draw inner battery bar
+        // Draw inner battery bar with rounded corners
         graphics.fillStyle(0x686868, 1);
-        graphics.fillRect(x + padding, y + padding, innerWidth, innerHeight);
-
-        // Fill the battery according to the percentage
-        graphics.fillStyle(0x00ff00, 1);
-        graphics.fillRect(
+        graphics.fillRoundedRect(
             x + padding,
             y + padding,
-            innerWidth * percentage,
-            innerHeight
+            innerWidth,
+            innerHeight,
+            BATTERY_RADIUS
         );
 
+        // Fill the battery according to the percentage
+        if (percentage > 0) {
+            graphics.fillStyle(0x00ff00, 1);
+            const filledWidth = innerWidth * percentage;
+            graphics.fillRoundedRect(
+                x + padding,
+                y + padding,
+                filledWidth,
+                innerHeight,
+                BATTERY_RADIUS
+            );
+        }
+
         // Draw vertical lines to divide the battery bar into sections
-        for (let i = 1; i < 5; i++) {
+        for (let i = 1; i < MAX_BATTERY_VALUE; i++) {
             graphics.lineStyle(1, BATTERY_OUTLINE, 1);
             graphics.beginPath();
             graphics.moveTo(x + padding + i * sectionWidth, y + padding);
@@ -105,7 +105,9 @@ class HUD extends GameObjects.Container {
 
 function addToHUDScore(name) {
     const currentValue = getCounter(name);
-    saveCounter(name, currentValue + 1);
+    if (currentValue < MAX_BATTERY_VALUE) {
+        saveCounter(name, currentValue + 1);
+    }
 }
 
 export { HUD, addToHUDScore };
