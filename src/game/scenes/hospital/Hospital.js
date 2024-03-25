@@ -199,8 +199,11 @@ export class Hospital extends Scene {
     }
 
     handleDoctorCollision() {
-        this.overlay.setVisible(true)
+        if (!this.dialogueInProgess) {
+            this.overlay.setVisible(true)
+        }
         if (this.cursors.space.isDown && !this.dialogueInProgess) {
+            this.overlay.setVisible(false)
             this.allowMovement = false;
             this.dialogueInProgess = true;
             startDialogue(this ,this.dialogue, () => {
