@@ -3,22 +3,21 @@ import { startDialogue } from "../../components/Dialogue";
 import script from "./script.json";
 import { MyPlayer } from "../../components/MyPlayer";
 
-export class Hospital extends Scene {
+class Hospital extends Scene {
     constructor() {
         super("Hospital");
         this.player;
         this.doctor;
-        this.dialogueInProgess = false;
     }
 
     init(data) {
-        this.doorPosition = data.doorPosition;
         this.dialogue = script[data.doctorType];
-        // TODO: assign this.minigameScene based on doctorType
+        this.doctorType = data.doctorType;
+        this.minigameScene = data.minigame;
     }
 
     create() {
-        var checkZone = this.scene.time
+        this.dialogueInProgess = false;
         this.allowMovement = true;
         // Load the hospital room tilemap
         const map = this.make.tilemap({
@@ -123,6 +122,22 @@ export class Hospital extends Scene {
             this
         );
 
+        const minigameTriggerZone = this.add.zone(
+            this.doctor.x + 200,
+            this.doctor.y + 30,
+            48,
+            64
+        );
+        this.physics.world.enable(minigameTriggerZone);
+        minigameTriggerZone.body.setAllowGravity(false);
+        this.physics.add.overlap(
+            this.player,
+            minigameTriggerZone,
+            this.handleMinigame,
+            null,
+            this
+        );
+
         const triggerDialogueZone = this.add.zone(
             this.doctor.x,
             this.doctor.y + 12,
@@ -194,7 +209,7 @@ export class Hospital extends Scene {
         this.allowMovement = false;
         this.cameras.main.fadeOut(250, 0, 0, 0);
         this.cameras.main.once(Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () =>
-            this.scene.start("City", { playerSpawn: this.doorPosition })
+            this.scene.start("City", { doctorType: this.doctorType })
         );
     }
 
@@ -206,11 +221,49 @@ export class Hospital extends Scene {
             this.overlay.setVisible(false)
             this.allowMovement = false;
             this.dialogueInProgess = true;
-            startDialogue(this ,this.dialogue, () => {
+            startDialogue(this, this.dialogue, () => {
                 this.dialogueInProgess = false;
                 this.allowMovement = true;
             });
         }
     }
+
+    handleMinigame() {
+        if (this.cursors.space.isDown && !this.dialogueInProgess) {
+            this.scene.start("MinigameMenu", {
+                minigame: this.minigameScene,
+            });
+        }
+    }
 }
+
+function startSpecialistScene(sceneRef, doctorType) {
+    let minigame;
+    switch (doctorType) {
+        case "Pulmonologist":
+            minigame = "Pong";
+            break;
+        case "Neurologist":
+            minigame = "Maze";
+            break;
+        case "Pediatrician":
+            minigame = "TileJump";
+            break;
+        case "Dermatologist":
+            minigame = "ZebraCatcher";
+            break;
+        case "Ophthalmologist":
+            minigame = "iSpy";
+            break;
+        default:
+            minigame = undefined;
+    }
+
+    sceneRef.scene.start("Hospital", {
+        doctorType: doctorType,
+        minigame,
+    });
+}
+
+export { Hospital, startSpecialistScene };
 

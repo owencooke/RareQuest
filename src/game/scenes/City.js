@@ -1,6 +1,7 @@
 import { Scene, Cameras } from "phaser";
 import { MyPlayer } from "../components/MyPlayer";
 import { startDialogue } from "../components/Dialogue";
+import { startSpecialistScene } from "./hospital/Hospital";
 
 const DOCTOR_SYMBOLS_SCALE = {
     Pediatrician: 0.125,
@@ -17,25 +18,19 @@ export class City extends Scene {
     }
 
     init(data) {
-        // Check if data.playerSpawn is provided and valid
-        if (data.playerSpawn && typeof data.playerSpawn.x === 'number' && typeof data.playerSpawn.y === 'number') {
-            this.playerSpawn = {
-                x: data.playerSpawn.x,
-                y: data.playerSpawn.y,
-            };
-        } else {
-            // Default case: Set a default spawn position if not provided
-            // This can be the initial spawn point or any safe location you prefer
-            this.playerSpawn = {
-                x: 32 * 51, // Example default x position
-                y: 32 * 30, // Example default y position
-            };
+        if (data.doctorType) {
+            this.doctorType = data.doctorType;
         }
     }
-    
+
     preload() {
         // Load the question mark button image
-        this.load.image('question', 'assets/question.png');
+        this.load.image("question", "assets/question.png");
+    }
+
+    preload() {
+        // Load the question mark button image
+        this.load.image("question", "assets/question.png");
     }
 
     create() {
@@ -66,47 +61,57 @@ export class City extends Scene {
         this.physics.add.collider(this.player, buildingsLayer);
 
         // Bind door objects to next scene handler
+        const doors = map.createFromObjects("Doors");
+        if (this.doctorType) {
+            doors.forEach((door) => {
+                if (this.doctorType === door.name) {
+                    // this.player.setOrigin(door.x, door.y + 32);
+                    this.player.setX(door.x);
+                    this.player.setY(door.y + 32);
+                }
+            });
+        }
+
         this.physics.add.collider(
             this.player,
-            this.physics.add.staticGroup(map.createFromObjects("Doors")),
+            this.physics.add.staticGroup(doors),
             this.handleEnterDoor,
             null,
             this
         );
 
+        // Insert the button code here
+        let buttonX = this.cameras.main.width - 80; // 30 pixels from the right edge of the camera viewport
+        let buttonY = 80; // 30 pixels from the top of the camera viewport
+        this.questionButton = this.add
+            .image(buttonX, buttonY, "question")
+            .setScrollFactor(0)
+            .setInteractive();
+        this.questionButton.setScale(0.1, 0.1);
+        this.questionButton.setOrigin(0.5, 0.5);
+        this.questionButton.setDepth(100);
 
-    // Insert the button code here
-    let buttonX = this.cameras.main.width - 80; // 30 pixels from the right edge of the camera viewport
-    let buttonY = 80; // 30 pixels from the top of the camera viewport
-    this.questionButton = this.add.image(buttonX, buttonY, 'question').setScrollFactor(0).setInteractive();
-    this.questionButton.setScale(0.1, 0.1);
-    this.questionButton.setOrigin(0.5, 0.5);
-    this.questionButton.setDepth(100);
+        // Adjust the button's position on resize
+        this.scale.on("resize", (gameSize) => {
+            // No need to manually adjust camera size here; it's handled by Phaser
+            this.questionButton.setPosition(this.cameras.main.width - 30, 30);
+        });
 
-    // Adjust the button's position on resize
-    this.scale.on('resize', (gameSize) => {
-        // No need to manually adjust camera size here; it's handled by Phaser
-        this.questionButton.setPosition(this.cameras.main.width - 30, 30);
-    });
+        this.questionButton.on("pointerdown", () => {
+            console.log("Question button clicked!");
 
-    this.questionButton.on('pointerdown', () => {
-        console.log('Question button clicked!');
-        
-        // Capture the player's current position
-        const playerPosition = { x: this.player.x, y: this.player.y };
+            // Capture the player's current position
+            const playerPosition = { x: this.player.x, y: this.player.y };
 
-        // Transition to the Rules scene, passing the player's current position
-        this.scene.start('Rules', { playerSpawn: playerPosition });
-    });
+            // Transition to the Rules scene, passing the player's current position
+            this.scene.start("Rules", { playerSpawn: playerPosition });
+        });
 
         map.createLayer("Roofs", exteriors, 0, 0);
         map.createLayer("RoofDecor", exteriors, 0, 0);
 
         // Setup doctor symbols for buildings
-        let doorsGroup = this.physics.add.staticGroup(
-            map.createFromObjects("Doctor Symbols")
-        );
-        doorsGroup.getChildren().forEach((door) => {
+        map.createFromObjects("Doctor Symbols").forEach((door) => {
             door.setTexture(door.name);
             door.setScale(DOCTOR_SYMBOLS_SCALE[door.name]);
         }, this);
@@ -140,13 +145,9 @@ export class City extends Scene {
     handleEnterDoor(_, door) {
         this.allowMovement = false;
         const doctorType = door.name;
-        const doorPosition = { x: door.x, y: door.y };
         this.cameras.main.fadeOut(250, 0, 0, 0);
         this.cameras.main.once(Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () =>
-            this.scene.start("Hospital", {
-                doctorType,
-                doorPosition,
-            })
+            startSpecialistScene(this, doctorType)
         );
     }
 }

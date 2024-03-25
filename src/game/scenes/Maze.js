@@ -1,5 +1,6 @@
 import { Scene } from "phaser";
 import { MyPlayer } from "../components/MyPlayer";
+import { startSpecialistScene } from "./hospital/Hospital";
 
 export class Maze extends Scene {
     constructor() {
@@ -73,6 +74,7 @@ export class Maze extends Scene {
             map.heightInPixels
         );
         this.cameras.main.startFollow(this.player);
+        this.cameras.main.setZoom(1.5);
 
         this.homeButton = this.add
             .image(this.cameras.main.width - 32, 32, "home")
@@ -81,10 +83,10 @@ export class Maze extends Scene {
             .setScale(0.2)
             .setInteractive();
 
-        this.scale.on("resize", (gameSize) => {
-            this.cameras.main.setSize(gameSize.width, gameSize.height);
-            this.homeButton.setPosition(this.cameras.main.width - 32, 32);
-        });
+        // this.scale.on("resize", (gameSize) => {
+        //     this.cameras.main.setSize(gameSize.width, gameSize.height);
+        //     this.homeButton.setPosition(this.cameras.main.width - 32, 32);
+        // });
 
         this.homeButton.on("pointerover", () => {
             this.game.canvas.style.cursor = "pointer";
@@ -95,7 +97,7 @@ export class Maze extends Scene {
         });
 
         this.homeButton.on("pointerdown", () => {
-            this.scene.start("City");
+            startSpecialistScene(this, "Neurologist");
         });
 
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -125,7 +127,7 @@ export class Maze extends Scene {
             1000,
             () => {
                 message.destroy();
-                this.scene.start("City");
+                startSpecialistScene(this, "Neurologist");
             },
             [],
             this
