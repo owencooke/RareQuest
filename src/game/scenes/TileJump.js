@@ -184,7 +184,7 @@ export class TileJump extends Phaser.Scene {
             this.score = 0;
             // Display the congratulatory message
             this.add.text(this.game.config.width / 2, this.game.config.height / 2, 'Congratulations!', { font: '48px Arial', fill: '#fff' }).setOrigin(0.5);
-            this.add.text(this.game.config.width / 2, this.game.config.height / 2 + 100, 'Click anywhere to play again', { font: '24px Arial', fill: '#fff' }).setOrigin(0.5);
+            this.add.text(this.game.config.width / 2, this.game.config.height / 2 + 100, 'Click anywhere to continue', { font: '24px Arial', fill: '#fff' }).setOrigin(0.5);
             
             // Pause the game logic (but not the scene itself)
             this.physics.pause();
@@ -192,7 +192,7 @@ export class TileJump extends Phaser.Scene {
 
             // Make the scene listen for a click to restart
             this.input.once('pointerdown', () => {
-                this.scene.restart();
+                this.scene.start("Hospital")
             });
         }
     }

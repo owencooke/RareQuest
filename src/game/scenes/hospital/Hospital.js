@@ -218,7 +218,7 @@ export class Hospital extends Scene {
 
     handleMinigame() {
         if (this.cursors.space.isDown) {
-            this.scene.start(this.minigameScene)
+            this.scene.start(this.minigameScene, {x: this.player.x, y: this.player.y})
         }
     }
 }

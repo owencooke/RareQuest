@@ -77,7 +77,7 @@ export class Maze extends Scene {
     });
 
     this.homeButton.on('pointerdown', () => {
-      this.scene.start('City');
+      this.scene.start('Hospital');
     });
 
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -110,7 +110,7 @@ export class Maze extends Scene {
 
     this.time.delayedCall(1000, () => {
       message.destroy();
-      this.scene.start('City');
+      this.scene.start('Hospital');
     }, [], this);
   }
 
