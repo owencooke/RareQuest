@@ -1,7 +1,12 @@
 import Phaser from "phaser";
 import { MyPlayer } from "../components/MyPlayer";
-import { startSpecialistScene } from "./hospital/Hospital";
 import { createHomeButton } from "../components/HomeButton";
+
+const winText = ["It seems that Sam's not responding well to the common treatments. His symptoms persist.",
+"His symptoms are quite varied. It is difficult to diagnose him without some specialized tests",
+"His respiratory symptoms like difficulty breathing may explain his other symptoms like fatigue and headaches",
+"Perhaps a starting point would be to seek a Pulmonologist appointment"
+];
 
 export class TileJump extends Phaser.Scene {
     constructor() {
@@ -16,6 +21,7 @@ export class TileJump extends Phaser.Scene {
         this.score = 0;
         this.player;
         this.isPlayerAirborne = false;
+        this.winText = winText;
     }
 
     create() {
@@ -187,7 +193,10 @@ export class TileJump extends Phaser.Scene {
 
             this.time.delayedCall(2000, () => {
                 message.destroy();
-                startSpecialistScene(this, "Pediatrician");
+                this.scene.start("MinigamePost", {
+                    doctorType: "Pediatrician",
+                    winText: this.winText,
+                })
             });
         }
     }
