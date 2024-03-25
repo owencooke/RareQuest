@@ -37,7 +37,7 @@ The player has journeyed through the intricate process of diagnosing a rare dise
 5.2. Tile Jump
 5.3. Finding the Zebra
 5.4. Catch the Zebra
-6. Once you complete the minigames, you earn a value badge which increases your progress bar.
+6. Once you complete the minigames, you earn a value badge which increases your progress bar. You play the games multiple times to earn all the badges.
 7. Once you have completed all the minigames and earned all the badges, you've successfully completed the game.
 
 Our project sits on GitHub at [https://github.com/owencooke/RQMO12]
