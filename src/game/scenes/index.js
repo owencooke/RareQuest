@@ -9,7 +9,7 @@ import { TileJump } from "./TileJump";
 import { GameOverTileJump } from "./GameOverTileJump";
 import { Maze } from "./Maze";
 import { Pong, gameEnd } from "./Pong";
-import { SpyGame } from "./SpyGame";
+import { iSpy } from "./iSpy";
 import { ZebraCatcher } from "./ZebraCatcher";
 import { MinigameMenu } from "./MinigameMenu";
 
@@ -27,7 +27,7 @@ export const scenes = [
     Maze,
     Pong,
     gameEnd,
-    SpyGame,
+    iSpy,
     ZebraCatcher,
     MinigameMenu,
 ];

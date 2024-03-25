@@ -244,7 +244,7 @@ function startSpecialistScene(sceneRef, doctorType) {
             minigame = "ZebraCatcher";
             break;
         case "Ophthalmologist":
-            minigame = "SpyGame";
+            minigame = "iSpy";
             break;
         default:
             minigame = undefined;

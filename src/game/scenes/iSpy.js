@@ -1,9 +1,9 @@
 import { Scene } from "phaser";
 import { startSpecialistScene } from "./hospital/Hospital";
 
-export class SpyGame extends Scene {
+export class iSpy extends Scene {
     constructor() {
-        super("SpyGame");
+        super("iSpy");
         this.background;
     }
 
