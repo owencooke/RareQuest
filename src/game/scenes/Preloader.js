@@ -114,6 +114,9 @@ export class Preloader extends Scene {
         // Load find zebra images
         this.load.image("zebra", "./assets/zebra.png");
         this.load.image("find_zebra", "./assets/find_zebra.png");
+
+        // Load select image
+        this.load.image("select","./assets/select.png");
     }
 
     create() {

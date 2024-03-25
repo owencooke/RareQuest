@@ -3,6 +3,17 @@ import { MyPlayer } from "../components/MyPlayer";
 import { startSpecialistScene } from "./hospital/Hospital";
 import { createHomeButton } from "../components/HomeButton";
 
+const textStyle = {
+    fontSize: "24px",
+    fill: "black",
+    align: "center",
+    fontFamily: "'Press Start 2P'",
+};
+
+const winText = ["After a long process of monitoring Sam's responses to the tests and treatments so far, it seems that his symptoms closely match that of the Fibrocutaneous Nodular Syndrome disease.\n",
+ "It is characterized by Firm, raised nodules or plaques on the skin, often slow-growing and painless, flesh-colored or pinkish in appearance, may have a slightly purplish hue, may be mistaken for a benign skin lesion, but can invade deeper tissues if left untreated.",
+ "We suggest continuing on the ZebraCatcher treatment plan. It is crucial that Sam continues to visit his doctors for regular check ups. His case also presents a unique opportunity for raising awareness on rare skin diseases. \nWe are here to help and ensure that Sam can continue to flourish in his endeavors!"];
+
 const sizes = {
     width: 1200,
     height: 800,
@@ -99,7 +110,7 @@ export class ZebraCatcher extends Phaser.Scene {
 
         this.textScore.setText(`Score: ${this.points}`);
         this.resetZebraPosition();
-        if (this.points >= 5) {
+        if (this.points >= 3) {
             this.gameOver(true);
         }
     }
@@ -138,7 +149,7 @@ export class ZebraCatcher extends Phaser.Scene {
             2000,
             () => {
                 message.destroy();
-                startSpecialistScene(this, "Dermatologist");
+                this.scene.start("ZebraCatcherEnd");
             },
             [],
             this
@@ -154,5 +165,63 @@ export class ZebraCatcher extends Phaser.Scene {
             this.scene.restart();
         }
     }
+}
+
+export class ZebraCatcherEnd extends Phaser.Scene {
+    constructor() {
+        super("ZebraCatcherEnd");
+    }
+
+    create() {
+        const background = this.add.image(
+            this.cameras.main.width / 2,
+            this.cameras.main.height / 2,
+            "bg"
+        );
+        background.setDisplaySize(
+            this.cameras.main.width,
+            this.cameras.main.height
+        );
+
+        // Title text
+        this.add
+            .text(
+                this.game.config.width / 2,
+                this.game.config.height / 4,
+                "Treatment results",
+                { ...textStyle, fontSize: "48px" }
+            )
+            .setOrigin(0.5);
+        
+
+        const selectButton = this.add.sprite(this.cameras.main.width-64, this.cameras.main.height-64, "select").setScale(0.2).setInteractive();
+        let line = this.displayString(winText[0]);
+        let clickCount = 1;
+        selectButton.on('pointerup', () => {
+            clickCount++;
+            line.destroy()
+            // Display the next string from the array
+            if (clickCount <= winText.length) {
+                line = this.displayString(winText[clickCount - 1]);
+            } else {
+                startSpecialistScene(this, "Dermatologist");
+            }
+        });
+    }
+
+    displayString(string) {
+         return this.add
+            .text(
+                this.game.config.width / 2,
+                this.game.config.height / 2,
+                string,
+                {
+                    ...textStyle,
+                    wordWrap: { width: this.game.config.width - 100 },
+                }
+            )
+            .setOrigin(0.5);
+    }
+
 }
 
