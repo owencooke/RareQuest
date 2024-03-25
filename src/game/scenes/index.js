@@ -24,4 +24,5 @@ export const scenes = [
     Maze,
     Pong,
     gameEnd,
+    HurdleJump,
 ];

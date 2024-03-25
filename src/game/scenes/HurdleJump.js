@@ -1,23 +1,19 @@
 import { MyPlayer } from "../components/MyPlayer";
-
-create() {
-    this.player = new MyPlayer(
-        this,
-       0,
-       0,
-        "down"
-    );
-}
-
 import Phaser from 'phaser';
 
-class PlayScene extends Phaser.Scene {
+class HurdleJump extends Phaser.Scene {
 
     constructor() {
-        super('Play');
+        super('HurdleJump');
       }
 
       create() {
+        this.player = new MyPlayer(
+            this,
+            0,
+            0,
+            "down"
+        );
         const { height, width } = this.game.config;
         this.customGameSpeed = 10;
         this.customIsGameRunning = false;
@@ -126,6 +122,7 @@ class PlayScene extends Phaser.Scene {
         }, null, this)
     }
 
+    //Kashish, try adding and commiting and pushing the files me and Bhagya just edited. Then try creating and PR and running that through github
     initAnims() {
         // Assuming you have animations for 'alex-run' (running), 'alex-down-anim' (crouching), and 'enemy-alex-fly' (flying enemies)
         this.anims.create({
@@ -275,6 +272,3 @@ class PlayScene extends Phaser.Scene {
       }
     }
     
-
-
-
