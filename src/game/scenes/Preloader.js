@@ -57,6 +57,7 @@ export class Preloader extends Scene {
         );
         this.load.image("home", "./assets/home.png");
 
+
         // Load player
         this.load.spritesheet("adam-run", "./assets/Adam_run_16x16.png", {
             frameWidth: 16,

@@ -5,7 +5,7 @@ const BUTTON_FONT_SIZE = 64;
 const buttonNavStyle = {
     fontFamily: "Impact",
     fontSize: `${BUTTON_FONT_SIZE}px`,
-    fill: "orange",
+    fill: "white",
 };
 
 class Dialogue extends TextBox {
@@ -44,27 +44,38 @@ class Dialogue extends TextBox {
         this.displayDialogue();
     }
 
-    displayDialogue() {
+    displayDialogue(isAnimated) {
         this.hideDialogue();
         const { name, text } = this.dialogue[this.currentIndex];
-        super.displayDialogue(`${name}:\n ${text}`);
+        const dialogue = `${name}:\n ${text}`;
+        if (isAnimated) {
+            super.displayDialogue(dialogue);
+        } else {
+            super.displayStaticDialogue(dialogue);
+        }
         this.forwardButton.setVisible(this.currentIndex < this.dialogue.length);
         this.backButton.setVisible(this.currentIndex > 0);
     }
 
     advance() {
-        if (this.currentIndex < this.dialogue.length - 1) {
-            this.currentIndex += 1;
-            this.displayDialogue();
+        if (this.typingTimer?.loop) {
+            this.typingTimer.destroy();
+            this.typingTimer = null;
+            this.displayDialogue(false);
         } else {
-            this.end();
+            if (this.currentIndex < this.dialogue.length - 1) {
+                this.currentIndex += 1;
+                this.displayDialogue(true);
+            } else {
+                this.end();
+            }
         }
     }
 
     goBack() {
         if (this.currentIndex > 0) {
             this.currentIndex -= 1;
-            this.displayDialogue();
+            this.displayDialogue(false);
         }
     }
 
