@@ -173,7 +173,6 @@ class Hospital extends Scene {
         );
 
         // Overlay
-
         this.overlay = this.physics.add.sprite(
             this.doctor.x, 
             this.doctor.y + 70, 
@@ -186,6 +185,26 @@ class Hospital extends Scene {
         {
             if (this.physics.overlap(this.player, triggerDialogueZone) === false) {
                 this.overlay.setVisible(false)
+            }
+        }, 
+        delay: 5, 
+        callbackScope: 
+        this,
+        loop: true
+    })
+
+    this.minigameOverlay = this.physics.add.sprite(
+        this.doctor.x + 200, 
+        this.doctor.y + 70 + 10, 
+        "spacebar"
+        )
+    
+    this.minigameOverlay.setScale(0.1)
+    this.minigameOverlay.setVisible(false)
+    this.time.addEvent({callback: ()=>
+        {
+            if (this.physics.overlap(this.player, minigameTriggerZone) === false) {
+                this.minigameOverlay.setVisible(false)
             }
         }, 
         delay: 5, 
@@ -215,10 +234,10 @@ class Hospital extends Scene {
 
     handleDoctorCollision() {
         if (!this.dialogueInProgess) {
-            this.overlay.setVisible(true)
+            this.overlay.setVisible(true);
         }
         if (this.cursors.space.isDown && !this.dialogueInProgess) {
-            this.overlay.setVisible(false)
+            this.overlay.setVisible(false);
             this.allowMovement = false;
             this.dialogueInProgess = true;
             startDialogue(this, this.dialogue, () => {
@@ -229,7 +248,11 @@ class Hospital extends Scene {
     }
 
     handleMinigame() {
+        if (!this.dialogueInProgess) {
+            this.minigameOverlay.setVisible(true);
+        }
         if (this.cursors.space.isDown && !this.dialogueInProgess) {
+            this.minigameOverlay.setVisible(false);
             this.scene.start("MinigameMenu", {
                 minigame: this.minigameScene,
             });
