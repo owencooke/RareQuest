@@ -47,8 +47,6 @@ export class TileJump extends Phaser.Scene {
             loop: true,
         });
 
-        this.homeButton = createHomeButton(this, "Pediatrician");
-
         this.physics.add.collider(
             this.player,
             this.platforms,
@@ -64,6 +62,8 @@ export class TileJump extends Phaser.Scene {
                 }
             }
         );
+
+        this.homeButton = createHomeButton(this, "Pediatrician");
     }
 
     addTile(x, y) {
