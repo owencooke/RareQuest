@@ -18,6 +18,7 @@ export class Hospital extends Scene {
     }
 
     create() {
+        var checkZone = this.scene.time
         this.allowMovement = true;
         // Load the hospital room tilemap
         const map = this.make.tilemap({
@@ -156,6 +157,29 @@ export class Hospital extends Scene {
             map.heightInPixels / 2
         );
 
+        // Overlay
+
+        this.overlay = this.physics.add.sprite(
+            this.doctor.x, 
+            this.doctor.y + 70, 
+            "spacebar"
+            )
+        
+        this.overlay.setScale(0.1)
+        this.overlay.setVisible(false)
+        this.time.addEvent({callback: ()=>
+        {
+            if (this.physics.overlap(this.player, triggerDialogueZone) === false) {
+                this.overlay.setVisible(false)
+            }
+        }, 
+        delay: 5, 
+        callbackScope: 
+        this,
+        loop: true
+    })
+
+
         // Enable keyboard input
         this.cursors = this.input.keyboard.createCursorKeys();
     }
@@ -175,6 +199,7 @@ export class Hospital extends Scene {
     }
 
     handleDoctorCollision() {
+        this.overlay.setVisible(true)
         if (this.cursors.space.isDown && !this.dialogueInProgess) {
             this.allowMovement = false;
             this.dialogueInProgess = true;

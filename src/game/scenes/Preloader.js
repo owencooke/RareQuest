@@ -64,6 +64,7 @@ export class Preloader extends Scene {
 
         // Load minigame assets
         this.load.image("bg", "./assets/balancebg.jpg");
+        this.load.image("spacebar", "./assets/space.png");
         this.load.image("tile1", "./assets/tile1.png");
 
         // Load building icons for each doctor
