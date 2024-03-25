@@ -14,7 +14,7 @@ class Hospital extends Scene {
     init(data) {
         this.dialogue = script[data.doctorType];
         this.doctorType = data.doctorType;
-        this.minigameScene = data.minigame;
+        this.minigame = data.minigame;
     }
 
     create() {
@@ -75,6 +75,14 @@ class Hospital extends Scene {
         );
         interiorLayer2.setCollisionByExclusion([-1]);
 
+        // Create doctor
+        const doctor = map.getObjectLayer("doctor").objects[0];
+        this.doctor = this.physics.add
+            .staticSprite(doctor.x + layerX, doctor.y + layerY, "doctorA")
+            .setScale(2);
+        this.doctor.setOffset(4, 24);
+        this.doctor.anims.play("doctorA-animation", true);
+
         //Get the object layer made in the map to indicate where the plaer starts when map is loaded
         const startingPoint = map.getObjectLayer("Player").objects[0];
 
@@ -97,14 +105,6 @@ class Hospital extends Scene {
             null,
             this
         );
-
-        // Create doctor
-        const doctor = map.getObjectLayer("doctor").objects[0];
-        this.doctor = this.physics.add
-            .staticSprite(doctor.x + layerX, doctor.y + layerY, "doctorA")
-            .setScale(2);
-        this.doctor.setOffset(4, 24);
-        this.doctor.anims.play("doctorA-animation", true);
 
         // Start dialogue upon collision with the doctor
         this.physics.add.collider(
@@ -195,26 +195,27 @@ class Hospital extends Scene {
             callbackScope: this,
             loop: true,
         });
-    this.minigameOverlay = this.physics.add.sprite(
-        this.doctor.x + 200, 
-        this.doctor.y + 70 + 10, 
-        "spacebar"
-        )
-    
-    this.minigameOverlay.setScale(0.1)
-    this.minigameOverlay.setVisible(false)
-    this.time.addEvent({callback: ()=>
-        {
-            if (this.physics.overlap(this.player, minigameTriggerZone) === false) {
-                this.minigameOverlay.setVisible(false)
-            }
-        }, 
-        delay: 5, 
-        callbackScope: 
-        this,
-        loop: true
-    })
+        this.minigameOverlay = this.physics.add.sprite(
+            this.doctor.x + 200,
+            this.doctor.y + 70 + 10,
+            "spacebar"
+        );
 
+        this.minigameOverlay.setScale(0.1);
+        this.minigameOverlay.setVisible(false);
+        this.time.addEvent({
+            callback: () => {
+                if (
+                    this.physics.overlap(this.player, minigameTriggerZone) ===
+                    false
+                ) {
+                    this.minigameOverlay.setVisible(false);
+                }
+            },
+            delay: 5,
+            callbackScope: this,
+            loop: true,
+        });
 
         // Enable keyboard input
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -257,7 +258,7 @@ class Hospital extends Scene {
         if (this.cursors.space.isDown && !this.dialogueInProgess) {
             this.minigameOverlay.setVisible(false);
             this.scene.start("MinigameMenu", {
-                minigame: this.minigameScene,
+                minigame: this.minigame,
             });
         }
     }

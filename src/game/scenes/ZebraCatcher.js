@@ -21,7 +21,6 @@ export class ZebraCatcher extends Phaser.Scene {
         super("ZebraCatcher");
         this.player = null;
         this.cursor = null;
-        this.playerSpeed = speedDown + 50;
         this.target = null;
         this.points = 0;
         this.textScore = null;

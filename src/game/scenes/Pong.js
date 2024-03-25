@@ -12,7 +12,7 @@ export class Pong extends Scene {
         super("Pong");
         this.playerSpeed = 375;
         this.currentDirection = "right";
-        this.scoreWin = 50;
+        this.scoreWin = 3;
         this.ballSpeed = 300;
         this.ballSpeedAmp = 20;
         this.scoreCount = 0;
@@ -35,7 +35,7 @@ export class Pong extends Scene {
         );
 
         // Score
-        this.score = this.add.text(10, 0, "0/" + this.scoreWin, {
+        this.score = this.add.text(0, 0, "0/" + this.scoreWin, {
             fontSize: "72px",
             color: "#ffffff",
             fontFamily: "Arial Black",
@@ -99,7 +99,7 @@ export class Pong extends Scene {
                     ball.body.setVelocity(vec.x, vec.y);
 
                     // Score Update
-                    this.scoreCount += 10;
+                    this.scoreCount += 1;
                     this.score.text = this.scoreCount + "/" + this.scoreWin;
                     this.ColliderActivate = false;
 

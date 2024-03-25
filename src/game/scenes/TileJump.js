@@ -161,7 +161,7 @@ export class TileJump extends Phaser.Scene {
         this.score += 1;
         this.scoreLabel.text = this.score.toString();
 
-        if (this.score === 5) {
+        if (this.score >= 3) {
             this.score = 0;
             // Display the congratulatory message
             // Create a box sprite as the background for the text

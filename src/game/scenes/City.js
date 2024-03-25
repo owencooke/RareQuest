@@ -14,12 +14,14 @@ const DOCTOR_SYMBOLS_SCALE = {
 export class City extends Scene {
     constructor() {
         super("City");
-        this.playerSpawn = { x: 32 * 51, y: 32 * 30 };
     }
 
     init(data) {
         if (data.doctorType) {
             this.doctorType = data.doctorType;
+        }
+        if (data.playerSpawn) {
+            this.playerSpawn = data.playerSpawn;
         }
     }
 
@@ -42,12 +44,7 @@ export class City extends Scene {
         buildingsLayer.setCollisionByExclusion([-1]);
 
         // Add player sprite before above layers (roofs)
-        this.player = new MyPlayer(
-            this,
-            this.playerSpawn.x,
-            this.playerSpawn.y,
-            "down"
-        );
+        this.player = new MyPlayer(this, 32 * 51, 32 * 30, "down");
         this.physics.add.collider(this.player, buildingsLayer);
 
         // Bind door objects to next scene handler
@@ -55,11 +52,14 @@ export class City extends Scene {
         if (this.doctorType) {
             doors.forEach((door) => {
                 if (this.doctorType === door.name) {
-                    // this.player.setOrigin(door.x, door.y + 32);
                     this.player.setX(door.x);
                     this.player.setY(door.y + 32);
                 }
             });
+            this.doctorType = null;
+        } else if (this.playerSpawn) {
+            this.player.setX(this.playerSpawn.x);
+            this.player.setY(this.playerSpawn.y);
         }
 
         this.physics.add.collider(
@@ -69,25 +69,6 @@ export class City extends Scene {
             null,
             this
         );
-
-        // Insert the button code here
-        let buttonX = this.cameras.main.width - 80; // 30 pixels from the right edge of the camera viewport
-        let buttonY = 80; // 30 pixels from the top of the camera viewport
-        this.questionButton = this.add
-            .image(buttonX, buttonY, "question")
-            .setScrollFactor(0)
-            .setInteractive();
-        this.questionButton.setScale(0.1, 0.1);
-        this.questionButton.setOrigin(0.5, 0.5);
-        this.questionButton.setDepth(100);
-
-        this.questionButton.on("pointerdown", () => {
-            // Capture the player's current position
-            const playerPosition = { x: this.player.x, y: this.player.y };
-
-            // Transition to the Rules scene, passing the player's current position
-            this.scene.start("Rules", { playerSpawn: playerPosition });
-        });
 
         map.createLayer("Roofs", exteriors, 0, 0);
         map.createLayer("RoofDecor", exteriors, 0, 0);

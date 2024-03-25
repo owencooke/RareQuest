@@ -20,8 +20,35 @@ class HUD extends GameObjects.Container {
         this.scene = scene;
         this.counters = {};
         this.createCounters();
+        this.createHelpButton();
         scene.add.existing(this);
         this.setScrollFactor(0);
+    }
+
+    createHelpButton() {
+        let offset = 64;
+        let buttonX = this.scene.cameras.main.width - offset;
+        let buttonY = offset;
+        this.questionButton = this.scene.add
+            .image(buttonX, buttonY, "question")
+            .setScrollFactor(0)
+            .setInteractive();
+        this.questionButton.setScale(0.1, 0.1);
+        this.questionButton.setOrigin(0.5, 0.5);
+        this.questionButton.setDepth(100);
+
+        this.questionButton.on("pointerdown", () => {
+            // Transition to the Rules scene, passing the player's current position
+            this.scene.scene.start("Rules", {
+                nextScene: this.scene.scene.key,
+                playerSpawn: {
+                    x: this.scene.player.x,
+                    y: this.scene.player.y,
+                },
+                doctorType: this.scene.doctorType,
+                minigame: this.scene.minigame,
+            });
+        });
     }
 
     createCounters() {

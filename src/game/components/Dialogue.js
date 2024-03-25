@@ -47,7 +47,7 @@ class Dialogue extends TextBox {
     displayDialogue(isAnimated) {
         this.hideDialogue();
         const { name, text } = this.dialogue[this.currentIndex];
-        const dialogue = `${name}:\n ${text}`;
+        const dialogue = name ? `${name}:\n ${text}` : text;
         if (isAnimated) {
             super.displayDialogue(dialogue);
         } else {
@@ -111,3 +111,4 @@ function startDialogue(scene, script, callback) {
 }
 
 export { startDialogue, Dialogue };
+
