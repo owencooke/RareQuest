@@ -46,15 +46,25 @@ export class TileJump extends Phaser.Scene {
             loop: true,
         });
 
-        let exitButton = this.add
-            .text(this.game.config.width - 10, 10, "Exit", {
-                font: "24px Arial",
-                fill: "#fff",
-            })
+        this.homeButton = this.add
+            .image(this.cameras.main.width - 32, 32, "home")
+            .setScrollFactor(0)
             .setOrigin(1, 0)
-            .setInteractive({ useHandCursor: true });
+            .setScale(0.2)
+            .setInteractive();
 
-        exitButton.on("pointerdown", () => this.scene.start("MainMenu")); // Replace 'MainMenu' with the key of your main menu scene
+        this.homeButton.on("pointerover", () => {
+            this.game.canvas.style.cursor = "pointer";
+        });
+
+        this.homeButton.on("pointerout", () => {
+            this.game.canvas.style.cursor = "default";
+        });
+
+        this.homeButton.on("pointerdown", () => {
+            startSpecialistScene(this, "Pediatrician");
+        });
+
 
         this.physics.add.collider(
             this.player,
