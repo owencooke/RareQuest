@@ -1,5 +1,6 @@
 import { Scene } from "phaser";
 import { startSpecialistScene } from "./hospital/Hospital";
+import { createHomeButton } from "../components/HomeButton";
 
 export class iSpy extends Scene {
     constructor() {
@@ -16,24 +17,7 @@ export class iSpy extends Scene {
         zebra.setScale(0.7);
         zebra.on("pointerdown", this.onZebraClicked, this);
 
-        this.homeButton = this.add
-            .image(this.cameras.main.width - 32, 32, "home")
-            .setScrollFactor(0)
-            .setOrigin(1, 0)
-            .setScale(0.2)
-            .setInteractive();
-
-        this.homeButton.on("pointerover", () => {
-            this.game.canvas.style.cursor = "pointer";
-        });
-
-        this.homeButton.on("pointerout", () => {
-            this.game.canvas.style.cursor = "default";
-        });
-
-        this.homeButton.on("pointerdown", () => {
-            startSpecialistScene(this, "Ophthalmologist");
-        });
+        this.homeButton = createHomeButton(this, "Ophthalmologist");
     }
 
     onZebraClicked() {

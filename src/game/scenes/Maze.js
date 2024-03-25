@@ -1,5 +1,6 @@
 import { Scene } from "phaser";
 import { MyPlayer } from "../components/MyPlayer";
+import {createHomeButton} from "../components/HomeButton";
 import { startSpecialistScene } from "./hospital/Hospital";
 
 export class Maze extends Scene {
@@ -25,6 +26,7 @@ export class Maze extends Scene {
             "modern_exteriors_32",
             "modern_exteriors_32"
         );
+        
         // Create layers
         map.createLayer("Ground", modernExteriors, 0, 0);
         const wallLayer = map.createLayer("Walls", modernExteriors, 0, 0);
@@ -35,7 +37,7 @@ export class Maze extends Scene {
             0,
             0,
             map.widthInPixels,
-            map.heightInPixels
+            map.heightInPixels,
         );
 
         // Get starting point
@@ -74,31 +76,8 @@ export class Maze extends Scene {
             map.heightInPixels
         );
         this.cameras.main.startFollow(this.player);
-        this.cameras.main.setZoom(1.5);
-
-        this.homeButton = this.add
-            .image(this.cameras.main.width - 32, 32, "home")
-            .setScrollFactor(0)
-            .setOrigin(1, 0)
-            .setScale(0.2)
-            .setInteractive();
-
-        // this.scale.on("resize", (gameSize) => {
-        //     this.cameras.main.setSize(gameSize.width, gameSize.height);
-        //     this.homeButton.setPosition(this.cameras.main.width - 32, 32);
-        // });
-
-        this.homeButton.on("pointerover", () => {
-            this.game.canvas.style.cursor = "pointer";
-        });
-
-        this.homeButton.on("pointerout", () => {
-            this.game.canvas.style.cursor = "default";
-        });
-
-        this.homeButton.on("pointerdown", () => {
-            startSpecialistScene(this, "Neurologist");
-        });
+        this.homeButton = createHomeButton(this, "Neurologist");
+        // this.cameras.main.setZoom(1.5);
 
         this.cursors = this.input.keyboard.createCursorKeys();
     }

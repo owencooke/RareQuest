@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import { MyPlayer } from "../components/MyPlayer";
 import { startSpecialistScene } from "./hospital/Hospital";
+import { createHomeButton } from "../components/HomeButton";
 
 export class TileJump extends Phaser.Scene {
     constructor() {
@@ -46,16 +47,6 @@ export class TileJump extends Phaser.Scene {
             loop: true,
         });
 
-        let exitButton = this.add
-            .text(this.game.config.width - 10, 10, "Exit", {
-                font: "24px Arial",
-                fill: "#fff",
-            })
-            .setOrigin(1, 0)
-            .setInteractive({ useHandCursor: true });
-
-        exitButton.on("pointerdown", () => this.scene.start("MainMenu")); // Replace 'MainMenu' with the key of your main menu scene
-
         this.physics.add.collider(
             this.player,
             this.platforms,
@@ -71,6 +62,8 @@ export class TileJump extends Phaser.Scene {
                 }
             }
         );
+
+        this.homeButton = createHomeButton(this, "Pediatrician");
     }
 
     addTile(x, y) {
