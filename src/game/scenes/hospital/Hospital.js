@@ -18,7 +18,6 @@ class Hospital extends Scene {
 
     create() {
         this.dialogueInProgess = false;
-        this.dialogueOccured = false;
         this.allowMovement = true;
         // Load the hospital room tilemap
         const map = this.make.tilemap({
@@ -195,7 +194,6 @@ class Hospital extends Scene {
         if (this.cursors.space.isDown && !this.dialogueInProgess) {
             this.allowMovement = false;
             this.dialogueInProgess = true;
-            this.dialogueOccured = true;
             startDialogue(this, this.dialogue, () => {
                 this.dialogueInProgess = false;
                 this.allowMovement = true;
@@ -205,25 +203,9 @@ class Hospital extends Scene {
 
     handleMinigame() {
         if (this.cursors.space.isDown && !this.dialogueInProgess) {
-            if (this.dialogueOccured) {
-                this.scene.start("MinigameMenu", {
-                    minigame: this.minigameScene,
-                });
-            } else {
-                this.dialogueInProgess = true;
-                startDialogue(
-                    this,
-                    [
-                        {
-                            name: this.doctorType,
-                            text: `Hey! You have to come talk to me first!`,
-                        },
-                    ],
-                    () => {
-                        this.dialogueInProgess = false;
-                    }
-                );
-            }
+            this.scene.start("MinigameMenu", {
+                minigame: this.minigameScene,
+            });
         }
     }
 }
