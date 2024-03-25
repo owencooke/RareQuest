@@ -1,4 +1,5 @@
 import { Scene } from "phaser";
+import { MusicService } from "../MusicService";
 
 export class MainMenu extends Scene {
     constructor() {
@@ -6,6 +7,12 @@ export class MainMenu extends Scene {
     }
 
     create() {
+
+
+        // AUDIO
+        this.musicService = new MusicService(this);
+        this.musicService.play();
+
         // BACKGROUND
         const background = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'background');
         background.setDisplaySize(this.cameras.main.width, this.cameras.main.height);

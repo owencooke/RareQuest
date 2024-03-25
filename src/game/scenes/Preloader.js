@@ -47,6 +47,9 @@ export class Preloader extends Scene {
     }
 
     preload() {
+        //Load audio
+        this.load.audio("backgroundMusic","./assets/bgm_music.mp3");
+
         this.cameras.main.setBackgroundColor("#87CEEB");
         // Load city
         this.load.tilemapTiledJSON("city", "./assets/city.json");
