@@ -2,10 +2,11 @@ import Phaser from "phaser";
 import { MyPlayer } from "../components/MyPlayer";
 import { createHomeButton } from "../components/HomeButton";
 
-const winText = ["It seems that Sam's not responding well to the common treatments. His symptoms persist.",
-"His symptoms are quite varied. It is difficult to diagnose him without some specialized tests",
-"His respiratory symptoms like difficulty breathing may explain his other symptoms like fatigue and headaches",
-"Perhaps a starting point would be to seek a Pulmonologist appointment"
+const winText = [
+    "It seems that Sam's not responding well to the common treatments. His symptoms persist.",
+    "His symptoms are quite varied. It is difficult to diagnose him without some specialized tests",
+    "His respiratory symptoms like difficulty breathing may explain his other symptoms like fatigue and headaches",
+    "Perhaps a starting point would be to seek a Pulmonologist appointment",
 ];
 
 export class TileJump extends Phaser.Scene {
@@ -186,7 +187,7 @@ export class TileJump extends Phaser.Scene {
                     }
                 )
                 .setOrigin(0.5);
-            
+
             // Pause the game logic
             this.physics.pause();
             this.time.removeAllEvents();
@@ -196,7 +197,8 @@ export class TileJump extends Phaser.Scene {
                 this.scene.start("MinigamePost", {
                     doctorType: "Pediatrician",
                     winText: this.winText,
-                })
+                    scoreType: "Engagement",
+                });
             });
         }
     }

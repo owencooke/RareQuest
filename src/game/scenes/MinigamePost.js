@@ -16,6 +16,7 @@ export class MinigamePost extends Phaser.Scene {
     init(data) {
         this.doctorType = data.doctorType;
         this.winText = data.winText;
+        this.scoreType = data.scoreType;
     }
 
     create() {
@@ -38,25 +39,31 @@ export class MinigamePost extends Phaser.Scene {
                 { ...textStyle, fontSize: "48px" }
             )
             .setOrigin(0.5);
-        
 
-        const selectButton = this.add.sprite(this.cameras.main.width-64, this.cameras.main.height-64, "select").setScale(0.2).setInteractive();
+        const selectButton = this.add
+            .sprite(
+                this.cameras.main.width - 64,
+                this.cameras.main.height - 64,
+                "select"
+            )
+            .setScale(0.2)
+            .setInteractive();
         let line = this.displayString(this.winText[0]);
         let clickCount = 1;
-        selectButton.on('pointerup', () => {
+        selectButton.on("pointerup", () => {
             clickCount++;
-            line.destroy()
+            line.destroy();
             // Display the next string from the array
             if (clickCount <= this.winText.length) {
                 line = this.displayString(this.winText[clickCount - 1]);
             } else {
-                startSpecialistScene(this, this.doctorType);
+                startSpecialistScene(this, this.doctorType, this.scoreType);
             }
         });
     }
 
     displayString(string) {
-         return this.add
+        return this.add
             .text(
                 this.game.config.width / 2,
                 this.game.config.height / 2,
@@ -68,6 +75,5 @@ export class MinigamePost extends Phaser.Scene {
             )
             .setOrigin(0.5);
     }
-
 }
 
