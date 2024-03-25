@@ -1,7 +1,7 @@
 import { Scene, Cameras } from "phaser";
 import { MyPlayer } from "../components/MyPlayer";
-import { startDialogue } from "../components/Dialogue";
 import { startSpecialistScene } from "./hospital/Hospital";
+import { HUD } from "../components/HUD";
 
 const DOCTOR_SYMBOLS_SCALE = {
     Pediatrician: 0.125,
@@ -21,16 +21,6 @@ export class City extends Scene {
         if (data.doctorType) {
             this.doctorType = data.doctorType;
         }
-    }
-
-    preload() {
-        // Load the question mark button image
-        this.load.image("question", "assets/question.png");
-    }
-
-    preload() {
-        // Load the question mark button image
-        this.load.image("question", "assets/question.png");
     }
 
     create() {
@@ -91,15 +81,7 @@ export class City extends Scene {
         this.questionButton.setOrigin(0.5, 0.5);
         this.questionButton.setDepth(100);
 
-        // Adjust the button's position on resize
-        this.scale.on("resize", (gameSize) => {
-            // No need to manually adjust camera size here; it's handled by Phaser
-            this.questionButton.setPosition(this.cameras.main.width - 30, 30);
-        });
-
         this.questionButton.on("pointerdown", () => {
-            console.log("Question button clicked!");
-
             // Capture the player's current position
             const playerPosition = { x: this.player.x, y: this.player.y };
 
@@ -133,6 +115,8 @@ export class City extends Scene {
 
         // Enable keyboard input
         this.cursors = this.input.keyboard.createCursorKeys();
+
+        this.hud = new HUD(this);
     }
 
     update() {
