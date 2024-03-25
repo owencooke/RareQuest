@@ -178,7 +178,7 @@ export class Hospital extends Scene {
         if (this.cursors.space.isDown && !this.dialogueInProgess) {
             this.allowMovement = false;
             this.dialogueInProgess = true;
-            startDialogue(this, this.dialogue, () => {
+            startDialogue(this ,this.dialogue, () => {
                 this.dialogueInProgess = false;
                 this.allowMovement = true;
             });

@@ -41,7 +41,7 @@ class Dialogue extends TextBox {
     }
 
     start() {
-        this.displayDialogue();
+        this.displayDialogue(true);
     }
 
     displayDialogue(isAnimated) {
@@ -111,4 +111,3 @@ function startDialogue(scene, script, callback) {
 }
 
 export { startDialogue, Dialogue };
-
