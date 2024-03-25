@@ -2,6 +2,7 @@ import { Scene, Cameras } from "phaser";
 import { startDialogue } from "../../components/Dialogue";
 import script from "./script.json";
 import { MyPlayer } from "../../components/MyPlayer";
+import { HUD, addToHUDScore } from "../../components/HUD";
 
 class Hospital extends Scene {
     constructor() {
@@ -175,28 +176,30 @@ class Hospital extends Scene {
         // Overlay
 
         this.overlay = this.physics.add.sprite(
-            this.doctor.x, 
-            this.doctor.y + 70, 
+            this.doctor.x,
+            this.doctor.y + 70,
             "spacebar"
-            )
-        
-        this.overlay.setScale(0.1)
-        this.overlay.setVisible(false)
-        this.time.addEvent({callback: ()=>
-        {
-            if (this.physics.overlap(this.player, triggerDialogueZone) === false) {
-                this.overlay.setVisible(false)
-            }
-        }, 
-        delay: 5, 
-        callbackScope: 
-        this,
-        loop: true
-    })
+        );
 
+        this.overlay.setScale(0.1);
+        this.overlay.setVisible(false);
+        this.time.addEvent({
+            callback: () => {
+                if (
+                    this.physics.overlap(this.player, triggerDialogueZone) ===
+                    false
+                ) {
+                    this.overlay.setVisible(false);
+                }
+            },
+            delay: 5,
+            callbackScope: this,
+            loop: true,
+        });
 
         // Enable keyboard input
         this.cursors = this.input.keyboard.createCursorKeys();
+        this.hud = new HUD(this);
     }
 
     update() {
@@ -215,10 +218,10 @@ class Hospital extends Scene {
 
     handleDoctorCollision() {
         if (!this.dialogueInProgess) {
-            this.overlay.setVisible(true)
+            this.overlay.setVisible(true);
         }
         if (this.cursors.space.isDown && !this.dialogueInProgess) {
-            this.overlay.setVisible(false)
+            this.overlay.setVisible(false);
             this.allowMovement = false;
             this.dialogueInProgess = true;
             startDialogue(this, this.dialogue, () => {
@@ -237,7 +240,11 @@ class Hospital extends Scene {
     }
 }
 
-function startSpecialistScene(sceneRef, doctorType) {
+function startSpecialistScene(sceneRef, doctorType, scoreToUpdate) {
+    if (scoreToUpdate) {
+        addToHUDScore(scoreToUpdate);
+    }
+
     let minigame;
     switch (doctorType) {
         case "Pulmonologist":

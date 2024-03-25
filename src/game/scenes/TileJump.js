@@ -187,7 +187,7 @@ export class TileJump extends Phaser.Scene {
 
             // Make the scene listen for a click to restart
             this.input.once("pointerdown", () => {
-                startSpecialistScene(this, "Pediatrician");
+                startSpecialistScene(this, "Pediatrician", "Engagement");
             });
         }
     }

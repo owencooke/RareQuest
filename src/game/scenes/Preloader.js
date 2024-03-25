@@ -1,6 +1,5 @@
 import { Scene } from "phaser";
 
-
 const CHAR_FRAMES_PER_ROW = 56;
 
 export class Preloader extends Scene {
@@ -110,6 +109,7 @@ export class Preloader extends Scene {
             frameWidth: 321,
             frameHeight: 80,
         });
+        this.load.image("question", "assets/question.png");
 
         // Load find zebra images
         this.load.image("zebra", "./assets/zebra.png");
@@ -132,7 +132,7 @@ export class Preloader extends Scene {
         });
 
         //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
-        this.scene.start("MainMenu");
+        this.scene.start("City");
     }
 
     createPlayerRunAnimations() {

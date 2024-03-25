@@ -188,7 +188,7 @@ export class gameEnd extends Scene {
                 .setOrigin(0.5)
                 .setInteractive();
             continueButton.on("pointerdown", () => {
-                startSpecialistScene(this, "Pulmonologist");
+                startSpecialistScene(this, "Pulmonologist", "Engagement");
             });
         } else {
             const playButton = this.add

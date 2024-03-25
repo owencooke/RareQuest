@@ -145,7 +145,7 @@ export class ZebraCatcher extends Phaser.Scene {
             1000,
             () => {
                 message.destroy();
-                startSpecialistScene(this, "Dermatologist");
+                startSpecialistScene(this, "Dermatologist", "Collaboration");
             },
             [],
             this
