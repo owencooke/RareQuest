@@ -206,7 +206,9 @@ class Hospital extends Scene {
     handleMinigame() {
         if (this.cursors.space.isDown && !this.dialogueInProgess) {
             if (this.dialogueOccured) {
-                this.scene.start(this.minigameScene);
+                this.scene.start("MinigameMenu", {
+                    minigame: this.minigameScene,
+                });
             } else {
                 this.dialogueInProgess = true;
                 startDialogue(

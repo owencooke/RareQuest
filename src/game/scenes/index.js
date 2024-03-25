@@ -9,6 +9,7 @@ import { TileJump } from "./TileJump";
 import { GameOverTileJump } from "./GameOverTileJump";
 import { Maze } from "./Maze";
 import { Pong, gameEnd } from "./Pong";
+import { MinigameMenu } from "./MinigameMenu";
 
 // IMPORTANT: you must import and add your new scene to this array for it to be renderable!!
 export const scenes = [
@@ -23,4 +24,5 @@ export const scenes = [
     Maze,
     Pong,
     gameEnd,
+    MinigameMenu,
 ];

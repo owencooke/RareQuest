@@ -82,10 +82,10 @@ export class Maze extends Scene {
             .setScale(0.2)
             .setInteractive();
 
-        this.scale.on("resize", (gameSize) => {
-            this.cameras.main.setSize(gameSize.width, gameSize.height);
-            this.homeButton.setPosition(this.cameras.main.width - 32, 32);
-        });
+        // this.scale.on("resize", (gameSize) => {
+        //     this.cameras.main.setSize(gameSize.width, gameSize.height);
+        //     this.homeButton.setPosition(this.cameras.main.width - 32, 32);
+        // });
 
         this.homeButton.on("pointerover", () => {
             this.game.canvas.style.cursor = "pointer";
