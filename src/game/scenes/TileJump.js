@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import { MyPlayer } from "../components/MyPlayer";
 import { startSpecialistScene } from "./hospital/Hospital";
+import { createHomeButton } from "../components/HomeButton";
 
 export class TileJump extends Phaser.Scene {
     constructor() {
@@ -46,25 +47,7 @@ export class TileJump extends Phaser.Scene {
             loop: true,
         });
 
-        this.homeButton = this.add
-            .image(this.cameras.main.width - 32, 32, "home")
-            .setScrollFactor(0)
-            .setOrigin(1, 0)
-            .setScale(0.2)
-            .setInteractive();
-
-        this.homeButton.on("pointerover", () => {
-            this.game.canvas.style.cursor = "pointer";
-        });
-
-        this.homeButton.on("pointerout", () => {
-            this.game.canvas.style.cursor = "default";
-        });
-
-        this.homeButton.on("pointerdown", () => {
-            startSpecialistScene(this, "Pediatrician");
-        });
-
+        this.homeButton = createHomeButton(this, "Pediatrician");
 
         this.physics.add.collider(
             this.player,

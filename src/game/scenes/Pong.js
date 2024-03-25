@@ -1,5 +1,6 @@
 import { Scene, Math } from "phaser";
 import { startSpecialistScene } from "./hospital/Hospital";
+import { createHomeButton } from "../components/HomeButton";
 
 export class Pong extends Scene {
     constructor() {
@@ -131,6 +132,8 @@ export class Pong extends Scene {
             undefined,
             this
         );
+        
+        this.homeButton = createHomeButton(this, "Pulmonologist");
 
         // Set Up Input
         this.cursors = this.input.keyboard.createCursorKeys();

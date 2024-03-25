@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import { MyPlayer } from "../components/MyPlayer";
 import { startSpecialistScene } from "./hospital/Hospital";
+import { createHomeButton } from "../components/HomeButton";
 
 const sizes = {
     width: 1200,
@@ -59,25 +60,7 @@ export class ZebraCatcher extends Phaser.Scene {
             fontStyle: "bold",
         });
 
-        // Create the home button
-        const homeButton = this.add
-            .image(sizes.width - 50, 50, "home")
-            .setScrollFactor(0)
-            .setOrigin(0, 0.5)
-            .setScale(0.2)
-            .setInteractive();
-
-        homeButton.on("pointerover", () => {
-            this.game.canvas.style.cursor = "pointer";
-        });
-
-        homeButton.on("pointerout", () => {
-            this.game.canvas.style.cursor = "default";
-        });
-
-        homeButton.on("pointerdown", () => {
-            startSpecialistScene(this, "Dermatologist");
-        });
+        this.homeButton = createHomeButton(this, "Dermatologist");
     }
 
     update() {
