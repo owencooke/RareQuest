@@ -21,6 +21,9 @@ export class City extends Scene {
         if (data.doctorType) {
             this.doctorType = data.doctorType;
         }
+        if (data.playerSpawn) {
+            this.playerSpawn = data.playerSpawn;
+        }
     }
 
     create() {
@@ -69,25 +72,6 @@ export class City extends Scene {
             null,
             this
         );
-
-        // Insert the button code here
-        let buttonX = this.cameras.main.width - 80; // 30 pixels from the right edge of the camera viewport
-        let buttonY = 80; // 30 pixels from the top of the camera viewport
-        this.questionButton = this.add
-            .image(buttonX, buttonY, "question")
-            .setScrollFactor(0)
-            .setInteractive();
-        this.questionButton.setScale(0.1, 0.1);
-        this.questionButton.setOrigin(0.5, 0.5);
-        this.questionButton.setDepth(100);
-
-        this.questionButton.on("pointerdown", () => {
-            // Capture the player's current position
-            const playerPosition = { x: this.player.x, y: this.player.y };
-
-            // Transition to the Rules scene, passing the player's current position
-            this.scene.start("Rules", { playerSpawn: playerPosition });
-        });
 
         map.createLayer("Roofs", exteriors, 0, 0);
         map.createLayer("RoofDecor", exteriors, 0, 0);
