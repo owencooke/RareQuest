@@ -38,16 +38,18 @@ class HUD extends GameObjects.Container {
         this.questionButton.setDepth(100);
 
         this.questionButton.on("pointerdown", () => {
-            // Capture the player's current position
-            const playerPosition = {
-                x: this.scene.player.x,
-                y: this.scene.player.y,
-            };
-
+            const nextScene = this.scene.scene.key;
+            const doctorType =
+                nextScene === "Hospital" ? this.scene.doctorType : undefined;
             // Transition to the Rules scene, passing the player's current position
             this.scene.scene.start("Rules", {
-                nextScene: this.scene.scene.key,
-                playerSpawn: playerPosition,
+                nextScene,
+                playerSpawn: {
+                    x: this.scene.player.x,
+                    y: this.scene.player.y,
+                },
+                doctorType,
+                minigame: this.scene.minigame,
             });
         });
     }

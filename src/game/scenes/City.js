@@ -14,7 +14,6 @@ const DOCTOR_SYMBOLS_SCALE = {
 export class City extends Scene {
     constructor() {
         super("City");
-        this.playerSpawn = { x: 32 * 51, y: 32 * 30 };
     }
 
     init(data) {
@@ -24,6 +23,8 @@ export class City extends Scene {
         if (data.playerSpawn) {
             this.playerSpawn = data.playerSpawn;
         }
+
+        console.log(this.playerSpawn, this.doctorType);
     }
 
     create() {
@@ -45,12 +46,7 @@ export class City extends Scene {
         buildingsLayer.setCollisionByExclusion([-1]);
 
         // Add player sprite before above layers (roofs)
-        this.player = new MyPlayer(
-            this,
-            this.playerSpawn.x,
-            this.playerSpawn.y,
-            "down"
-        );
+        this.player = new MyPlayer(this, 32 * 51, 32 * 30, "down");
         this.physics.add.collider(this.player, buildingsLayer);
 
         // Bind door objects to next scene handler
@@ -58,11 +54,14 @@ export class City extends Scene {
         if (this.doctorType) {
             doors.forEach((door) => {
                 if (this.doctorType === door.name) {
-                    // this.player.setOrigin(door.x, door.y + 32);
                     this.player.setX(door.x);
                     this.player.setY(door.y + 32);
                 }
             });
+            this.doctorType = null;
+        } else if (this.playerSpawn) {
+            this.player.setX(this.playerSpawn.x);
+            this.player.setY(this.playerSpawn.y);
         }
 
         this.physics.add.collider(

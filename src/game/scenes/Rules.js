@@ -15,6 +15,8 @@ export class Rules extends Scene {
         // Store the position data passed from Scene A
         this.nextScene = data.nextScene;
         this.playerSpawn = data.playerSpawn;
+        this.doctorType = data.doctorType;
+        this.minigame = data.minigame;
     }
 
     create() {
@@ -61,7 +63,18 @@ export class Rules extends Scene {
             .setInteractive();
 
         backButton.on("pointerdown", () => {
-            this.scene.start(this.nextScene, { playerSpawn: this.playerSpawn });
+            console.log({
+                nextScene: this.nextScene,
+                playerSpawn: this.playerSpawn,
+                doctorType: this.doctorType,
+                minigame: this.minigame,
+            });
+
+            this.scene.start(this.nextScene, {
+                playerSpawn: this.playerSpawn,
+                doctorType: this.doctorType,
+                minigame: this.minigame,
+            });
         });
     }
 }

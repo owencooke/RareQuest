@@ -14,7 +14,7 @@ class Hospital extends Scene {
     init(data) {
         this.dialogue = script[data.doctorType];
         this.doctorType = data.doctorType;
-        this.minigameScene = data.minigame;
+        this.minigame = data.minigame;
     }
 
     create() {
@@ -258,7 +258,7 @@ class Hospital extends Scene {
         if (this.cursors.space.isDown && !this.dialogueInProgess) {
             this.minigameOverlay.setVisible(false);
             this.scene.start("MinigameMenu", {
-                minigame: this.minigameScene,
+                minigame: this.minigame,
             });
         }
     }
