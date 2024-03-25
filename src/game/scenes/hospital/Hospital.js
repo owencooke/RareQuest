@@ -15,22 +15,29 @@ export class Hospital extends Scene {
     init(data) {
         this.doorPosition = data.doorPosition;
         this.dialogue = script[data.doctorType];
+        this.doctorType = data.doctorType;
         
-        if (data.doctorType === "Pulmonologist") {
-            this.minigameScene = "Pong"
+        if (this.doctorType === "Pulmonologist") {
+            const hospitalData = {doctorType: "Pulmonologist", minigame: "Pong"};
+            this.minigameScene = hospitalData;
         }
-        else if (data.doctorType === "Neurologist") {
-            this.minigameScene = "Maze"
+        else if (this.doctorType === "Neurologist") {
+            const hospitalData = {doctorType: "Neurologist", minigame: "Maze"};
+            this.minigameScene = hospitalData;
         }
-        else if (data.doctorType === "Pediatrician") {
-            this.minigameScene = "TileJump"
+        else if (this.doctorType === "Pediatrician") {
+            const hospitalData = {doctorType: "Pediatrician", minigame: "TileJump"};
+            this.minigameScene = hospitalData;
         }
-        else if (data.doctorType = "Dermatologist") {
-            this.minigameScene = "Hospital"
+        else if (this.doctorType === "Dermatologist") {
+            const hospitalData = {doctorType: "Dermatologist", minigame: "Hospital"};
+            this.minigameScene = hospitalData;
         }
-        else if (data.doctorType = "Ophthalmologist") {
-            this.minigameScene = "Hospital"
+        else if (this.doctorType === "Ophthalmologist") {
+            const hospitalData = {doctorType: "Ophthalmologist", minigame: "Hospital"};
+            this.minigameScene = hospitalData;
         }
+        
     }
 
     create() {
@@ -217,9 +224,9 @@ export class Hospital extends Scene {
         }
     }
 
-    handleMinigame() {
+    handleMinigame(doctor) {
         if (this.cursors.space.isDown) {
-            this.scene.start(this.minigameScene, {x: this.player.x, y: this.player.y})
+            this.scene.start(this.minigameScene.minigame, {doctorType: this.minigameScene.doctorType})
         }
     }
 }
