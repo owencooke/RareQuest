@@ -4,10 +4,12 @@ const TEXTBOX_SETTINGS = {
     SPRITE_SHEET: "textbox",
     SPRITE_INDEX: 3,
     MARGIN_WIDTH: 0.05,
-    FONT_FAMILY: "ArcadeClassic",
-    FONT_SIZE: "24px",
+    FONT_FAMILY: "'Press Start 2P'",
+    FONT_SIZE: "20px",
     CHARACTERS_PER_SECOND: 40,
+    LINE_SPACING: 5,
 };
+
 
 class TextBox extends GameObjects.Container {
     constructor(scene) {
@@ -53,8 +55,9 @@ class TextBox extends GameObjects.Container {
             {
                 fontFamily: TEXTBOX_SETTINGS.FONT_FAMILY,
                 fontSize: TEXTBOX_SETTINGS.FONT_SIZE,
-                fill: "black",
+                fill: "white",
                 wordWrap: { width: this.width * 0.9 },
+                lineSpacing: TEXTBOX_SETTINGS.LINE_SPACING,
             }
         );
         this.add(this.text);
@@ -99,4 +102,3 @@ class TextBox extends GameObjects.Container {
 }
 
 export default TextBox;
-
