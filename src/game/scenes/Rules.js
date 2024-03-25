@@ -63,13 +63,6 @@ export class Rules extends Scene {
             .setInteractive();
 
         backButton.on("pointerdown", () => {
-            console.log({
-                nextScene: this.nextScene,
-                playerSpawn: this.playerSpawn,
-                doctorType: this.doctorType,
-                minigame: this.minigame,
-            });
-
             this.scene.start(this.nextScene, {
                 playerSpawn: this.playerSpawn,
                 doctorType: this.doctorType,

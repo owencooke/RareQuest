@@ -23,8 +23,6 @@ export class City extends Scene {
         if (data.playerSpawn) {
             this.playerSpawn = data.playerSpawn;
         }
-
-        console.log(this.playerSpawn, this.doctorType);
     }
 
     create() {
