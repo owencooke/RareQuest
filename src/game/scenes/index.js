@@ -1,6 +1,6 @@
 import { Boot } from "./Boot";
 import { City } from "./City";
-import {Rules} from "./Rules";
+import { Rules } from "./Rules";
 import { Hospital } from "./hospital/Hospital";
 import { MainMenu } from "./MainMenu";
 import { Story } from "./Story";
@@ -28,6 +28,7 @@ export const scenes = [
     Pong,
     gameEnd,
     SpyGame,
-    ZebraCatcher
+    ZebraCatcher,
     MinigameMenu,
 ];
+

@@ -74,6 +74,7 @@ export class Maze extends Scene {
             map.heightInPixels
         );
         this.cameras.main.startFollow(this.player);
+        this.cameras.main.setZoom(1.5);
 
         this.homeButton = this.add
             .image(this.cameras.main.width - 32, 32, "home")

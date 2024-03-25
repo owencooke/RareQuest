@@ -240,13 +240,11 @@ function startSpecialistScene(sceneRef, doctorType) {
         case "Pediatrician":
             minigame = "TileJump";
             break;
-        // FIXME: add minigame
         case "Dermatologist":
-            minigame = undefined;
+            minigame = "ZebraCatcher";
             break;
-        // FIXME: add minigame
         case "Ophthalmologist":
-            minigame = undefined;
+            minigame = "SpyGame";
             break;
         default:
             minigame = undefined;
