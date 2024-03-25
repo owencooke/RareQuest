@@ -1,7 +1,12 @@
 export class MusicService {
     constructor(scene) {
         if (!MusicService.instance) {
-            this.backgroundMusic = scene.sound.add('backgroundMusic', { loop: true });
+            this.backgroundMusic = scene.sound
+                .add("backgroundMusic", {
+                    loop: true,
+                })
+                .setVolume(0.2);
+
             this.isPlaying = false;
             this.resumePosition = 0; // Track the playback position
             MusicService.instance = this;
@@ -28,3 +33,4 @@ export class MusicService {
 }
 
 MusicService.instance = null;
+
