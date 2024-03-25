@@ -89,21 +89,43 @@ export class Maze extends Scene {
         this.player.setActive(false);
         this.cameras.main.stopFollow();
 
+        // const message = this.add
+        //     .text(
+        //         this.cameras.main.worldView.x + this.cameras.main.width / 2,
+        //         this.cameras.main.worldView.y + this.cameras.main.height / 2,
+        //         "Congratulations!",
+        //         {
+        //             fontSize: "32px",
+        //             color: "#ffffff",
+        //             fontStyle: "bold",
+        //         }
+        //     )
+        //     .setOrigin(0.5, 0.5);
+        const box = this.add.graphics();
+        box.fillStyle(0x000000, 0.5);
+        box.fillRect(
+            this.cameras.main.worldView.x + this.cameras.main.width / 2 - 300,
+            this.cameras.main.worldView.y + this.cameras.main.height / 2 - 50,
+            600,
+            100
+        );
+
         const message = this.add
             .text(
                 this.cameras.main.worldView.x + this.cameras.main.width / 2,
                 this.cameras.main.worldView.y + this.cameras.main.height / 2,
                 "Congratulations!",
                 {
-                    fontSize: "32px",
-                    color: "#ffffff",
+                    fontSize: "42px",
+                    fill: "#ffffff",
                     fontStyle: "bold",
+                    fontFamily: "Arial Black",
                 }
             )
-            .setOrigin(0.5, 0.5);
+            .setOrigin(0.5);
 
         this.time.delayedCall(
-            1000,
+            2000,
             () => {
                 message.destroy();
                 startSpecialistScene(this, "Neurologist");

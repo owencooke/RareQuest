@@ -157,29 +157,36 @@ export class TileJump extends Phaser.Scene {
         if (this.score === 5) {
             this.score = 0;
             // Display the congratulatory message
-            this.add
-                .text(
-                    this.game.config.width / 2,
-                    this.game.config.height / 2,
-                    "Congratulations!",
-                    { font: "48px Arial", fill: "#fff" }
-                )
-                .setOrigin(0.5);
-            this.add
-                .text(
-                    this.game.config.width / 2,
-                    this.game.config.height / 2 + 100,
-                    "Click anywhere to continue",
-                    { font: "24px Arial", fill: "#fff" }
-                )
-                .setOrigin(0.5);
+            // Create a box sprite as the background for the text
+            const box = this.add.graphics();
+            box.fillStyle(0x000000, 0.7);
+            box.fillRect(
+                this.cameras.main.centerX - 300,
+                this.cameras.main.centerY - 50,
+                600,
+                100
+            );
 
-            // Pause the game logic (but not the scene itself)
+            const message = this.add
+                .text(
+                    this.cameras.main.centerX,
+                    this.cameras.main.centerY,
+                    "Congratulations!",
+                    {
+                        fontSize: "42px",
+                        fill: "#ffffff",
+                        fontStyle: "bold",
+                        fontFamily: "Arial Black",
+                    }
+                )
+                .setOrigin(0.5);
+            
+            // Pause the game logic
             this.physics.pause();
             this.time.removeAllEvents();
 
-            // Make the scene listen for a click to restart
-            this.input.once("pointerdown", () => {
+            this.time.delayedCall(2000, () => {
+                message.destroy();
                 startSpecialistScene(this, "Pediatrician");
             });
         }

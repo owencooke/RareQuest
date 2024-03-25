@@ -31,7 +31,7 @@ export class iSpy extends Scene {
             100
         );
 
-        this.add
+        const message = this.add
             .text(
                 this.cameras.main.centerX,
                 this.cameras.main.centerY,
@@ -46,6 +46,7 @@ export class iSpy extends Scene {
             .setOrigin(0.5);
 
         this.time.delayedCall(2000, () => {
+            message.destroy();
             startSpecialistScene(this, "Ophthalmologist");
         });
     }

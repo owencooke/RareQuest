@@ -165,14 +165,14 @@ export class gameEnd extends Scene {
         // Game End
         if (data.gameScore === data.scoreCon) {
             this.gameState = "Success!";
-        }
-        this.add
+            this.add
             .text(this.cameras.main.centerX, 300, this.gameState, {
                 fontSize: "72px",
                 color: "#ffffff",
                 fontFamily: "Arial Black",
             })
             .setOrigin(0.5);
+        }
 
         // Try again or Continue
 
@@ -191,6 +191,7 @@ export class gameEnd extends Scene {
                 .setOrigin(0.5)
                 .setInteractive();
             continueButton.on("pointerdown", () => {
+                this.gameState = "Failure!";
                 startSpecialistScene(this, "Pulmonologist");
             });
         } else {
