@@ -1,101 +1,67 @@
-import Phaser from 'phaser';
-export class HurdleJump extends Phaser.Scene {
-    constructor() {
-        super('HurdleJump');
-    }
+import { Scene } from 'phaser'
+
+export class HurdleJump extends Scene {
+  constructor() {
+    super('HurdleJump')
+  }
+
+  preload() {
+    // No need to preload an image for the player since we're using a rectangle
+  }
+
+  create() {
+    // phaser config load
 
 
-    create() {
-        // Player setup
-        this.player = this.add.rectangle(100, 300, 50, 50, 0xff0000);
-        this.physics.add.existing(this.player); // Enable physics for the player
-    
-        // Obstacles setup
-        this.obstacles = this.physics.add.group();
-    
-        // Score setup
-        this.score = 0;
-        this.scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000' });
-    
-        // Set up collision detection
-        this.physics.add.collider(this.player, this.obstacles, this.gameOver, null, this);
-    
-        // Listen for space key to jump
-        this.input.keyboard.on('keydown-SPACE', this.jump, this);
-    }
-    
-    
+  this.cameras.main.setBackgroundColor('#0000FF') // Set background color to blue
 
-    update(time, delta) {
-        // Check if it's time to create a new obstacle
-        if (time > this.nextObstacleTime) {
-            this.createObstacle();
-            this.nextObstacleTime = time + this.obstacleDelay;
-        }
+  // Create rectangles
+  this.rectangles = this.add.group()
+  this.time.addEvent({
+    delay: 3000,
+    callback: this.createRectangle,
+    callbackScope: this,
+    loop: true
+  })
 
-        // Increase difficulty over time
-        this.obstacleSpeed -= delta / 10000;
-    }
+  // Create the player as a physics-enabled square rectangle and color it red
+  const playerSize = 50
+  const playerX = this.cameras.main.width / 2 // Center horizontally
+  const playerY = this.cameras.main.height - playerSize / 2 // Bottom of the screen
+  this.player = this.add.rectangle(playerX, playerY, playerSize, playerSize, 0xFF0000)
 
-    jump() {
-        if (this.player.body.touching.down) {
-            this.player.setVelocityY(-400);
-        }
-    }
+  // Ground
+  this.ground = this.add.rectangle(0, this.cameras.main.height, this.cameras.main.width, 10, 0x000000).setOrigin(0, 1)
+  this.physics.add.existing(this.ground, true) // Make ground static
+  this.physics.add.collider(this.player, this.ground)
 
-    createObstacle() {
-        const obstacleHeight = Phaser.Math.Between(20, 80); // Randomize obstacle height
-        const obstacle = this.add.rectangle(800, 350 - obstacleHeight / 2, 20, obstacleHeight, 0x00ff00); // Create a rectangle obstacle
-        this.physics.add.existing(obstacle); // Enable physics for the obstacle
-        this.obstacles.add(obstacle); // Add the obstacle to the obstacles group
-    
-        obstacle.setVelocityX(this.obstacleSpeed);
-        obstacle.setGravityY(-500);
-        obstacle.setBounce(1);
-        obstacle.body.onWorldBounds = true;
-        obstacle.body.world.on('worldbounds', function() {
-            this.obstacles.killAndHide(obstacle);
-            this.score++;
-            this.scoreText.setText('Score: ' + this.score);
-        }, this);
-    
-        // Animation effect to make obstacles appear to come through
-        this.tweens.add({
-            targets: obstacle,
-            duration: 500, // Duration of animation
-            scaleX: 2, // Double the width
-            scaleY: 0.5, // Half the height
-            ease: 'Linear', // Linear easing
-            yoyo: true, // Repeat the animation in reverse
-            repeat: -1 // Repeat indefinitely
-        });
-    }
-    
-
-    gameOver() {
-        this.physics.pause();
-        this.scene.pause();
-        const gameOverText = this.add.text(400, 200, 'Game Over\nScore: ' + this.score, { fontSize: '48px', fill: '#ff0000' }).setOrigin(0.5);
-        const restartText = this.add.text(400, 300, 'Press SPACE to Restart', { fontSize: '32px', fill: '#000' }).setOrigin(0.5);
-        restartText.setInteractive();
-        restartText.on('pointerdown', () => {
-            this.scene.restart();
-        });
-    }
+  // Input for jumping
+  this.cursors = this.input.keyboard.createCursorKeys()
 }
 
-const config = {
-    type: Phaser.AUTO,
-    width: 800,
-    height: 400,
-    physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: { y: 1000 }, // Adjust gravity to make jumping feel right
-            debug: false
-        }
-    },
-    scene: HurdleJump
-};
 
-const game = new Phaser.Game(config);
+
+  update() {
+    // Move rectangles
+    this.rectangles.getChildren().forEach(rectangle => {
+      rectangle.x -= 2
+      if (rectangle.x < -rectangle.width) {
+        this.rectangles.remove(rectangle, true, true)
+      }
+    })
+
+    // Jumping logic
+    if (this.cursors.up.isDown && this.player.body.touching.down) {
+      this.player.body.setVelocityY(-300) // Tweak this value for higher or lower jumps
+    }
+  }
+
+  createRectangle() {
+    let x = this.cameras.main.width
+    let y = this.cameras.main.height
+    let width = 50
+    let height = 100
+    let rectangle = this.add.rectangle(x, y, width, height, 0xFFFFFF).setOrigin(1, 1)
+    this.rectangles.add(rectangle)
+  }
+}
