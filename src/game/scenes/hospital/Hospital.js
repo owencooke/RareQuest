@@ -8,8 +8,6 @@ class Hospital extends Scene {
         super("Hospital");
         this.player;
         this.doctor;
-        this.dialogueInProgess = false;
-        this.dialogueOccured = false;
     }
 
     init(data) {
@@ -19,6 +17,8 @@ class Hospital extends Scene {
     }
 
     create() {
+        this.dialogueInProgess = false;
+        this.dialogueOccured = false;
         this.allowMovement = true;
         // Load the hospital room tilemap
         const map = this.make.tilemap({
