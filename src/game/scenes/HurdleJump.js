@@ -1,36 +1,30 @@
 import Phaser from 'phaser';
-
-class HurdleJump extends Phaser.Scene {
+export class HurdleJump extends Phaser.Scene {
     constructor() {
         super('HurdleJump');
     }
 
-    preload() {
-        this.load.image('player', 'assets/player.png');
-        this.load.image('obstacle', 'assets/obstacle.png');
-    }
 
     create() {
         // Player setup
-        this.player = this.physics.add.sprite(100, 300, 'player').setScale(0.5);
-        this.player.setCollideWorldBounds(true);
-
+        this.player = this.add.rectangle(100, 300, 50, 50, 0xff0000);
+        this.physics.add.existing(this.player); // Enable physics for the player
+    
         // Obstacles setup
         this.obstacles = this.physics.add.group();
-        this.obstacleSpeed = -200; // Initial obstacle speed
-        this.obstacleDelay = 1000; // Initial obstacle delay
-        this.nextObstacleTime = 0;
-
+    
         // Score setup
         this.score = 0;
         this.scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000' });
-
+    
         // Set up collision detection
         this.physics.add.collider(this.player, this.obstacles, this.gameOver, null, this);
-
+    
         // Listen for space key to jump
         this.input.keyboard.on('keydown-SPACE', this.jump, this);
     }
+    
+    
 
     update(time, delta) {
         // Check if it's time to create a new obstacle
@@ -50,19 +44,33 @@ class HurdleJump extends Phaser.Scene {
     }
 
     createObstacle() {
-        const obstacle = this.obstacles.create(800, 300, 'obstacle').setScale(0.5);
+        const obstacleHeight = Phaser.Math.Between(20, 80); // Randomize obstacle height
+        const obstacle = this.add.rectangle(800, 350 - obstacleHeight / 2, 20, obstacleHeight, 0x00ff00); // Create a rectangle obstacle
+        this.physics.add.existing(obstacle); // Enable physics for the obstacle
+        this.obstacles.add(obstacle); // Add the obstacle to the obstacles group
+    
         obstacle.setVelocityX(this.obstacleSpeed);
         obstacle.setGravityY(-500);
         obstacle.setBounce(1);
-        obstacle.setSize(50, 100);
-        obstacle.setOffset(10, 0);
         obstacle.body.onWorldBounds = true;
         obstacle.body.world.on('worldbounds', function() {
             this.obstacles.killAndHide(obstacle);
             this.score++;
             this.scoreText.setText('Score: ' + this.score);
         }, this);
+    
+        // Animation effect to make obstacles appear to come through
+        this.tweens.add({
+            targets: obstacle,
+            duration: 500, // Duration of animation
+            scaleX: 2, // Double the width
+            scaleY: 0.5, // Half the height
+            ease: 'Linear', // Linear easing
+            yoyo: true, // Repeat the animation in reverse
+            repeat: -1 // Repeat indefinitely
+        });
     }
+    
 
     gameOver() {
         this.physics.pause();
