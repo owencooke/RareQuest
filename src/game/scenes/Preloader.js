@@ -91,7 +91,6 @@ export class Preloader extends Scene {
             "./assets/Room_Builder_Walls_32x32.png"
         );
         this.load.image("19_Hospital_32x32", "./assets/19_Hospital_32x32.png");
-
         // Load DoctorA
         this.load.spritesheet("doctorA", "./assets/doctorA.png", {
             frameWidth: 16,
