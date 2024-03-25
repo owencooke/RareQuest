@@ -9,6 +9,7 @@ export class Hospital extends Scene {
         this.player;
         this.doctor;
         this.dialogueInProgess = false;
+        this.dialogueFinish1 = false;
     }
 
     init(data) {
@@ -25,10 +26,10 @@ export class Hospital extends Scene {
             this.minigameScene = "TileJump"
         }
         else if (data.doctorType = "Dermatologist") {
-            this.minigameScene = "None"
+            this.minigameScene = "Hospital"
         }
         else if (data.doctorType = "Ophthalmologist") {
-            this.minigameScene = "None"
+            this.minigameScene = "Hospital"
         }
     }
 
