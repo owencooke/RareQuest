@@ -1,6 +1,14 @@
 import { Scene, Cameras } from "phaser";
 import { MyPlayer } from "../components/MyPlayer";
 
+const DOCTOR_SYMBOLS_SCALE = {
+    Pediatrician: 0.125,
+    Pulmonologist: 0.125,
+    Dermatologist: 0.125,
+    Neurologist: 0.125,
+    Ophthalmologist: 0.05,
+};
+
 export class City extends Scene {
     constructor() {
         super("City");
@@ -30,11 +38,11 @@ export class City extends Scene {
         });
         const exteriors = map.addTilesetImage("exteriors_32", "exteriors_32");
         map.createLayer("Ground", exteriors, 0, 0);
+        map.createLayer("GroundDecor", exteriors, 0, 0);
         const buildingsLayer = map.createLayer("Buildings", exteriors, 0, 0);
         buildingsLayer.setCollisionByExclusion([-1]);
-        map.createLayer("BelowPlayer", exteriors, 0, 0);
 
-        // Add player sprite before AbovePlayer layer
+        // Add player sprite before above layers (roofs)
         this.player = new MyPlayer(
             this,
             this.playerSpawn.x,
@@ -52,7 +60,17 @@ export class City extends Scene {
             this
         );
 
-        map.createLayer("AbovePlayer", exteriors, 0, 0);
+        map.createLayer("Roofs", exteriors, 0, 0);
+        map.createLayer("RoofDecor", exteriors, 0, 0);
+
+        // Setup doctor symbols for buildings
+        let doorsGroup = this.physics.add.staticGroup(
+            map.createFromObjects("Doctor Symbols")
+        );
+        doorsGroup.getChildren().forEach((door) => {
+            door.setTexture(door.name);
+            door.setScale(DOCTOR_SYMBOLS_SCALE[door.name]);
+        }, this);
 
         // Set world bounds and collision
         this.physics.world.setBounds(

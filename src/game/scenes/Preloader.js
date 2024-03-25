@@ -57,6 +57,14 @@ export class Preloader extends Scene {
         );
         this.load.image("home", "./assets/home.png");
 
+        this.load.image("bg", "./assets/balancebg.jpg");
+
+        // Load building icons for each doctor
+        this.load.image("Pediatrician", "./assets/doctor_symbols/bear.png");
+        this.load.image("Pulmonologist", "./assets/doctor_symbols/lungs.png");
+        this.load.image("Dermatologist", "./assets/doctor_symbols/derm.png");
+        this.load.image("Neurologist", "./assets/doctor_symbols/brain.png");
+        this.load.image("Ophthalmologist", "./assets/doctor_symbols/eye.png");
 
         // Load player
         this.load.spritesheet("adam-run", "./assets/Adam_run_16x16.png", {
