@@ -3,7 +3,7 @@ import { createHomeButton } from "../components/HomeButton";
 
 const winText = ["Based on the tests and treatment plan, there doesn't seem to be any significant abnormality in the eye structure.",
 "However, the symptoms still persist. Sometimes eye symptoms can be linked to underlying systemic conditons",
-"It seems Sam has some skin rashes as well. Skin conditions can sometimes manifest with eye symptoms",
+"It seems Sam has some skin lesions and nodules below his neck. Skin conditions can sometimes manifest eye symptoms",
 "It's worth exploring Sam's condition from a dermatology angle."];
 
 export class iSpy extends Scene {

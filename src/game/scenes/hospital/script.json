@@ -74,7 +74,7 @@
         },
         {
             "name": "Investigator",
-            "text": "Yes, it does get worse if he's been trying to play or do anything active."
+            "text": "Yes, it does get worse if he's been trying to play or do anything active. He feels weaker than usual."
         },
         {
             "name": "Neurologist",
@@ -142,11 +142,11 @@
         },
         {
             "name": "Investigator",
-            "text": "He does cough sometimes after running, but no wheezing or chest pain that we've noticed."
+            "text": "He does wheeze after running, but no cough or chest pain that we've noticed. He complains that the difficulty breathing is accompanied with difficult concentrating and headaches"
         },
         {
             "name": "Pulmonologist",
-            "text": "Alright, based on what you've told me, Sam needs to get started on the Pong treatment plan, which you can see over on my computer."
+            "text": "Alright, based on what you've told me, we should run some lung function tests and Sam needs to get started on the Pong treatment plan, which you can see over on my computer."
         }
     ]
 }

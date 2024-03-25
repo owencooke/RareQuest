@@ -1,6 +1,9 @@
 import { Scene, Math } from "phaser";
-import { startSpecialistScene } from "./hospital/Hospital";
 import { createHomeButton } from "../components/HomeButton";
+
+const winText = ["Sam's lung capacity seems to be low, but it doesn't explain some of his other symptoms.",
+"What's concerning is that he experiences weakness, difficulty concentrating and headaches as well.",
+"These are common neurological symptoms. We can refer you to a neurologist. It may be worthwile to test for any underlying neurological conditions"];
 
 export class Pong extends Scene {
     constructor() {
@@ -159,9 +162,20 @@ export class gameEnd extends Scene {
     constructor() {
         super("gameEnd");
         this.gameState = "Failure";
+        this.winText = winText;
     }
 
     create(data) {
+        const background = this.add.image(
+            this.cameras.main.width / 2,
+            this.cameras.main.height / 2,
+            "bg"
+        );
+        background.setDisplaySize(
+            this.cameras.main.width,
+            this.cameras.main.height
+        );
+
         // Game End
         if (data.gameScore === data.scoreCon) {
             this.gameState = "Success!";
@@ -175,8 +189,8 @@ export class gameEnd extends Scene {
         }
 
         // Try again or Continue
-
         if (this.gameState === "Success!") {
+
             const continueButton = this.add
                 .text(
                     this.cameras.main.centerX,
@@ -192,7 +206,10 @@ export class gameEnd extends Scene {
                 .setInteractive();
             continueButton.on("pointerdown", () => {
                 this.gameState = "Failure!";
-                startSpecialistScene(this, "Pulmonologist");
+                this.scene.start("MinigamePost", {
+                    doctorType: "Pulmonologist",
+                    winText: winText,
+                });
             });
         } else {
             const playButton = this.add

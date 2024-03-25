@@ -5,7 +5,8 @@ import { createHomeButton } from "../components/HomeButton";
 
 const winText = ["After a long process of monitoring Sam's responses to the tests and treatments so far, it seems that his symptoms closely match that of the Fibrocutaneous Nodular Syndrome disease.\n",
  "It is characterized by Firm, raised nodules or plaques on the skin, often slow-growing and painless, flesh-colored or pinkish in appearance, may have a slightly purplish hue, may be mistaken for a benign skin lesion, but can invade deeper tissues if left untreated.",
- "We suggest continuing on the ZebraCatcher treatment plan. It is crucial that Sam continues to visit his doctors for regular check ups. His case also presents a unique opportunity for raising awareness on rare skin diseases. \nWe are here to help and ensure that Sam can continue to flourish in his endeavors!"];
+ "Complications with this disease arising from environmental factors may manifest some of the other symptoms Sam has been experiencing. We suggest continuing on the ZebraCatcher treatment plan/",
+ "It is crucial that Sam continues to visit his doctors for regular check ups. His case also presents a unique opportunity for raising awareness on rare skin diseases. \nWe are here to help and ensure that Sam can continue to flourish in his endeavors!"];
 
 const sizes = {
     width: 1200,
