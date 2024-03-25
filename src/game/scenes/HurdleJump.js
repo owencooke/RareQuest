@@ -12,7 +12,6 @@ export class HurdleJump extends Scene {
   create() {
     // phaser config load
 
-
   this.cameras.main.setBackgroundColor('#0000FF') // Set background color to blue
 
   // Create rectangles
@@ -31,15 +30,15 @@ export class HurdleJump extends Scene {
   this.player = this.add.rectangle(playerX, playerY, playerSize, playerSize, 0xFF0000)
 
   // Ground
-  this.ground = this.add.rectangle(0, this.cameras.main.height, this.cameras.main.width, 10, 0x000000).setOrigin(0, 1)
-  this.physics.add.existing(this.ground, true) // Make ground static
-  this.physics.add.collider(this.player, this.ground)
+  
+this.ground = this.add.rectangle(0, this.cameras.main.height, this.cameras.main.width, 10, 0x000000).setOrigin(0, 1)
+this.physics.add.existing(this.ground, true) // Make ground static
+this.physics.add.collider(this.player, this.ground)
+
 
   // Input for jumping
   this.cursors = this.input.keyboard.createCursorKeys()
 }
-
-
 
   update() {
     // Move rectangles
@@ -52,7 +51,7 @@ export class HurdleJump extends Scene {
 
     // Jumping logic
     if (this.cursors.up.isDown && this.player.body.touching.down) {
-      this.player.body.setVelocityY(-300) // Tweak this value for higher or lower jumps
+        this.player.setVelocityY(-330);
     }
   }
 
