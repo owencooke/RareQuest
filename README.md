@@ -1,193 +1,44 @@
-# Phaser React Template
+# RareQuest - Team 12 RQMO
 
-This is a Phaser 3 project template that uses the React framework and Vite for bundling. It includes a bridge for React to Phaser game communication, hot-reloading for quick development workflow and scripts to generate production-ready builds.
+## RareQuest
 
-**[This Template is also available as a TypeScript version.](https://github.com/phaserjs/template-react-ts)**
+A web game for promoting the awareness and challenges of establishing a diagnosis for rare diseases
 
-### Versions
+## The Issue
 
-This template has been updated for:
+Rare diseases pose a unique diagnostic challenge because of limited research and awareness. This can create obstacles for patients and healthcare providers alike. By increasing understanding of these challenges, we can foster empathy, promote education about rare diseases, and encourage support for those affected.
 
-- [Phaser 3.80.1](https://github.com/phaserjs/phaser)
-- [React 18.2.0](https://github.com/facebook/react)
-- [Vite 5.1.4](https://github.com/vitejs/vite)
+## Our Magic Solution
 
-![screenshot](screenshot.png)
+Our solution is an interactive game where the player becomes an investigator determined to uncover Sam's mystery illness. Players will guide Sam's journey, analyzing medical information and researching potential diagnoses.  The game highlights the challenges of diagnosing rare diseases, encourages critical thinking, and promotes determination to find answers for those facing difficult medical situations.
 
-## Requirements
+## How it works
 
-[Node.js](https://nodejs.org) is required to install dependencies and run scripts via `npm`.
+### 1. Visit doctors to learn about symptoms
 
-## Available Commands
+Players will move around the map to interact with different doctors to learn more about the symptoms Sam is experiencing.
 
-| Command | Description |
-|---------|-------------|
-| `npm install` | Install project dependencies |
-| `npm run dev` | Launch a development web server |
-| `npm run build` | Create a production build in the `dist` folder |
+### 2. Play mini games
 
-## Writing Code
+Players will play mini games after meeting a doctor to examine the treatment plan outlined for Sam.
 
-After cloning the repo, run `npm install` from your project directory. Then, you can start the local development server by running `npm run dev`.
+### 3. The difficulties of rare disease diagnosis
 
-The local development server runs on `http://localhost:8080` by default. Please see the Vite documentation if you wish to change this, or add SSL support.
+The player has journeyed through the intricate process of diagnosing a rare disease, visiting numerous doctors to uncover the challenges faced by those with such conditions.
 
-Once the server is running you can edit any of the files in the `src` folder. Vite will automatically recompile your code and then reload the browser.
+## How to play
 
-## Template Project Structure
+1. Visit the website [https://rqmo12-game.web.app/]
+2. Click on the "Play" button
+3. Follow the instructions on the screen to play the game
+4. Find the different hispitals and doctors to learn more about Sam's symptoms by playing games. Walk into the door of the building to enter. Go the doctor and press the "space bar" key to interact with them.
+5. Go to the doctors respective computer to access the tasks and play the mini games to learn more about the treatment plan for Sam. Please follow the instructions for each minigame. The mini games are:
+5.1. Maze
+5.2. Tile Jump
+5.3. Finding the Zebra
+5.4. Catch the Zebra
+6. Once you complete the minigames, you earn a value badge which increases your progress bar.
+7. Once you have completed all the minigames and earned all the badges, you've successfully completed the game.
 
-We have provided a default project structure to get you started. This is as follows:
-
-- `index.html` - A basic HTML page to contain the game.
-- `src` - Contains the React client source code.
-- `src/main.jsx` - The main **React** entry point. This bootstraps the React application.
-- `src/App.jsx` - The main React component.
-- `src/game/PhaserGame.jsx` - The React component that initializes the Phaser Game and serve like a bridge between React and Phaser.
-- `src/game/EventBus.js` - A simple event bus to communicate between React and Phaser.
-- `src/game` - Contains the game source code.
-- `src/game/main.jsx` - The main **game** entry point. This contains the game configuration and start the game.
-- `src/game/scenes/` - The Phaser Scenes are in this folder.
-- `public/style.css` - Some simple CSS rules to help with page layout.
-- `public/assets` - Contains the static assets used by the game.
-
-## React Bridge
-
-The `PhaserGame.jsx` component is the bridge between React and Phaser. It initializes the Phaser game and passes events between the two.
-
-To communicate between React and Phaser, you can use the **EventBus.js** file. This is a simple event bus that allows you to emit and listen for events from both React and Phaser.
-
-```js
-// In React
-import { EventBus } from './EventBus';
-
-// Emit an event
-EventBus.emit('event-name', data);
-
-// In Phaser
-// Listen for an event
-EventBus.on('event-name', (data) => {
-    // Do something with the data
-});
-```
-
-In addition to this, the `PhaserGame` component exposes the Phaser game instance along with the most recently active Phaser Scene using React forwardRef.
-
-Once exposed, you can access them like any regular react reference.
-
-## Phaser Scene Handling
-
-In Phaser, the Scene is the lifeblood of your game. It is where you sprites, game logic and all of the Phaser systems live. You can also have multiple scenes running at the same time. This template provides a way to obtain the current active scene from React.
-
-You can get the current Phaser Scene from the component event `"current-active-scene"`. In order to do this, you need to emit the event `"current-scene-ready"` from the Phaser Scene class. This event should be emitted when the scene is ready to be used. You can see this done in all of the Scenes in our template.
-
-**Important**: When you add a new Scene to your game, make sure you expose to React by emitting the `"current-scene-ready"` event via the `EventBus`, like this:
-
-
-```js
-class MyScene extends Phaser.Scene
-{
-    constructor ()
-    {
-        super('MyScene');
-    }
-
-    create ()
-    {
-        // Your Game Objects and logic here
-
-        // At the end of create method:
-        EventBus.emit('current-scene-ready', this);
-    }
-}
-```
-
-You don't have to emit this event if you don't need to access the specific scene from React. Also, you don't have to emit it at the end of `create`, you can emit it at any point. For example, should your Scene be waiting for a network request or API call to complete, it could emit the event once that data is ready.
-
-### React Component Example
-
-Here's an example of how to access Phaser data for use in a React Component:
-
-```js
-import { useRef } from 'react';
-
-// In a parent component
-const ReactComponent = () => {
-
-    const phaserRef = useRef(); // you can access to this ref from phaserRef.current
-
-    const onCurrentActiveScene = (scene) => {
-    
-        // This is invoked
-
-    }
-
-    return (
-        ...
-        <PhaserGame ref={phaserRef} currentActiveScene={onCurrentActiveScene} />
-        ...
-    );
-
-}
-```
-
-In the code above, you can get a reference to the current Phaser Game instance and the current Scene by creating a reference with `useRef()` and assign to PhaserGame component.
-
-From this state reference, the game instance is available via `phaserRef.current.game` and the most recently active Scene via `phaserRef.current.scene`.
-
-The `onCurrentActiveScene` callback will also be invoked whenever the the Phaser Scene changes, as long as you emit the event via the EventBus, as outlined above.
-
-## Handling Assets
-
-Vite supports loading assets via JavaScript module `import` statements.
-
-This template provides support for both embedding assets and also loading them from a static folder. To embed an asset, you can import it at the top of the JavaScript file you are using it in:
-
-```js
-import logoImg from './assets/logo.png'
-```
-
-To load static files such as audio files, videos, etc place them into the `public/assets` folder. Then you can use this path in the Loader calls within Phaser:
-
-```js
-preload ()
-{
-    //  This is an example of an imported bundled image.
-    //  Remember to import it at the top of this file
-    this.load.image('logo', logoImg);
-
-    //  This is an example of loading a static image
-    //  from the public/assets folder:
-    this.load.image('background', 'assets/bg.png');
-}
-```
-
-When you issue the `npm run build` command, all static assets are automatically copied to the `dist/assets` folder.
-
-## Deploying to Production
-
-After you run the `npm run build` command, your code will be built into a single bundle and saved to the `dist` folder, along with any other assets your project imported, or stored in the public assets folder.
-
-In order to deploy your game, you will need to upload *all* of the contents of the `dist` folder to a public facing web server.
-
-## Customizing the Template
-
-### Vite
-
-If you want to customize your build, such as adding plugin (i.e. for loading CSS or fonts), you can modify the `vite/config.*.mjs` file for cross-project changes, or you can modify and/or create new configuration files and target them in specific npm tasks inside of `package.json`. Please see the [Vite documentation](https://vitejs.dev/) for more information.
-
-## Join the Phaser Community!
-
-We love to see what developers like you create with Phaser! It really motivates us to keep improving. So please join our community and show-off your work 😄
-
-**Visit:** The [Phaser website](https://phaser.io) and follow on [Phaser Twitter](https://twitter.com/phaser_)<br />
-**Play:** Some of the amazing games [#madewithphaser](https://twitter.com/search?q=%23madewithphaser&src=typed_query&f=live)<br />
-**Learn:** [API Docs](https://newdocs.phaser.io), [Support Forum](https://phaser.discourse.group/) and [StackOverflow](https://stackoverflow.com/questions/tagged/phaser-framework)<br />
-**Discord:** Join us on [Discord](https://discord.gg/phaser)<br />
-**Code:** 2000+ [Examples](https://labs.phaser.io)<br />
-**Read:** The [Phaser World](https://phaser.io/community/newsletter) Newsletter<br />
-
-Created by [Phaser Studio](mailto:support@phaser.io). Powered by coffee, anime, pixels and love.
-
-The Phaser logo and characters are &copy; 2011 - 2024 Phaser Studio Inc.
-
-All rights reserved.
+Our project sits on GitHub at [https://github.com/owencooke/RQMO12]
+Our project is hosted on GitHub at [https://rqmo12-game.web.app/]
