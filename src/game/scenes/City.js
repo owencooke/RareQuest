@@ -1,5 +1,6 @@
 import { Scene, Cameras } from "phaser";
 import { MyPlayer } from "../components/MyPlayer";
+import { startSpecialistScene } from "./hospital/Hospital";
 
 const DOCTOR_SYMBOLS_SCALE = {
     Pediatrician: 0.125,
@@ -16,11 +17,8 @@ export class City extends Scene {
     }
 
     init(data) {
-        if (data.playerSpawn) {
-            this.playerSpawn = {
-                x: data.playerSpawn.x,
-                y: data.playerSpawn.y + 32,
-            };
+        if (data.doctorType) {
+            this.doctorType = data.doctorType;
         }
     }
 
@@ -52,9 +50,20 @@ export class City extends Scene {
         this.physics.add.collider(this.player, buildingsLayer);
 
         // Bind door objects to next scene handler
+        const doors = map.createFromObjects("Doors");
+        if (this.doctorType) {
+            doors.forEach((door) => {
+                if (this.doctorType === door.name) {
+                    // this.player.setOrigin(door.x, door.y + 32);
+                    this.player.setX(door.x);
+                    this.player.setY(door.y + 32);
+                }
+            });
+        }
+
         this.physics.add.collider(
             this.player,
-            this.physics.add.staticGroup(map.createFromObjects("Doors")),
+            this.physics.add.staticGroup(doors),
             this.handleEnterDoor,
             null,
             this
@@ -64,10 +73,7 @@ export class City extends Scene {
         map.createLayer("RoofDecor", exteriors, 0, 0);
 
         // Setup doctor symbols for buildings
-        let doorsGroup = this.physics.add.staticGroup(
-            map.createFromObjects("Doctor Symbols")
-        );
-        doorsGroup.getChildren().forEach((door) => {
+        map.createFromObjects("Doctor Symbols").forEach((door) => {
             door.setTexture(door.name);
             door.setScale(DOCTOR_SYMBOLS_SCALE[door.name]);
         }, this);
@@ -101,13 +107,9 @@ export class City extends Scene {
     handleEnterDoor(_, door) {
         this.allowMovement = false;
         const doctorType = door.name;
-        const doorPosition = { x: door.x, y: door.y };
         this.cameras.main.fadeOut(250, 0, 0, 0);
         this.cameras.main.once(Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () =>
-            this.scene.start("Hospital", {
-                doctorType,
-                doorPosition,
-            })
+            startSpecialistScene(this, doctorType)
         );
     }
 }

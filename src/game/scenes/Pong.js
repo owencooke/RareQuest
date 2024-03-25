@@ -1,4 +1,5 @@
-import { Scene } from "phaser";
+import { Scene, Math } from "phaser";
+import { startSpecialistScene } from "./hospital/Hospital";
 
 export class Pong extends Scene {
     constructor() {
@@ -66,7 +67,7 @@ export class Pong extends Scene {
             "worldbounds",
             function (ball) {
                 this.ColliderActivate = true;
-                const angle = Phaser.Math.Between(25, 360);
+                const angle = Math.Between(25, 360);
                 const vec = this.physics.velocityFromAngle(
                     angle,
                     100 + this.ballSpeed
@@ -83,7 +84,7 @@ export class Pong extends Scene {
             function (player, ball) {
                 // Make sure hitbox overlap doesnt give > 10 points
                 if (this.ColliderActivate) {
-                    const angle = Phaser.Math.Between(25, 360);
+                    const angle = Math.Between(25, 360);
                     const vec = this.physics.velocityFromAngle(
                         angle,
                         100 + this.ballSpeed
@@ -187,7 +188,7 @@ export class gameEnd extends Scene {
                 .setOrigin(0.5)
                 .setInteractive();
             continueButton.on("pointerdown", () => {
-                this.scene.start("Hospital");
+                startSpecialistScene(this, "Pulmonologist");
             });
         } else {
             const playButton = this.add

@@ -3,41 +3,18 @@ import { startDialogue } from "../../components/Dialogue";
 import script from "./script.json";
 import { MyPlayer } from "../../components/MyPlayer";
 
-export class Hospital extends Scene {
+class Hospital extends Scene {
     constructor() {
         super("Hospital");
         this.player;
         this.doctor;
         this.dialogueInProgess = false;
-        this.dialogueFinish1 = false;
     }
 
     init(data) {
-        this.doorPosition = data.doorPosition;
         this.dialogue = script[data.doctorType];
         this.doctorType = data.doctorType;
-        
-        if (this.doctorType === "Pulmonologist") {
-            const hospitalData = {doctorType: "Pulmonologist", minigame: "Pong"};
-            this.minigameScene = hospitalData;
-        }
-        else if (this.doctorType === "Neurologist") {
-            const hospitalData = {doctorType: "Neurologist", minigame: "Maze"};
-            this.minigameScene = hospitalData;
-        }
-        else if (this.doctorType === "Pediatrician") {
-            const hospitalData = {doctorType: "Pediatrician", minigame: "TileJump"};
-            this.minigameScene = hospitalData;
-        }
-        else if (this.doctorType === "Dermatologist") {
-            const hospitalData = {doctorType: "Dermatologist", minigame: "Hospital"};
-            this.minigameScene = hospitalData;
-        }
-        else if (this.doctorType === "Ophthalmologist") {
-            const hospitalData = {doctorType: "Ophthalmologist", minigame: "Hospital"};
-            this.minigameScene = hospitalData;
-        }
-        
+        this.minigameScene = data.minigame;
     }
 
     create() {
@@ -146,9 +123,9 @@ export class Hospital extends Scene {
         );
 
         const minigameTriggerZone = this.add.zone(
-            this.doctor.x + 200, 
-            this.doctor.y + 30, 
-            48, 
+            this.doctor.x + 200,
+            this.doctor.y + 30,
+            48,
             64
         );
         this.physics.world.enable(minigameTriggerZone);
@@ -209,7 +186,7 @@ export class Hospital extends Scene {
         this.allowMovement = false;
         this.cameras.main.fadeOut(250, 0, 0, 0);
         this.cameras.main.once(Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () =>
-            this.scene.start("City", { playerSpawn: this.doorPosition })
+            this.scene.start("City", { doctorType: this.doctorType })
         );
     }
 
@@ -224,10 +201,42 @@ export class Hospital extends Scene {
         }
     }
 
-    handleMinigame(doctor) {
+    handleMinigame() {
         if (this.cursors.space.isDown) {
-            this.scene.start(this.minigameScene.minigame, {doctorType: this.minigameScene.doctorType})
+            this.scene.start(this.minigameScene);
         }
     }
 }
+
+function startSpecialistScene(sceneRef, doctorType) {
+    let minigame;
+    switch (doctorType) {
+        case "Pulmonologist":
+            minigame = "Pong";
+            break;
+        case "Neurologist":
+            minigame = "Maze";
+            break;
+        case "Pediatrician":
+            minigame = "TileJump";
+            break;
+        // FIXME: add minigame
+        case "Dermatologist":
+            minigame = undefined;
+            break;
+        // FIXME: add minigame
+        case "Ophthalmologist":
+            minigame = undefined;
+            break;
+        default:
+            minigame = undefined;
+    }
+
+    sceneRef.scene.start("Hospital", {
+        doctorType: doctorType,
+        minigame,
+    });
+}
+
+export { Hospital, startSpecialistScene };
 

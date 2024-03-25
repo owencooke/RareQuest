@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import { MyPlayer } from "../components/MyPlayer";
+import { startSpecialistScene } from "./hospital/Hospital";
 
 export class TileJump extends Phaser.Scene {
     constructor() {
@@ -175,7 +176,7 @@ export class TileJump extends Phaser.Scene {
                 .text(
                     this.game.config.width / 2,
                     this.game.config.height / 2 + 100,
-                    "Click anywhere to play again",
+                    "Click anywhere to continue",
                     { font: "24px Arial", fill: "#fff" }
                 )
                 .setOrigin(0.5);
@@ -186,7 +187,7 @@ export class TileJump extends Phaser.Scene {
 
             // Make the scene listen for a click to restart
             this.input.once("pointerdown", () => {
-                this.scene.start("Hospital");
+                startSpecialistScene(this, "Pediatrician");
             });
         }
     }

@@ -1,5 +1,6 @@
 import { Scene } from "phaser";
 import { MyPlayer } from "../components/MyPlayer";
+import { startSpecialistScene } from "./hospital/Hospital";
 
 export class Maze extends Scene {
     constructor() {
@@ -95,7 +96,7 @@ export class Maze extends Scene {
         });
 
         this.homeButton.on("pointerdown", () => {
-            this.scene.start("Hospital");
+            startSpecialistScene(this, "Neurologist");
         });
 
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -125,7 +126,7 @@ export class Maze extends Scene {
             1000,
             () => {
                 message.destroy();
-                this.scene.start("Hospital");
+                startSpecialistScene(this, "Neurologist");
             },
             [],
             this
