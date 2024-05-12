@@ -1,8 +1,8 @@
 # RareQuest - Team 12 RQMO
+![image](https://github.com/owencooke/RareQuest/assets/90405643/3affcb12-13aa-40d4-bec1-66d384762898)
+A web-based, pixel art, RPG game for promoting the awareness and challenges of establishing a diagnosis for rare diseases. Built for the [Quebec Coalition of Orphan Diseases](https://rqmo.org/mission/), a non-profit organization for raising awareness about the challenges of rare diseases, as part of [Morgan Stanley's 2024 Code to Give](https://codetogive.bemyapp.com/#/event) hackathon.  
 
-## RareQuest
-
-A web game for promoting the awareness and challenges of establishing a diagnosis for rare diseases
+Interested in learning more about the difficulty of diagnosing rare diseases? You can play the game at: https://rqmo12-game.web.app/
 
 ## The Issue
 
@@ -12,7 +12,9 @@ Rare diseases pose a unique diagnostic challenge because of limited research and
 
 Our solution is an interactive game where the player becomes an investigator determined to uncover Sam's mystery illness. Players will guide Sam's journey, analyzing medical information and researching potential diagnoses.  The game highlights the challenges of diagnosing rare diseases, encourages critical thinking, and promotes determination to find answers for those facing difficult medical situations.
 
-## How it works
+## How It Works
+![image](https://github.com/owencooke/RareQuest/assets/90405643/e7c6bf87-832f-4112-9487-f71bfb125029)
+![image](https://github.com/owencooke/RareQuest/assets/90405643/883b5f9f-bb2e-4b9f-a8b9-e8d762197ad6)
 
 ### 1. Visit doctors to learn about symptoms
 
@@ -26,7 +28,7 @@ Players will play mini games after meeting a doctor to examine the treatment pla
 
 The player has journeyed through the intricate process of diagnosing a rare disease, visiting numerous doctors to uncover the challenges faced by those with such conditions.
 
-## How to play
+## How To Play
 
 1. Visit the website [https://rqmo12-game.web.app/]
 2. Click on the "Play" button
